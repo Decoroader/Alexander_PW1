@@ -1,3 +1,7 @@
 ﻿Temp
 Logs
 Library
+.vs
+Alexander_PW1.sln
+*.csproj
+obj
