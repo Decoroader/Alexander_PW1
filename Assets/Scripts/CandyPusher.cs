@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class CandyPusher : MonoBehaviour
 {
@@ -6,15 +7,19 @@ public class CandyPusher : MonoBehaviour
 
     private Rigidbody currentRigid;
     private float speedDinamicObject = 3;
-    private float hightBound = 33;
+    private float hightBound = 17;
     private int speedGame;
+    private float tubeDistance = 8.8f;
 
-    private Vector3 startFlyPos = new Vector3(0, 1, 11);
+    private Vector3 startFlyToHeadPos;
+    private Vector3 startTransitToHeadPos;
     
     void Start()
     {
         currentRigid = GetComponent<Rigidbody>();
-        speedGame = 99;
+        speedGame = 199;
+        startFlyToHeadPos = new Vector3(0, 1, tubeDistance);
+        startTransitToHeadPos = new Vector3(0, 1, -1.3f);
     }
 
     void Update()
@@ -33,13 +38,30 @@ public class CandyPusher : MonoBehaviour
         if (toHead.gameObject.CompareTag("Head"))   // destroy the candy in the head
             Destroy(gameObject, 0.33f);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Reciever"))
         {
-            transform.position = startFlyPos;
-            currentRigid.AddForce(Vector3.forward * speedDinamicObject, ForceMode.Impulse);
-        }
+            Vector3 initScale = transform.localScale;
+            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
+            StartCoroutine(TubeTransit(initScale));
+        }
+    }
+    IEnumerator TubeTransit(Vector3 outScale)       
+	{
+        int ttt = 0;
+        Vector3 startMoveInTubePos = startTransitToHeadPos;
+
+        while (transform.position.z < tubeDistance)
+        {
+            transform.position = new Vector3(startMoveInTubePos.x, startMoveInTubePos.y,
+                startMoveInTubePos.z + (float)(ttt++) / 10);
+            yield return new WaitForFixedUpdate();
+        }
+        transform.position = startFlyToHeadPos;       // 
+        transform.localScale = outScale;
+        currentRigid.AddForce(Vector3.forward * speedDinamicObject, ForceMode.Impulse);
     }
 }

@@ -7,7 +7,6 @@ public class CandyShifter : MonoBehaviour
 
     private float initMouseCoordinate;
 
-
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
