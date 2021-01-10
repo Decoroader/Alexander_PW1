@@ -3,7 +3,6 @@
 public class CandyShifter : MonoBehaviour
 {
     public float coeffCoordinateMousToObject = 0.05f;
-    private int missedCount = 0;    // timer for hold down click
 
     private float initMouseCoordinate;
 
@@ -18,13 +17,6 @@ public class CandyShifter : MonoBehaviour
             initMouseCoordinate = Input.mousePosition.x;
             transform.position = new Vector3(transform.position.x - shiftX,
                 transform.position.y, transform.position.z);
-            missedCount++;
         }
-        if (Input.GetMouseButtonUp(0))
-            missedCount = 0;
     }
-    public int GetMissedCounter()
-	{
-        return missedCount;
-	}
 }

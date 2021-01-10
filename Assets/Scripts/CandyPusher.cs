@@ -8,8 +8,9 @@ public class CandyPusher : MonoBehaviour
     private Rigidbody currentRigid;
     private float speedDinamicObject = 3;
     private float hightBound = 17;
-    private int speedGame;
     private float tubeDistance = 8.8f;
+
+    private int speedGame;
 
     private Vector3 startFlyToHeadPos;
     private Vector3 startTransitToHeadPos;
@@ -20,6 +21,7 @@ public class CandyPusher : MonoBehaviour
         speedGame = 199;
         startFlyToHeadPos = new Vector3(0, 1, tubeDistance);
         startTransitToHeadPos = new Vector3(0, 1, -1.3f);
+        StartCoroutine(WaitForDecision());
     }
 
     void Update()
@@ -27,10 +29,7 @@ public class CandyPusher : MonoBehaviour
 		if (Input.GetMouseButtonUp(0))                      // the cundy runs in the head side
 			currentRigid.AddForce(Vector3.forward * speedDinamicObject, ForceMode.Impulse); 
 
-        if (candyShifter.GetMissedCounter() > speedGame)    // for the case the player click down and holds for too long time
-            currentRigid.useGravity = true;         // this period will shorten as the level rises
-
-        if (transform.position.z > hightBound)      // destroy the candy behind the head
+        if ((transform.position.z > hightBound) || (transform.position.x > hightBound))     // destroy the candy out of he bounds
             Destroy(gameObject);
     }
     private void OnCollisionEnter(Collision toHead)
@@ -43,14 +42,26 @@ public class CandyPusher : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Reciever"))
         {
-            Vector3 initScale = transform.localScale;
-            transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-
-            StartCoroutine(TubeTransit(initScale));
+            transform.localScale *= 0.1f;           // reduce scale to hide the candy in the transit sphere
+            StopAllCoroutines();
+            StartCoroutine(TubeTransit());
         }
     }
-    IEnumerator TubeTransit(Vector3 outScale)       
+    IEnumerator WaitForDecision()
+    {
+        int waitCount = 0;                  // timer for wait player's decision
+        while (waitCount < speedGame)
+        {
+            yield return new WaitForFixedUpdate();
+            waitCount++;
+        }
+        yield return null;
+        currentRigid.useGravity = true;     // the candy falls and out from game
+    }
+    IEnumerator TubeTransit()       
 	{
+        currentRigid.useGravity = false;     // the candy falls and out from game
+
         int ttt = 0;
         Vector3 startMoveInTubePos = startTransitToHeadPos;
 
@@ -60,8 +71,9 @@ public class CandyPusher : MonoBehaviour
                 startMoveInTubePos.z + (float)(ttt++) / 10);
             yield return new WaitForFixedUpdate();
         }
+        Debug.Log("Out from while");
         transform.position = startFlyToHeadPos;       // 
-        transform.localScale = outScale;
+        transform.localScale *= 10;
         currentRigid.AddForce(Vector3.forward * speedDinamicObject, ForceMode.Impulse);
     }
 }

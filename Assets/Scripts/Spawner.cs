@@ -4,6 +4,8 @@ public class Spawner : MonoBehaviour
 {
     public GameObject[] prefabsCandy;
     
+    public ParticleSystem spawnCandy;
+
     private GameObject currentCandy;
 
     private Vector3 prefabPosition;
