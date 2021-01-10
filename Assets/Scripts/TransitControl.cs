@@ -6,11 +6,11 @@ public class TransitControl : MonoBehaviour
 
     private GameObject currentCandy;
 
-    void Update()
+	void Update()
     {
         currentCandy = spawnedObject.GetCurrentObject();
         if ((currentCandy != null) && (currentCandy.transform.localScale.x < 0.5f))
-            transform.position = new Vector3(currentCandy.transform.position.x, 
+            transform.position = new Vector3(currentCandy.transform.position.x,
                 currentCandy.transform.position.y, currentCandy.transform.position.z);
     }
 }

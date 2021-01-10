@@ -15,8 +15,8 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        //InvokeRepeating("SpawnCandy", 1.0f, 3f);
-        SpawnCandy();
+        InvokeRepeating("SpawnCandy", 1.0f, 7f);
+        //SpawnCandy();
     }
     
     private void SpawnCandy()
