@@ -125,7 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b6fc7d10dff2b8488169b7f0cbf9c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  candyShifter: {fileID: 2947955830866307892}
+  prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
+    type: 3}
 --- !u!114 &2947955830866307892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,4 +139,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6d6472eca90c448941076fc2e757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coeffCoordinateMousToObject: 0.05
