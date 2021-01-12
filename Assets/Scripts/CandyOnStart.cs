@@ -6,8 +6,11 @@ public class CandyOnStart : MonoBehaviour
     private float coeffCoordinateMousToObject = 0.05f;
     private float initMouseCoordinate;
 
+    private Rigidbody currentRigid;
+
     private void Start()
 	{
+        currentRigid = GetComponent<Rigidbody>();
         StartCoroutine(LeftRightSlide());
     }
 
@@ -15,6 +18,8 @@ public class CandyOnStart : MonoBehaviour
     {
         while (true)
         {
+            if (currentRigid.useGravity)    // stop scan mouse for the candy shifting 
+                break;
             if (Input.GetMouseButtonDown(0))
                 initMouseCoordinate = Input.mousePosition.x; // get the X coordinate of the cursor
 
@@ -26,7 +31,7 @@ public class CandyOnStart : MonoBehaviour
                     transform.position.y, transform.position.z);
             }
 
-			if (Input.GetMouseButtonUp(0))              // the cundy runs in the reciever side
+			if (Input.GetMouseButtonUp(0))  // the cundy runs in the reciever side
 				break;
 			yield return new WaitForFixedUpdate();
         }

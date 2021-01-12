@@ -15,8 +15,8 @@ public class CandyPusher : MonoBehaviour
     private int countForMoveInTube;
     //private int countForMoveToHead;
     [SerializeField]private int countWaitToReceiver = 39;
-    private int speedGame;
     private int scaleTransformer = 3;
+    private int speedGame = 199;
 
     private string receiverString = "Receiver";
 
@@ -24,7 +24,6 @@ public class CandyPusher : MonoBehaviour
     {
         currentRigid = GetComponent<Rigidbody>();
         initRotation = transform.rotation;
-        speedGame = 199;
         StartCoroutine(WaitForPlayerDecision());
     }
 
@@ -83,8 +82,6 @@ public class CandyPusher : MonoBehaviour
 
     IEnumerator WaitForPlayerDecision()
     {
-        int waitCount = 0;                  // timer for wait player's decision
-
         while (true)
         {
             if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
@@ -95,7 +92,7 @@ public class CandyPusher : MonoBehaviour
                 break;
             }
 
-            if (waitCount++ > speedGame)
+            if (speedGame-- < 1)
             {
                 currentRigid.useGravity = true;         // the candy falls and out from game
                 break;
