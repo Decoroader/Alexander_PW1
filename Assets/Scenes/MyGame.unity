@@ -165,6 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 90417285}
+  - component: {fileID: 90417286}
   - component: {fileID: 90417284}
   m_Layer: 0
   m_Name: Spawner
@@ -202,6 +203,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &90417286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90417283}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 11, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0.3}
 --- !u!1 &444694561
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,8 +229,8 @@ GameObject:
   - component: {fileID: 444694564}
   - component: {fileID: 444694563}
   m_Layer: 0
-  m_Name: Reciever3_
-  m_TagString: Reciever
+  m_Name: Receiver2
+  m_TagString: Receiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,8 +261,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39
-  m_Center: {x: 0, y: 0, z: 0.64870393}
+  m_Radius: 0.31
+  m_Center: {x: 0, y: 0, z: 0.59}
 --- !u!23 &444694564
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -419,7 +433,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 0.3}
-  m_Center: {x: 0, y: 0, z: 0.15}
+  m_Center: {x: 0, y: 0, z: 0.33}
 --- !u!23 &876356752
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -494,8 +508,8 @@ GameObject:
   - component: {fileID: 878111075}
   - component: {fileID: 878111074}
   m_Layer: 0
-  m_Name: Reciever5_
-  m_TagString: Reciever
+  m_Name: Receiver4
+  m_TagString: Receiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -526,8 +540,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39
-  m_Center: {x: 0.15, y: 0, z: 0.64870393}
+  m_Radius: 0.31
+  m_Center: {x: 0.11, y: 0, z: 0.59}
 --- !u!23 &878111075
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -859,8 +873,8 @@ GameObject:
   - component: {fileID: 1138438534}
   - component: {fileID: 1138438533}
   m_Layer: 0
-  m_Name: Reciever4_
-  m_TagString: Reciever
+  m_Name: Receiver3
+  m_TagString: Receiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -891,8 +905,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39
-  m_Center: {x: 0.1, y: 0, z: 0.64870393}
+  m_Radius: 0.31
+  m_Center: {x: 0.1, y: 0, z: 0.59}
 --- !u!23 &1138438534
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -953,8 +967,8 @@ GameObject:
   - component: {fileID: 1160694022}
   - component: {fileID: 1160694021}
   m_Layer: 0
-  m_Name: Reciever2_
-  m_TagString: Reciever
+  m_Name: Receiver1
+  m_TagString: Receiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -985,8 +999,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39
-  m_Center: {x: -0.1, y: 0, z: 0.64870393}
+  m_Radius: 0.31
+  m_Center: {x: -0.1, y: 0, z: 0.59}
 --- !u!23 &1160694022
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1660,8 +1674,8 @@ GameObject:
   - component: {fileID: 2117198850}
   - component: {fileID: 2117198849}
   m_Layer: 0
-  m_Name: Reciever1_
-  m_TagString: Reciever
+  m_Name: Receiver0
+  m_TagString: Receiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1692,8 +1706,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.39
-  m_Center: {x: -0.15, y: 0, z: 0.64870393}
+  m_Radius: 0.31
+  m_Center: {x: -0.11, y: 0, z: 0.59}
 --- !u!23 &2117198850
 MeshRenderer:
   m_ObjectHideFlags: 0

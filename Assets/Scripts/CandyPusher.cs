@@ -5,7 +5,7 @@ public class CandyPusher : MonoBehaviour
 {
     public GameObject prefabTransit;
     private GameObject currentTransit;
-    private float speedOnOpenSpace = 3;
+    private float speedOnOpenSpace = 5.5f;
     private float speedInTube = 7;
     private float hightBound = 17;
 
@@ -13,16 +13,19 @@ public class CandyPusher : MonoBehaviour
     private Quaternion initRotation;
 
     private int countForMoveInTube;
-    private int countForMoveToHead;
-    private int countForMoveToReciever = 77;
+    //private int countForMoveToHead;
+    //[SerializeField]private int countForMoveToReceiver = 39;
     private int speedGame;
+    private int scaleTransformer = 3;
+
+    private string receiverString = "Receiver";
 
     void Start()
     {
         currentRigid = GetComponent<Rigidbody>();
         initRotation = transform.rotation;
         speedGame = 199;
-        StartCoroutine(WaitForDecision());
+        StartCoroutine(WaitForPlayerDecision());
     }
 
     void Update()
@@ -30,8 +33,8 @@ public class CandyPusher : MonoBehaviour
         if (countForMoveInTube-- > 0)       // move the candy in the tube
             transform.Translate(Vector3.forward * speedInTube * Time.deltaTime);
 
-        if (countForMoveToHead-- > 0)       // move the candy to the head side
-            transform.Translate(Vector3.forward * speedOnOpenSpace * Time.deltaTime);
+        //if (countForMoveToHead-- > 0)       // move the candy to the head side
+            //transform.Translate(Vector3.forward * speedOnOpenSpace * Time.deltaTime);
 
         if ((transform.position.z > hightBound) || (transform.position.x > hightBound) || (transform.position.x < -hightBound))     
             Destroy(gameObject);            // destroy the candy out of he bounds
@@ -44,40 +47,50 @@ public class CandyPusher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Reciever"))
-        {
-            StopAllCoroutines();
+        if (other.gameObject.name == "Spawner")
+            currentRigid.useGravity = true;                 // if the candy not hit the receiver
 
-            transform.position = other.gameObject.transform.position;    // to get form the current reciever position
-            transform.rotation = other.gameObject.transform.rotation;    // to set from the current reciever rotation
-            transform.localScale *= 0.1f;       // reduce scale to hide the candy in the transit sphere
+        if (other.gameObject.CompareTag(receiverString))
+        {
+            StopVelocity();
+            //StopAllCoroutines();
+            currentRigid.useGravity = false;                // the candy have hit the receiver
+
+            transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
+            transform.rotation = other.gameObject.transform.rotation;    // to set from the current receiverrotation
+            transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
 
             countForMoveInTube = 111;
             currentTransit = Instantiate(prefabTransit, transform.position, transform.rotation) as GameObject;
             currentTransit.transform.SetParent(transform);
         }
+        
         if (other.gameObject.CompareTag("OutSphere"))
 		{
+            StopVelocity();
             Destroy(currentTransit);
 
             transform.rotation = initRotation;
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
-            transform.localScale *= 10;         // back the scale to show the candy in the track to the head
+            transform.localScale *= scaleTransformer;         // back the scale to show the candy in the track to the head
 
-            countForMoveToHead = 77;
+            //countForMoveToHead = 77;
+            currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // move the candy to the head side
+
             countForMoveInTube = 0;
         }
     }
 
-    IEnumerator WaitForDecision()
+    IEnumerator WaitForPlayerDecision()
     {
         int waitCount = 0;                  // timer for wait player's decision
 
         while (true)
         {
-            if (Input.GetMouseButtonUp(0))              // the cundy runs in the reciever side
+            if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
             {
-                StartCoroutine(WaitForReciever());
+                currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); 
+                // move the candy to the receiverside
                 break;
             }
 
@@ -89,22 +102,22 @@ public class CandyPusher : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
-    IEnumerator WaitForReciever() {
-        while (true)
-        {
-            if (countForMoveToReciever-- > 0)           // move the candy to the reciever side
-                transform.Translate(Vector3.forward * speedOnOpenSpace * Time.deltaTime);
-			else
-			{
-                currentRigid.useGravity = true;         // the candy falls and out from game
-                break;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-    }
- //   void StopVelocity()
-	//{
-	//	currentRigid.velocity = Vector3.zero;
-	//	currentRigid.angularVelocity = Vector3.zero;
-	//}
+   // IEnumerator WaitForReciever() {
+   //     while (true)
+   //     {
+   //         if (countForMoveToReceiver-- > 0)           // move the candy to the receiverside
+   //             transform.Translate(Vector3.forward * speedOnOpenSpace * Time.deltaTime);
+			//else
+			//{
+   //             currentRigid.useGravity = true;         // the candy falls and out from game
+   //             break;
+   //         }
+   //         yield return new WaitForFixedUpdate();
+   //     }
+   // }
+	void StopVelocity()
+	{
+		currentRigid.velocity = Vector3.zero;
+		currentRigid.angularVelocity = Vector3.zero;
+	}
 }

@@ -10,9 +10,9 @@ public class Spawner : MonoBehaviour
 
     private Vector3 prefabPosition;
     private float rangeX = 7;
-    private float rangeMaxZ = -2.5f;
+    private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
-    private float gameSpeed = 7;
+    private float gameSpeed = 2;
 
     private int counter = 1; // temporary
 
