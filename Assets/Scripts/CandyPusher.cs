@@ -14,7 +14,7 @@ public class CandyPusher : MonoBehaviour
 
     private int countForMoveInTube;
     //private int countForMoveToHead;
-    //[SerializeField]private int countForMoveToReceiver = 39;
+    [SerializeField]private int countWaitToReceiver = 39;
     private int speedGame;
     private int scaleTransformer = 3;
 
@@ -53,7 +53,7 @@ public class CandyPusher : MonoBehaviour
         if (other.gameObject.CompareTag(receiverString))
         {
             StopVelocity();
-            //StopAllCoroutines();
+            StopAllCoroutines();
             currentRigid.useGravity = false;                // the candy have hit the receiver
 
             transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
@@ -89,8 +89,9 @@ public class CandyPusher : MonoBehaviour
         {
             if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
             {
-                currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); 
+                currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
                 // move the candy to the receiverside
+                StartCoroutine(WaitForReciever());      // wait for hit the receiver
                 break;
             }
 
@@ -102,19 +103,18 @@ public class CandyPusher : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
-   // IEnumerator WaitForReciever() {
-   //     while (true)
-   //     {
-   //         if (countForMoveToReceiver-- > 0)           // move the candy to the receiverside
-   //             transform.Translate(Vector3.forward * speedOnOpenSpace * Time.deltaTime);
-			//else
-			//{
-   //             currentRigid.useGravity = true;         // the candy falls and out from game
-   //             break;
-   //         }
-   //         yield return new WaitForFixedUpdate();
-   //     }
-   // }
+	IEnumerator WaitForReciever()
+	{
+		while (true)
+		{
+			if (!(countWaitToReceiver-- > 0))           // move the candy to the receiverside
+			{
+				currentRigid.useGravity = true;         // the candy falls and out from game
+				break;
+			}
+			yield return new WaitForFixedUpdate();
+		}
+	}
 	void StopVelocity()
 	{
 		currentRigid.velocity = Vector3.zero;
