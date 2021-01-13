@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
     public ParticleSystem spawnCandyEffect;
 
     private GameObject currentCandy;
-
+    private Rigidbody currentRigid;
     private Vector3 prefabPosition;
     private float rangeX = 7;
     private float rangeMaxZ = -1.5f;
@@ -18,15 +18,24 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnCandy", 1.0f, gameSpeed);
-        //SpawnCandy();
+        //InvokeRepeating("SpawnCandy", 1.0f, gameSpeed);
+        SpawnCandy();
     }
-    
-    private void SpawnCandy()
+	private void Update()
+	{
+        if (Input.GetMouseButtonUp(0) || (currentRigid != null && currentRigid.useGravity))
+        {
+            currentRigid = null;
+            Invoke("SpawnCandy", gameSpeed);
+        }
+
+    }
+	private void SpawnCandy()
 	{
         int prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, Quaternion.identity) as GameObject;
+        currentRigid = currentCandy.GetComponent<Rigidbody>();
         if(counter % 10 == 0)
 		{
             counter++;

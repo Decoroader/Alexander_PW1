@@ -82,31 +82,27 @@ public class CandyPusher : MonoBehaviour
 
     IEnumerator WaitForPlayerDecision()
     {
-        while (true)
+        while (speedGame-- > 0)                         // Wait For the Players Decision
         {
             if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
             {
                 currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
                 // move the candy to the receiverside
                 StartCoroutine(WaitForReciever());      // wait for hit the receiver
-                break;
-            }
-
-            if (speedGame-- < 1)
-            {
-                currentRigid.useGravity = true;         // the candy falls and out from game
-                break;
+                yield break;
             }
             yield return new WaitForFixedUpdate();
         }
+        currentRigid.useGravity = true;         // the candy falls and out from the game
+        yield return null;
     }
 	IEnumerator WaitForReciever()
 	{
 		while (true)
 		{
-			if (!(countWaitToReceiver-- > 0))           // move the candy to the receiverside
+			if (!(countWaitToReceiver-- > 0))           // while move the candy to the receiverside
 			{
-				currentRigid.useGravity = true;         // the candy falls and out from game
+				currentRigid.useGravity = true;         // the candy falls and out from the game since missed receiver
 				break;
 			}
 			yield return new WaitForFixedUpdate();
