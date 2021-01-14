@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
@@ -7,35 +8,26 @@ public class Spawner : MonoBehaviour
     public ParticleSystem spawnCandyEffect;
 
     private GameObject currentCandy;
-    private Rigidbody currentRigid;
     private Vector3 prefabPosition;
     private float rangeX = 7;
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
     private float gameSpeed = 2;
+    private float minFlyTime = 0.5f;
 
     private int counter = 1; // temporary
 
     void Start()
     {
-        //InvokeRepeating("SpawnCandy", 1.0f, gameSpeed);
-        SpawnCandy();
+        Invoke("SpawnCandy", 1);
+        StartCoroutine(NextObjectSpawner());
     }
-	private void Update()
-	{
-        if (Input.GetMouseButtonUp(0) || (currentRigid != null && currentRigid.useGravity))
-        {
-            currentRigid = null;
-            Invoke("SpawnCandy", gameSpeed);
-        }
-
-    }
+	
 	private void SpawnCandy()
 	{
         int prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, Quaternion.identity) as GameObject;
-        currentRigid = currentCandy.GetComponent<Rigidbody>();
         if(counter % 10 == 0)
 		{
             counter++;
@@ -47,4 +39,22 @@ public class Spawner : MonoBehaviour
 	{
         return currentCandy;
 	}
+
+    IEnumerator NextObjectSpawner()
+	{
+        while (true)
+        {
+            yield return null;
+            if (currentCandy != null)
+            {
+                if (prefabPosition.y != currentCandy.transform.position.y || prefabPosition.z != currentCandy.transform.position.z)
+                {
+                    yield return new WaitForSeconds(minFlyTime);
+                    SpawnCandy();
+                }
+            }
+            else
+                SpawnCandy();
+        }
+    }
 }
