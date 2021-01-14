@@ -9,11 +9,11 @@ public class Spawner : MonoBehaviour
 
     private GameObject currentCandy;
     private Vector3 prefabPosition;
-    private float rangeX = 7;
+    private float rangeX = 5;
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
     private float gameSpeed = 2;
-    private float minFlyTime = 0.5f;
+    private float minFlyTime = 0.33f;
 
     private int counter = 1; // temporary
 
@@ -33,7 +33,11 @@ public class Spawner : MonoBehaviour
             counter++;
             gameSpeed -= 0.5f; // temporary, should be changed to 1/coeff as -> to zero but never zero
         }
-	}
+        Debug.Log("prefabPosition = " + prefabPosition);
+        Debug.Log("currentCandy Position = " + currentCandy.transform.position);
+        currentCandy.transform.position = prefabPosition;
+
+    }
 
     public GameObject GetCurrentObject()
 	{

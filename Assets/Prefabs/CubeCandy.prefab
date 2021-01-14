@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8918852210528114860}
   m_Layer: 0
   m_Name: CubeCandy
-  m_TagString: Untagged
+  m_TagString: DinamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
     type: 3}
+  countWaitToReceiver: 39
 --- !u!114 &3982012281610317408
 MonoBehaviour:
   m_ObjectHideFlags: 0

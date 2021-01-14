@@ -40,8 +40,10 @@ public class CandyPusher : MonoBehaviour
     }
     private void OnCollisionEnter(Collision toHead)
 	{
-        if (toHead.gameObject.CompareTag("Head"))   // destroy the candy in the head
-            Destroy(gameObject, 0.33f);
+        if (toHead.gameObject.CompareTag("Head"))           // destroy the candy in the head
+            Destroy(gameObject, 0.19f);
+        if (toHead.gameObject.CompareTag("DinamicObject"))  // collision with other candy
+            currentRigid.useGravity = true;                 // the other candy falls and out from the game
     }
 
     private void OnTriggerEnter(Collider other)
@@ -71,7 +73,8 @@ public class CandyPusher : MonoBehaviour
 
             transform.rotation = initRotation;
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
-            transform.localScale *= scaleTransformer;         // back the scale to show the candy in the track to the head
+            if(transform.localScale.x < 1)
+                transform.localScale *= scaleTransformer;         // back the scale to show the candy in the track to the head
 
             //countForMoveToHead = 77;
             currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // move the candy to the head side
