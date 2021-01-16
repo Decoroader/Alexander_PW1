@@ -13,8 +13,7 @@ public class CandyPusher : MonoBehaviour
     private Quaternion initRotation;
 
     private int countForMoveInTube;
-    //private int countForMoveToHead;
-    [SerializeField]private int countWaitToReceiver = 39;
+    private int countWaitToReceiver = 39;
     private int scaleTransformer = 3;
     private int speedGame = 199;
 
@@ -31,9 +30,6 @@ public class CandyPusher : MonoBehaviour
     {
         if (countForMoveInTube-- > 0)       // move the candy in the tube
             transform.Translate(Vector3.forward * speedInTube * Time.deltaTime);
-
-        //if (countForMoveToHead-- > 0)       // move the candy to the head side
-            //transform.Translate(Vector3.forward * speedOnOpenSpace * Time.deltaTime);
 
         if ((transform.position.z > hightBound) || (transform.position.x > hightBound) || (transform.position.x < -hightBound))     
             Destroy(gameObject);            // destroy the candy out of he bounds
@@ -85,14 +81,20 @@ public class CandyPusher : MonoBehaviour
 
     IEnumerator WaitForPlayerDecision()
     {
+        bool isPressedMouseButton = false;
         while (speedGame-- > 0)                         // Wait For the Players Decision
         {
-            if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
+            if (Input.GetMouseButtonDown(0))            // 
+                isPressedMouseButton = true;
+            if (isPressedMouseButton)
             {
-                currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
-                // move the candy to the receiverside
-                StartCoroutine(WaitForReciever());      // wait for hit the receiver
-                yield break;
+                if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
+                {
+                    currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
+                    // move the candy to the receiverside
+                    StartCoroutine(WaitForReciever());      // wait for hit the receiver
+                    yield break;
+                }
             }
             yield return new WaitForFixedUpdate();
         }

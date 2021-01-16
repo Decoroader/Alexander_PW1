@@ -9,17 +9,16 @@ public class Spawner : MonoBehaviour
 
     private GameObject currentCandy;
     private Vector3 prefabPosition;
-    private float rangeX = 5;
+    private float rangeX = 7f;
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
     private float gameSpeed = 2;
-    private float minFlyTime = 0.33f;
+    private float minFlyTime = 0.5f;
 
     private int counter = 1; // temporary
 
     void Start()
     {
-        Invoke("SpawnCandy", 1);
         StartCoroutine(NextObjectSpawner());
     }
 	
@@ -33,10 +32,6 @@ public class Spawner : MonoBehaviour
             counter++;
             gameSpeed -= 0.5f; // temporary, should be changed to 1/coeff as -> to zero but never zero
         }
-        Debug.Log("prefabPosition = " + prefabPosition);
-        Debug.Log("currentCandy Position = " + currentCandy.transform.position);
-        currentCandy.transform.position = prefabPosition;
-
     }
 
     public GameObject GetCurrentObject()
@@ -46,6 +41,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator NextObjectSpawner()
 	{
+        yield return new WaitForSeconds(1);         // delay before first spawn
         while (true)
         {
             yield return null;
