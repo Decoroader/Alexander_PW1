@@ -9,6 +9,8 @@ TagManager:
   - Head
   - OutSphere
   - Receiver
+  - TestShiftCube
+  - TestImpulseCube
   layers:
   - Default
   - TransparentFX
