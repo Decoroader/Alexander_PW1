@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class HeadLogic : MonoBehaviour
 {
-    public Spawner spawnerData;
-
     [SerializeField]private Color[] A_HeadColors = new Color[5] {
         new Color(1, 0, 0),
         new Color(0, 1, 0),
@@ -34,24 +32,6 @@ public class HeadLogic : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyUp(KeyCode.R)){
-        //    GetComponent<Renderer>().material.color = A_HeadColors[0];
-        //}
-        //if (Input.GetKeyUp(KeyCode.G)){
-        //    GetComponent<Renderer>().material.color = A_HeadColors[1];
-        //}
-        //if (Input.GetKeyUp(KeyCode.B))
-        //{
-        //    GetComponent<Renderer>().material.color = A_HeadColors[2];
-        //}
-        //if (Input.GetKeyUp(KeyCode.Y))
-        //{
-        //    GetComponent<Renderer>().material.color = A_HeadColors[3];
-        //}
-        //if (Input.GetKeyUp(KeyCode.O))
-        //{
-        //    GetComponent<Renderer>().material.color = A_HeadColors[4];
-        //}
         if (Input.GetKeyUp(KeyCode.S))
         {
 			GetComponent<Renderer>().material.color = A_HeadColors[0] + A_HeadColors[1] +
@@ -62,7 +42,8 @@ public class HeadLogic : MonoBehaviour
 	{
 		if (candy.gameObject.CompareTag("DinamicObject"))
 		{
-			headColorContainer.Add(A_HeadColors[spawnerData.GetCurrentPrefabIndex()]);  // added current color to the 
+			headColorContainer.Add(
+                A_HeadColors[candy.gameObject.GetComponent<CandyOnStart>().GetCurrentObjectIndex()]);  // added current color to the 
 			headColorContainer.RemoveAt(0);                                             // removed 1st element for save List lenght
             Get_Set_HeadColor();
 		}
