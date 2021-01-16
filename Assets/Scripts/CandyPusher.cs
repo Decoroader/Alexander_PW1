@@ -51,17 +51,23 @@ public class CandyPusher : MonoBehaviour
         {
             if (other.gameObject.CompareTag(receiverString))
             {
-                StopVelocity();
-                StopAllCoroutines();
-                currentRigid.useGravity = false;                // the candy have hit the receiver
+                if ((int)char.GetNumericValue(other.gameObject.name[other.gameObject.name.Length - 1]) ==
+                    GetCurrentObjectIndex())
+                {
+                    StopVelocity();
+                    StopAllCoroutines();
+                    currentRigid.useGravity = false;                // the candy have hit the receiver
 
-                transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
-                transform.rotation = other.gameObject.transform.rotation;    // to set from the current receiverrotation
-                transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
-                
-                countForMoveInTube = 111;
-                currentTransit = Instantiate(prefabTransit, transform.position, transform.rotation) as GameObject;
-                currentTransit.transform.SetParent(transform);
+                    transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
+                    transform.rotation = other.gameObject.transform.rotation;    // to set from the current receiverrotation
+                    transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
+
+                    countForMoveInTube = 111;
+                    currentTransit = Instantiate(prefabTransit, transform.position, transform.rotation) as GameObject;
+                    currentTransit.transform.SetParent(transform);
+                }
+                else
+                    currentRigid.velocity *= -1;
             }
         }
         
@@ -121,4 +127,8 @@ public class CandyPusher : MonoBehaviour
 		currentRigid.velocity = Vector3.zero;
 		currentRigid.angularVelocity = Vector3.zero;
 	}
+    public int GetCurrentObjectIndex()
+    {
+        return (int)char.GetNumericValue(gameObject.name[gameObject.name.Length - 8]);
+    }
 }

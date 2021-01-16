@@ -43,7 +43,7 @@ public class HeadLogic : MonoBehaviour
 		if (candy.gameObject.CompareTag("DinamicObject"))
 		{
 			headColorContainer.Add(
-                A_HeadColors[candy.gameObject.GetComponent<CandyOnStart>().GetCurrentObjectIndex()]);  // added current color to the 
+                A_HeadColors[candy.gameObject.GetComponent<CandyPusher>().GetCurrentObjectIndex()]);  // added current color to the 
 			headColorContainer.RemoveAt(0);                                             // removed 1st element for save List lenght
             Get_Set_HeadColor();
 		}

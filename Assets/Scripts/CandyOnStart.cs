@@ -38,8 +38,4 @@ public class CandyOnStart : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
-    public int GetCurrentObjectIndex()
-	{
-        return (int)char.GetNumericValue(gameObject.name[gameObject.name.Length - 8]);
-    }
 }
