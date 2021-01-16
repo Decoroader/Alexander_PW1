@@ -12,7 +12,7 @@ public class CandyPusher : MonoBehaviour
     private Rigidbody currentRigid;
     private Quaternion initRotation;
 
-    private int countForMoveInTube;
+    private int countForMoveInTube = 0;
     private int countWaitToReceiver = 39;
     private int scaleTransformer = 3;
     private int speedGame = 199;
@@ -47,19 +47,22 @@ public class CandyPusher : MonoBehaviour
         if (other.gameObject.name == "Spawner")
             currentRigid.useGravity = true;                 // if the candy not hit the receiver
 
-        if (other.gameObject.CompareTag(receiverString))
+        if (countForMoveInTube < 99)                        // this check is necessary because OnTriggerEnter is called multiple times
         {
-            StopVelocity();
-            StopAllCoroutines();
-            currentRigid.useGravity = false;                // the candy have hit the receiver
+            if (other.gameObject.CompareTag(receiverString))
+            {
+                StopVelocity();
+                StopAllCoroutines();
+                currentRigid.useGravity = false;                // the candy have hit the receiver
 
-            transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
-            transform.rotation = other.gameObject.transform.rotation;    // to set from the current receiverrotation
-            transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
-
-            countForMoveInTube = 111;
-            currentTransit = Instantiate(prefabTransit, transform.position, transform.rotation) as GameObject;
-            currentTransit.transform.SetParent(transform);
+                transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
+                transform.rotation = other.gameObject.transform.rotation;    // to set from the current receiverrotation
+                transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
+                
+                countForMoveInTube = 111;
+                currentTransit = Instantiate(prefabTransit, transform.position, transform.rotation) as GameObject;
+                currentTransit.transform.SetParent(transform);
+            }
         }
         
         if (other.gameObject.CompareTag("OutSphere"))

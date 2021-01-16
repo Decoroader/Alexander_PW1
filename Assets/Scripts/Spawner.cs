@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour
     private float minFlyTime = 0.5f;
 
     private int counter = 1; // temporary
+    private int prefabIndex; 
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class Spawner : MonoBehaviour
 	
 	private void SpawnCandy()
 	{
-        int prefabIndex = Random.Range(0, prefabsCandy.Length);
+        prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, Quaternion.identity) as GameObject;
         if(counter % 10 == 0)
@@ -38,6 +39,10 @@ public class Spawner : MonoBehaviour
 	{
         return currentCandy;
 	}
+    public int GetCurrentPrefabIndex()
+	{
+        return prefabIndex;
+    }
 
     IEnumerator NextObjectSpawner()
 	{

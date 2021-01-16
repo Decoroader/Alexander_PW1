@@ -187,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabsCandy:
+  - {fileID: 2947955830866307891, guid: 4c5d188afdea8654a937c4aeb5227578, type: 3}
   - {fileID: 3982012281610317409, guid: 80e2a158a1be392429e264dd12d20051, type: 3}
   spawnCandyEffect: {fileID: 0}
 --- !u!4 &90417285
@@ -1451,17 +1452,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015c0a0b3e8420c429b025d12f71e93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnerData: {fileID: 90417284}
   A_HeadColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 0.92, b: 0.016, a: 1}
   - {r: 1, g: 0.45166627, b: 0.0039215684, a: 1}
-  coeffR: 1
-  coeffG: 1
-  coeffB: 1
-  coeffY: 0.17
-  coeffO: 0.35
+  coeffY: 0.21
+  coeffO: 0.5
 --- !u!1 &1989965771
 GameObject:
   m_ObjectHideFlags: 0
