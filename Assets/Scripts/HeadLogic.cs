@@ -17,7 +17,7 @@ public class HeadLogic : MonoBehaviour
     [SerializeField] private float coeffY = 0.21f;
     [SerializeField] private float coeffO = 0.5f;
 
-    private List<Color> headColorContainer = new List<Color> {
+    [SerializeField]private List<Color> headColorContainer = new List<Color> {
         new Color(1, 0, 0),
         new Color(0, 1, 0),
         new Color(0, 0, 1)
@@ -25,9 +25,11 @@ public class HeadLogic : MonoBehaviour
 
     void Start()
     {
-        headColorContainer.Add(A_HeadColors[3] * coeffY);
-        headColorContainer.Add(A_HeadColors[4] * coeffO);
-        GetHeadColor();
+        A_HeadColors[3] *= coeffY;
+        A_HeadColors[4] *= coeffO;
+        headColorContainer.Add(A_HeadColors[3]);
+        headColorContainer.Add(A_HeadColors[4]);
+        Get_Set_HeadColor();
     }
 
     void Update()
@@ -62,9 +64,10 @@ public class HeadLogic : MonoBehaviour
 		{
 			headColorContainer.Add(A_HeadColors[spawnerData.GetCurrentPrefabIndex()]);  // added current color to the 
 			headColorContainer.RemoveAt(0);                                             // removed 1st element for save List lenght
+            Get_Set_HeadColor();
 		}
 	}
-	private void GetHeadColor()                 // sum of the all colors in the List<Color>, and coloring head
+	private void Get_Set_HeadColor()                 // sum of the all colors in the List<Color>, and coloring head
 	{
         Color headColor = Color.black;
 
