@@ -37,8 +37,10 @@ public class HeadLogic : MonoBehaviour
 			GetComponent<Renderer>().material.color = A_HeadColors[0] + A_HeadColors[1] +
 				A_HeadColors[2] + A_HeadColors[3] * coeffY + A_HeadColors[4] * coeffO;
 		}
+        if (Input.GetKeyUp(KeyCode.Q))
+            Application.Quit();
     }
-	private void OnCollisionEnter(Collision candy)
+    private void OnCollisionEnter(Collision candy)
 	{
 		if (candy.gameObject.CompareTag("DinamicObject"))
 		{

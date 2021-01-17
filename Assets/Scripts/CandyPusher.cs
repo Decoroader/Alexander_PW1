@@ -8,6 +8,7 @@ public class CandyPusher : MonoBehaviour
     private float speedOnOpenSpace = 5.5f;
     private float speedInTube = 7;
     private float hightBound = 17;
+    private float lowBound = - 5;
 
     private Rigidbody currentRigid;
     private Quaternion initRotation;
@@ -31,7 +32,9 @@ public class CandyPusher : MonoBehaviour
         if (countForMoveInTube-- > 0)       // move the candy in the tube
             transform.Translate(Vector3.forward * speedInTube * Time.deltaTime);
 
-        if ((transform.position.z > hightBound) || (transform.position.x > hightBound) || (transform.position.x < -hightBound))     
+        if ((transform.position.z > hightBound) || (transform.position.z < -hightBound) ||
+            (transform.position.x > hightBound) || (transform.position.x < -hightBound)||
+            (transform.position.y < lowBound))
             Destroy(gameObject);            // destroy the candy out of he bounds
     }
     private void OnCollisionEnter(Collision toHead)
@@ -81,7 +84,6 @@ public class CandyPusher : MonoBehaviour
             if(transform.localScale.x < 1)
                 transform.localScale *= scaleTransformer;         // back the scale to show the candy in the track to the head
 
-            //countForMoveToHead = 77;
             currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // move the candy to the head side
 
             countForMoveInTube = 0;
