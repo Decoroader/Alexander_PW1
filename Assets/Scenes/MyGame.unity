@@ -187,8 +187,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabsCandy:
-  - {fileID: 2947955830866307891, guid: 4c5d188afdea8654a937c4aeb5227578, type: 3}
-  - {fileID: 3982012281610317409, guid: 80e2a158a1be392429e264dd12d20051, type: 3}
+  - {fileID: 2487429769065770820, guid: f5ba1c53beaec3045b03f486ed7ab1a9, type: 3}
+  - {fileID: 5336637961074331231, guid: 0fad0a567bf93c943ab9cb9a58770a33, type: 3}
+  - {fileID: 2446310922697107953, guid: 18ad67adcbf972a47b14f1b0ce47cf9f, type: 3}
+  - {fileID: 3961909489135902230, guid: 2f810785253a158429945e681ca467cc, type: 3}
+  - {fileID: 4663475702092943416, guid: 2c42eb32bb936284ea5ae6f30b69e36b, type: 3}
   spawnCandyEffect: {fileID: 0}
 --- !u!4 &90417285
 Transform:
