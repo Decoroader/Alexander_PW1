@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public GameController gameController;
+
     public GameObject[] prefabsCandy;
     
     public ParticleSystem spawnCandyEffect;
@@ -12,10 +14,8 @@ public class Spawner : MonoBehaviour
     private float rangeX = 7f;
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
-    private float gameSpeed = 2;
     private float minFlyTime = 0.5f;
 
-    private int counter = 1; // temporary
     private int prefabIndex; 
 
     void Start()
@@ -28,11 +28,6 @@ public class Spawner : MonoBehaviour
         prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, Quaternion.identity) as GameObject;
-        if(counter % 10 == 0)
-		{
-            counter++;
-            gameSpeed -= 0.5f; // temporary, should be changed to 1/coeff as -> to zero but never zero
-        }
     }
 
     public GameObject GetCurrentObject()
@@ -47,7 +42,7 @@ public class Spawner : MonoBehaviour
     IEnumerator NextObjectSpawner()
 	{
         yield return new WaitForSeconds(1);         // delay before first spawn
-        while (true)
+        while (gameController.isGameActive)
         {
             yield return null;
             if (currentCandy != null)

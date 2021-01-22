@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class HeadLogic : MonoBehaviour
 {
-    [SerializeField]private Color[] A_HeadColors = new Color[5] {
+    public GameController gameController;
+
+    private Color[] A_HeadColors = new Color[5] {
         new Color(1, 0, 0),
         new Color(0, 1, 0),
         new Color(0, 0, 1),
@@ -15,19 +17,21 @@ public class HeadLogic : MonoBehaviour
     [SerializeField] private float coeffY = 0.21f;
     [SerializeField] private float coeffO = 0.5f;
 
-    [SerializeField]private List<Color> headColorContainer = new List<Color> {
-        new Color(1, 0, 0),
-        new Color(0, 1, 0),
-        new Color(0, 0, 1)
-    };
+    [SerializeField] private List<Color> headColorContainer = new List<Color> { };
+
+    private Color trueColor;
+    private int score_level = 1;
 
     void Start()
     {
         A_HeadColors[3] *= coeffY;
         A_HeadColors[4] *= coeffO;
-        headColorContainer.Add(A_HeadColors[3]);
-        headColorContainer.Add(A_HeadColors[4]);
-        Get_Set_HeadColor();
+		for (int iA = 0; iA < A_HeadColors.Length; iA++)
+            headColorContainer.Add(A_HeadColors[iA]);
+
+        trueColor = Get_HeadColor();
+        GetComponent<Renderer>().material.color = trueColor;
+        Debug.Log("trueColor is " + trueColor);
     }
 
     void Update()
@@ -46,16 +50,23 @@ public class HeadLogic : MonoBehaviour
 		{
 			headColorContainer.Add(
                 A_HeadColors[candy.gameObject.GetComponent<CandyPusher>().GetCurrentObjectIndex()]);  // added current color to the 
-			headColorContainer.RemoveAt(0);                                             // removed 1st element for save List lenght
-            Get_Set_HeadColor();
+			headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
+
+            Color tempColor = Get_HeadColor();
+            GetComponent<Renderer>().material.color = tempColor;
+            if (tempColor == trueColor)
+            {
+                gameController.UpdateLevel_Score(++score_level);
+            }
 		}
 	}
-	private void Get_Set_HeadColor()                 // sum of the all colors in the List<Color>, and coloring head
+	
+    private Color Get_HeadColor()                 // sum of the all colors in the List<Color>, and coloring head
 	{
         Color headColor = Color.black;
 
         foreach (Color iColor in headColorContainer)
             headColor += iColor;
-        GetComponent<Renderer>().material.color = headColor;
+        return headColor;
     }
 }

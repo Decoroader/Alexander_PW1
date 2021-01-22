@@ -3,14 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
-  - DinamicObject
-  - Head
-  - OutSphere
-  - Receiver
-  - TestShiftCube
-  - TestImpulseCube
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -20,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - PostProcessing
   - 
   - 
   - 

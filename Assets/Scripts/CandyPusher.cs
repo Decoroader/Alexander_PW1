@@ -4,19 +4,22 @@ using UnityEngine;
 public class CandyPusher : MonoBehaviour
 {
     public GameObject prefabTransit;
+
     private GameObject currentTransit;
     private float speedOnOpenSpace = 5.5f;
     private float speedInTube = 7;
     private float hightBound = 17;
     private float lowBound = - 5;
+    private float torqueRange = 11;
 
     private Rigidbody currentRigid;
-    private Quaternion initRotation;
+    //private GameController gameController;
 
+    private Quaternion initRotation;
     private int countForMoveInTube = 0;
     private int countWaitToReceiver = 39;
     private int scaleTransformer = 3;
-    private int speedGame = 199;
+    private int waitingTime;
 
     private string receiverString = "Receiver";
 
@@ -24,6 +27,9 @@ public class CandyPusher : MonoBehaviour
     {
         currentRigid = GetComponent<Rigidbody>();
         initRotation = transform.rotation;
+        //gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        //waitingTime = gameController.gameSpeed;
+        waitingTime = GameObject.Find("GameController").GetComponent<GameController>().gameSpeed;
         StartCoroutine(WaitForPlayerDecision());
     }
 
@@ -89,11 +95,15 @@ public class CandyPusher : MonoBehaviour
             countForMoveInTube = 0;
         }
     }
-
+    private float RandomTorque()
+	{
+        return Random.Range(-torqueRange, torqueRange);
+	}
+ 
     IEnumerator WaitForPlayerDecision()
     {
         bool isPressedMouseButton = false;
-        while (speedGame-- > 0)                         // Wait For the Players Decision
+        while (waitingTime-- > 0)                         // Wait For the Players Decision
         {
             if (Input.GetMouseButtonDown(0))            // 
                 isPressedMouseButton = true;
@@ -101,8 +111,10 @@ public class CandyPusher : MonoBehaviour
             {
                 if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
                 {
-                    currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
+                    currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // is run
                     // move the candy to the receiverside
+                    currentRigid.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
+                    // random rotation in the all axes
                     StartCoroutine(WaitForReciever());      // wait for hit the receiver
                     yield break;
                 }
