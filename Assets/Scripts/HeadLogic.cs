@@ -22,6 +22,7 @@ public class HeadLogic : MonoBehaviour
     private Color trueColor;
     private int score_level = 1;
     private float tresholdColor = 3.9f;
+    private int dearthTime = 5;
 
     void Start()
     {
@@ -54,15 +55,17 @@ public class HeadLogic : MonoBehaviour
 
             Color tempColor = Get_HeadColor();
             GetComponent<Renderer>().material.color = tempColor;
-            Debug.Log("tempColor is " + tempColor);
 
             if (tempColor == trueColor)
             {
                 gameController.UpdateLevel_Score(++score_level);
             }
-            if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor)
-                gameController.OverHeadColor();
-                // call overColor sound 
+            if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor) { 
+                gameController.GameOver();
+                Debug.Log("call overColor sound...");
+            }
+            StopAllCoroutines();
+            StartCoroutine(FeedTimer());
         }
     }
 	
@@ -73,5 +76,21 @@ public class HeadLogic : MonoBehaviour
         foreach (Color iColor in headColorContainer)
             headColor += iColor;
         return headColor;
+    }
+
+    IEnumerator FeedTimer()
+    {
+        int feedTimer = 1;
+        while (gameController.isGameActive)
+        {
+            yield return new WaitForSeconds(5);
+            if (++feedTimer > dearthTime)
+            {
+                gameController.GameOver();
+                Debug.Log("call beep, as diyng...");
+            }
+            else
+                Debug.Log("yum-yum sound...");
+        }
     }
 }

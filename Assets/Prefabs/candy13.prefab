@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3371818456551002419}
   - component: {fileID: 3371818456551805207}
   - component: {fileID: 3371818456552903639}
-  - component: {fileID: 3371818456548877239}
   m_Layer: 0
   m_Name: YellowRound_2
   m_TagString: Untagged
@@ -49,8 +48,8 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3371818456550968595}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 0
@@ -80,20 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &3371818456548877239
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3371818456550968595}
-  m_Material: {fileID: 13400000, guid: 84d9892f484a24bc2bfa4e7e44eea717, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 2a7035755e9ed4155b2ced7a850e8d49, type: 3}
 --- !u!1 &3371818456550968597
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,10 +118,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3371818456551002423}
-  - component: {fileID: 3371818456541494999}
+  - component: {fileID: 810294508403125291}
   - component: {fileID: 3371818456545521271}
+  - component: {fileID: 1603082153110803681}
+  - component: {fileID: 5952438137921413744}
   m_Layer: 0
-  m_Name: Cylinder Yellow
+  m_Name: candy13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,32 +138,26 @@ Transform:
   m_GameObject: {fileID: 3371818456550968599}
   m_LocalRotation: {x: 0.69047886, y: 0.15244342, z: -0.15244344, w: 0.69047874}
   m_LocalPosition: {x: 1.7, y: 0, z: -2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.35, z: 0.5}
   m_Children:
   - {fileID: 3371818456551002421}
   - {fileID: 3371818456551002419}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3371818456541494999
-Animator:
-  serializedVersion: 3
+--- !u!65 &810294508403125291
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3371818456550968599}
+  m_Material: {fileID: 13400000, guid: 89af37d093fd6324599ecbe73c3c1af6, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 2a7035755e9ed4155b2ced7a850e8d49, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  serializedVersion: 2
+  m_Size: {x: 1.45, y: 0.82, z: 1.35}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3371818456545521271
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -188,8 +169,35 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1603082153110803681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371818456550968599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba6d6472eca90c448941076fc2e757c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnCandyEffect: {fileID: 0}
+--- !u!114 &5952438137921413744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3371818456550968599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b6fc7d10dff2b8488169b7f0cbf9c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
+    type: 3}

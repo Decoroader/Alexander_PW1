@@ -7,8 +7,6 @@ public class Spawner : MonoBehaviour
 
     public GameObject[] prefabsCandy;
     
-    public ParticleSystem spawnCandyEffect;
-
     private GameObject currentCandy;
     private Vector3 prefabPosition;
     private float rangeX = 7f;

@@ -424,7 +424,11 @@ MonoBehaviour:
   - {fileID: 2446310922697107953, guid: 18ad67adcbf972a47b14f1b0ce47cf9f, type: 3}
   - {fileID: 3961909489135902230, guid: 2f810785253a158429945e681ca467cc, type: 3}
   - {fileID: 4663475702092943416, guid: 2c42eb32bb936284ea5ae6f30b69e36b, type: 3}
-  spawnCandyEffect: {fileID: 0}
+  - {fileID: 2947955830866307891, guid: 4c5d188afdea8654a937c4aeb5227578, type: 3}
+  - {fileID: 4107671402584166215, guid: 451d7aaf00e31864daf21e4fa437e553, type: 3}
+  - {fileID: 6123546025084623713, guid: 7c5ec80e4eff1d448acd39e3591f04e4, type: 3}
+  - {fileID: 3371818456550968599, guid: b0283d5f0e8373846aaa7cb6cf783e59, type: 3}
+  - {fileID: 179519710845768263, guid: 4b271643bdbbea44aa5e8fcdd171f943, type: 3}
 --- !u!4 &90417285
 Transform:
   m_ObjectHideFlags: 0
@@ -845,7 +849,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.9622642, g: 0.9304913, b: 0.86694556, a: 1}
   m_Intensity: 0.75
   m_Range: 10
   m_SpotAngle: 30
@@ -1094,7 +1098,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.990566, g: 0.96424055, b: 0.8924439, a: 1}
   m_Intensity: 0.55
   m_Range: 10
   m_SpotAngle: 30

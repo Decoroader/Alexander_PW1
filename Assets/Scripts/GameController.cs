@@ -51,18 +51,15 @@ public class GameController : MonoBehaviour
                 GameOver();
         }
     }
-    private void GameOver()
+    
+    public void GameOver()
 	{
         isGameActive = false;
         restartBtn.gameObject.SetActive(true);
+        Debug.Log("switch light color to the dark grey ...");
     }
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-    public void OverHeadColor()
-	{
-        GameOver();
-        Debug.Log("GameOver called.");
     }
 }
