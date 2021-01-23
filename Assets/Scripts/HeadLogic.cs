@@ -21,6 +21,7 @@ public class HeadLogic : MonoBehaviour
 
     private Color trueColor;
     private int score_level = 1;
+    private float tresholdColor = 3.9f;
 
     void Start()
     {
@@ -31,7 +32,6 @@ public class HeadLogic : MonoBehaviour
 
         trueColor = Get_HeadColor();
         GetComponent<Renderer>().material.color = trueColor;
-        Debug.Log("trueColor is " + trueColor);
     }
 
     void Update()
@@ -54,12 +54,17 @@ public class HeadLogic : MonoBehaviour
 
             Color tempColor = Get_HeadColor();
             GetComponent<Renderer>().material.color = tempColor;
+            Debug.Log("tempColor is " + tempColor);
+
             if (tempColor == trueColor)
             {
                 gameController.UpdateLevel_Score(++score_level);
             }
-		}
-	}
+            if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor)
+                gameController.OverHeadColor();
+                // call overColor sound 
+        }
+    }
 	
     private Color Get_HeadColor()                 // sum of the all colors in the List<Color>, and coloring head
 	{

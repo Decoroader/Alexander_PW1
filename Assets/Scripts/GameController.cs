@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
+    public Button restartBtn;
     public int gameSpeed = 230;
     public bool isGameActive = true;
 
     //[SerializeField]private int speedDiscrette = 30;
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
-    private int timer = 10;
+    private int timer = 70;
 
     void Start()
     {
@@ -37,22 +40,29 @@ public class GameController : MonoBehaviour
             else
                 gameSpeed = maxSpeed;
         }
-        Debug.Log("gameSpeed = " + gameSpeed);
     }
     IEnumerator CommonTimer()
 	{
         while (isGameActive)
         {
-            yield return new WaitForSeconds(1);
-            Debug.Log("timer = " + timer);
-            if (timer <= 0)
-                GameOver();
             timeText.text = "Time " + timer--;
+            yield return new WaitForSeconds(1);
+            if (timer < 0)
+                GameOver();
         }
     }
     private void GameOver()
 	{
         isGameActive = false;
-
+        restartBtn.gameObject.SetActive(true);
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void OverHeadColor()
+	{
+        GameOver();
+        Debug.Log("GameOver called.");
     }
 }
