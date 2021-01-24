@@ -11,17 +11,20 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI timeText;
     public Button restartBtn;
     public Light verticalLight;
+    public AudioClip clickSound;
     public int gameSpeed = 230;
     public bool isGameActive = true;
 
     //[SerializeField]private int speedDiscrette = 30;
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
-    private int timer = 11;
+    private int timer = 111;
     [SerializeField]private Color gameOverLight = new Color(0.1f, 0, 0);
+    private AudioSource playerAudio;
 
     void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         UpdateLevel_Score(1);
         StartCoroutine(CommonTimer());
     }
@@ -62,6 +65,7 @@ public class GameController : MonoBehaviour
     }
     public void RestartGame()
     {
+        playerAudio.PlayOneShot(clickSound, 1.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

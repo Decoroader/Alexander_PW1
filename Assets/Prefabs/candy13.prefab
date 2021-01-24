@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 5952438137921413744}
   m_Layer: 0
   m_Name: candy13
-  m_TagString: Untagged
+  m_TagString: DinamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

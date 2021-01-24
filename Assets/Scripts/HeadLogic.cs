@@ -24,7 +24,8 @@ public class HeadLogic : MonoBehaviour
     private Color trueColor;
     private int score_level = 1;
     private float tresholdColor = 3.9f;
-    private int dearthTime = 5;
+    private int dearthTime = 3;
+    private bool isCollisionAble = true;
 
     void Start()
     {
@@ -51,26 +52,31 @@ public class HeadLogic : MonoBehaviour
     }
     private void OnCollisionEnter(Collision candy)
 	{
-		if (candy.gameObject.CompareTag("DinamicObject"))
-		{
-			headColorContainer.Add(
-                A_HeadColors[candy.gameObject.GetComponent<CandyPusher>().GetCurrentObjectIndex()]);  // added current color to the 
-			headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
-
-            Color tempColor = Get_HeadColor();
-            GetComponent<Renderer>().material.color = tempColor;
-            nose.GetComponent<Renderer>().material.color = tempColor;
-
-            if (tempColor == trueColor)
+        if (isCollisionAble)
+        {
+            if (candy.gameObject.CompareTag("DinamicObject"))
             {
-                gameController.UpdateLevel_Score(++score_level);
+                headColorContainer.Add(
+                    A_HeadColors[candy.gameObject.GetComponent<CandyPusher>().GetCurrentObjectIndex()]);  // added current color to the 
+                headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
+
+                Color tempColor = Get_HeadColor();
+                GetComponent<Renderer>().material.color = tempColor;
+                nose.GetComponent<Renderer>().material.color = tempColor;
+
+                if (tempColor == trueColor)
+                {
+                    gameController.UpdateLevel_Score(++score_level);
+                }
+                if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor)
+                {
+                    gameController.GameOver();
+                    Debug.Log("call overColor sound...");
+                }
+                StopAllCoroutines();
+                StartCoroutine(FeedTimer());
+                StartCoroutine(LockCollision());
             }
-            if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor) { 
-                gameController.GameOver();
-                Debug.Log("call overColor sound...");
-            }
-            StopAllCoroutines();
-            StartCoroutine(FeedTimer());
         }
     }
 	
@@ -83,7 +89,16 @@ public class HeadLogic : MonoBehaviour
         return headColor;
     }
 
-    IEnumerator FeedTimer()
+    IEnumerator LockCollision()                 // lock Collision since some candies collides more than one time
+    {
+        isCollisionAble = false;
+        int timeOfLock = 15;
+        while (timeOfLock-- > 0)
+            yield return new WaitForFixedUpdate();
+
+        isCollisionAble = true;
+    }
+    IEnumerator FeedTimer()                     // time for life of the head without candy
     {
         int feedTimer = 1;
         while (gameController.isGameActive)
