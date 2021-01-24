@@ -20,6 +20,8 @@ public class HeadLogic : MonoBehaviour
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
 
     public GameObject nose;
+    public GameObject ear1;
+    public GameObject ear2;
 
     private Color trueColor;
     private int score_level = 1;
@@ -31,12 +33,11 @@ public class HeadLogic : MonoBehaviour
     {
         A_HeadColors[3] *= coeffY;
         A_HeadColors[4] *= coeffO;
-		for (int iA = 0; iA < A_HeadColors.Length; iA++)
-            headColorContainer.Add(A_HeadColors[iA]);
+
+        FillSaffleList();
 
         trueColor = Get_HeadColor();
-        GetComponent<Renderer>().material.color = trueColor;
-        nose.GetComponent<Renderer>().material.color = trueColor;
+        ColoringHead(trueColor);
     }
 
     void Update()
@@ -44,9 +45,10 @@ public class HeadLogic : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.S))
         {
             Color tempC = A_HeadColors[0] + A_HeadColors[1] +
-                A_HeadColors[2] + A_HeadColors[3] * coeffY + A_HeadColors[4] * coeffO;
-            GetComponent<Renderer>().material.color = tempC;
-        }   
+                A_HeadColors[2] + A_HeadColors[3] + A_HeadColors[4];
+            ColoringHead(tempC);
+            Debug.Log("Ideal color      " + tempC);
+        }
         if (Input.GetKeyUp(KeyCode.Q))
             Application.Quit();
     }
@@ -61,13 +63,11 @@ public class HeadLogic : MonoBehaviour
                 headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
 
                 Color tempColor = Get_HeadColor();
-                GetComponent<Renderer>().material.color = tempColor;
-                nose.GetComponent<Renderer>().material.color = tempColor;
+                ColoringHead(tempColor);
 
                 if (tempColor == trueColor)
-                {
                     gameController.UpdateLevel_Score(++score_level);
-                }
+
                 if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor)
                 {
                     gameController.GameOver();
@@ -87,6 +87,14 @@ public class HeadLogic : MonoBehaviour
         foreach (Color iColor in headColorContainer)
             headColor += iColor;
         return headColor;
+    }
+
+    private void ColoringHead(Color currColor)
+	{
+        GetComponent<Renderer>().material.color = currColor;
+        nose.GetComponent<Renderer>().material.color = currColor;
+        ear1.GetComponent<Renderer>().material.color = currColor;
+        ear2.GetComponent<Renderer>().material.color = currColor;
     }
 
     IEnumerator LockCollision()                 // lock Collision since some candies collides more than one time
@@ -111,6 +119,17 @@ public class HeadLogic : MonoBehaviour
             }
             else
                 Debug.Log("yum-yum sound...");
+        }
+    }
+    private void FillSaffleList() {
+        List<Color> tempColorList = new List<Color> { };
+        for (int iA = 0; iA < A_HeadColors.Length; iA++)
+            tempColorList.Add(A_HeadColors[iA]);
+        while(tempColorList.Count > 0)
+		{
+            Color tempColor = tempColorList[Random.Range(0, tempColorList.Count)];
+            headColorContainer.Add(tempColor);
+            tempColorList.Remove(tempColor);
         }
     }
 }

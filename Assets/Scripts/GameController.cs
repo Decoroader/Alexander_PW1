@@ -29,11 +29,6 @@ public class GameController : MonoBehaviour
         StartCoroutine(CommonTimer());
     }
 
-    void Update()
-    {
-        
-    }
-
     public void UpdateLevel_Score(int localScore)
 	{
         scoreText.text = "Score: " + localScore;

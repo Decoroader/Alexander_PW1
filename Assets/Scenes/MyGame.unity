@@ -3248,6 +3248,8 @@ MonoBehaviour:
   coeffO: 0.5
   headColorContainer: []
   nose: {fileID: 440615553}
+  ear1: {fileID: 405080333}
+  ear2: {fileID: 2003820972}
 --- !u!1 &1989965771
 GameObject:
   m_ObjectHideFlags: 0
