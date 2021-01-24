@@ -19,6 +19,8 @@ public class HeadLogic : MonoBehaviour
 
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
 
+    public GameObject nose;
+
     private Color trueColor;
     private int score_level = 1;
     private float tresholdColor = 3.9f;
@@ -33,15 +35,17 @@ public class HeadLogic : MonoBehaviour
 
         trueColor = Get_HeadColor();
         GetComponent<Renderer>().material.color = trueColor;
+        nose.GetComponent<Renderer>().material.color = trueColor;
     }
 
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.S))
         {
-			GetComponent<Renderer>().material.color = A_HeadColors[0] + A_HeadColors[1] +
-				A_HeadColors[2] + A_HeadColors[3] * coeffY + A_HeadColors[4] * coeffO;
-		}
+            Color tempC = A_HeadColors[0] + A_HeadColors[1] +
+                A_HeadColors[2] + A_HeadColors[3] * coeffY + A_HeadColors[4] * coeffO;
+            GetComponent<Renderer>().material.color = tempC;
+        }   
         if (Input.GetKeyUp(KeyCode.Q))
             Application.Quit();
     }
@@ -55,6 +59,7 @@ public class HeadLogic : MonoBehaviour
 
             Color tempColor = Get_HeadColor();
             GetComponent<Renderer>().material.color = tempColor;
+            nose.GetComponent<Renderer>().material.color = tempColor;
 
             if (tempColor == trueColor)
             {

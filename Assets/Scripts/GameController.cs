@@ -10,13 +10,15 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
     public Button restartBtn;
+    public Light verticalLight;
     public int gameSpeed = 230;
     public bool isGameActive = true;
 
     //[SerializeField]private int speedDiscrette = 30;
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
-    private int timer = 70;
+    private int timer = 11;
+    [SerializeField]private Color gameOverLight = new Color(0.1f, 0, 0);
 
     void Start()
     {
@@ -56,7 +58,7 @@ public class GameController : MonoBehaviour
 	{
         isGameActive = false;
         restartBtn.gameObject.SetActive(true);
-        Debug.Log("switch light color to the dark grey ...");
+        verticalLight.color = gameOverLight;
     }
     public void RestartGame()
     {
