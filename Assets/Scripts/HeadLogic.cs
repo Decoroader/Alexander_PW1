@@ -8,14 +8,11 @@ public class HeadLogic : MonoBehaviour
 
     private Color[] A_HeadColors = new Color[5] {
         new Color(1, 0, 0),
-        new Color(0, 1, 0),
+        new Color(0, 0.7f, 0),
         new Color(0, 0, 1),
-        new Color(1, 0.92f, 0.016f),
-        new Color(1, 0.89f, 0.005f),
+        new Color(0.15f, 0.138f, 0.0025f),
+        new Color(0.5f, 0.445f, 0.0025f),
     };
-
-    [SerializeField] private float coeffY = 0.21f;
-    [SerializeField] private float coeffO = 0.5f;
 
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
 
@@ -26,13 +23,18 @@ public class HeadLogic : MonoBehaviour
     private Color trueColor;
     private int score_level = 1;
     private float tresholdColor = 3.9f;
-    private int dearthTime = 3;
+    private int dearthTime = 5;
     private bool isCollisionAble = true;
+
+    //[SerializeField] private float coeffG = 0.7f;
+    //[SerializeField] private float coeffY = 0.15f;
+    //[SerializeField] private float coeffO = 0.5f;
 
     void Start()
     {
-        A_HeadColors[3] *= coeffY;
-        A_HeadColors[4] *= coeffO;
+        //A_HeadColors[1] *= coeffG;
+        //A_HeadColors[3] *= coeffY;
+        //A_HeadColors[4] *= coeffO;
 
         FillSaffleList();
 

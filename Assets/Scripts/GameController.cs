@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
     public Button restartBtn;
+    public Button quitBtn;
     public Light verticalLight;
     public AudioClip clickSound;
     public int gameSpeed = 230;
@@ -56,11 +57,17 @@ public class GameController : MonoBehaviour
 	{
         isGameActive = false;
         restartBtn.gameObject.SetActive(true);
+        quitBtn.gameObject.SetActive(true);
         verticalLight.color = gameOverLight;
     }
     public void RestartGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void QuitGame()
+    {
+        playerAudio.PlayOneShot(clickSound, 1.0f);
+        Application.Quit();
     }
 }
