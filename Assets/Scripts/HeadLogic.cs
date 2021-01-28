@@ -16,14 +16,15 @@ public class HeadLogic : MonoBehaviour
 
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
 
-    public GameObject nose;
+    public GameObject nose1;
+    public GameObject nose3;
     public GameObject ear1;
     public GameObject ear2;
 
     private Color trueColor;
     private int score_level = 1;
     private float tresholdColor = 3.9f;
-    private int dearthTime = 5;
+    private int dearthTime = 3;
     private bool isCollisionAble = true;
 
     //[SerializeField] private float coeffG = 0.7f;
@@ -70,11 +71,12 @@ public class HeadLogic : MonoBehaviour
                 if (tempColor == trueColor)
                     gameController.UpdateLevel_Score(++score_level);
 
-                if (tempColor.r > tresholdColor || tempColor.g > tresholdColor || tempColor.b > tresholdColor)
+                if (tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
                 {
                     gameController.GameOver();
                     Debug.Log("call overColor sound...");
                 }
+
                 StopAllCoroutines();
                 StartCoroutine(FeedTimer());
                 StartCoroutine(LockCollision());
@@ -94,7 +96,8 @@ public class HeadLogic : MonoBehaviour
     private void ColoringHead(Color currColor)
 	{
         GetComponent<Renderer>().material.color = currColor;
-        nose.GetComponent<Renderer>().material.color = currColor;
+        nose1.GetComponent<Renderer>().material.color = currColor;
+        nose3.GetComponent<Renderer>().material.color = currColor;
         ear1.GetComponent<Renderer>().material.color = currColor;
         ear2.GetComponent<Renderer>().material.color = currColor;
     }

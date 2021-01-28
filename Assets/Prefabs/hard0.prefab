@@ -29,13 +29,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2487429769065770820}
-  m_LocalRotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -1.5, y: 0, z: -3}
-  m_LocalScale: {x: 5.5, y: 5.5, z: 7.5}
+  m_LocalScale: {x: 4.33, y: 4.33, z: 5.9}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &2487429769064772420
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6d6472eca90c448941076fc2e757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnCandyEffect: {fileID: 0}
 --- !u!114 &505987597179182174
 MonoBehaviour:
   m_ObjectHideFlags: 0

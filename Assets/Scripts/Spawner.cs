@@ -25,7 +25,7 @@ public class Spawner : MonoBehaviour
 	{
         prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
-        currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, Quaternion.identity) as GameObject;
+        currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, prefabsCandy[prefabIndex].transform.rotation) as GameObject;
     }
 
     public GameObject GetCurrentObject()

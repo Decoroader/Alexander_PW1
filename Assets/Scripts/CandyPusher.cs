@@ -20,6 +20,7 @@ public class CandyPusher : MonoBehaviour
     private int countWaitToReceiver = 39;
     private int scaleTransformer = 3;
     private int waitingTime;
+    private Vector3 tempLocalScale;
 
     private string receiverString = "Receiver";
 
@@ -67,8 +68,9 @@ public class CandyPusher : MonoBehaviour
                     StopAllCoroutines();
                     currentRigid.useGravity = false;                // the candy have hit the receiver
 
-                    transform.position = other.gameObject.transform.position;    // to get form the current receiverposition
+                    transform.position = other.gameObject.transform.position;    // to set from the current receiverposition
                     transform.rotation = other.gameObject.transform.rotation;    // to set from the current receiverrotation
+                    tempLocalScale = transform.localScale;
                     transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
 
                     countForMoveInTube = 111;
@@ -87,10 +89,10 @@ public class CandyPusher : MonoBehaviour
 
             transform.rotation = initRotation;
             transform.position = new Vector3(0, transform.position.y, transform.position.z);
-            if(transform.localScale.x < 1)
-                transform.localScale *= scaleTransformer;         // back the scale to show the candy in the track to the head
+            transform.localScale = tempLocalScale;         // back the scale to show the candy in the track to the head
 
-            currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // move the candy to the head side
+            currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
+            // move the candy to the head side
 
             countForMoveInTube = 0;
         }
