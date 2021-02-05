@@ -24,6 +24,10 @@ public class CandyPusher : MonoBehaviour
 
     private string receiverString = "Receiver";
 
+    private bool isDisableAllCollisions = false;
+    private int timeScaleFall = 75;
+    private float speedScaleFall = 0.001333333f;
+
     void Start()
     {
         currentRigid = GetComponent<Rigidbody>();
@@ -44,12 +48,19 @@ public class CandyPusher : MonoBehaviour
             (transform.position.y < lowBound))
             Destroy(gameObject);            // destroy the candy out of he bounds
     }
-    private void OnCollisionEnter(Collision toHead)
+    private void OnCollisionEnter(Collision toHead_toGround)
 	{
-        if (toHead.gameObject.CompareTag("Head"))           // destroy the candy in the head
-            Destroy(gameObject, 0.19f);
-        if (toHead.gameObject.CompareTag("DinamicObject"))  // collision with other candy
-            currentRigid.useGravity = true;                 // the other candy falls and out from the game
+        if(!isDisableAllCollisions){
+            if (toHead_toGround.gameObject.CompareTag("Head"))           // destroy the candy in the head
+                Destroy(gameObject, 0.19f);
+            if (toHead_toGround.gameObject.CompareTag("DinamicObject"))  // collision with other candy
+                currentRigid.useGravity = true;                 // the other candy falls and out from the game
+            if (toHead_toGround.gameObject.CompareTag("Ground"))
+            {
+                isDisableAllCollisions = true;
+                StartCoroutine(FallingToDestroy());
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,7 +112,7 @@ public class CandyPusher : MonoBehaviour
 	{
         return Random.Range(-torqueRange, torqueRange);
 	}
- 
+
     IEnumerator WaitForPlayerDecision()
     {
         bool isPressedMouseButton = false;
@@ -138,7 +149,30 @@ public class CandyPusher : MonoBehaviour
 			yield return new WaitForFixedUpdate();
 		}
 	}
-	void StopVelocity()
+    IEnumerator FallingToDestroy()
+	{
+        tempLocalScale = transform.localScale;
+        while (transform.localScale.x > tempLocalScale.x * 0.25f)
+		{
+            yield return new WaitForSeconds(5);
+            Debug.Log("start smoke from cany particles");
+            StartCoroutine(SoftScaleDown());
+        }
+        Destroy(gameObject, 0.3f);
+    }
+
+    IEnumerator SoftScaleDown()
+	{
+        int iteratorFallingScale = timeScaleFall;
+		while (iteratorFallingScale -- > 0)
+		{
+            transform.localScale = new Vector3(transform.localScale.x - tempLocalScale.x * speedScaleFall, 
+                transform.localScale.y - tempLocalScale.y * speedScaleFall, transform.localScale.z - tempLocalScale.z * speedScaleFall);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    void StopVelocity()
 	{
 		currentRigid.velocity = Vector3.zero;
 		currentRigid.angularVelocity = Vector3.zero;
