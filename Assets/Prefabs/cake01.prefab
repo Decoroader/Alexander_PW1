@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4107671402589236263}
   - component: {fileID: -2063493232494191989}
   - component: {fileID: 6850542917987163618}
+  - component: {fileID: 5036510506811376036}
   m_Layer: 0
   m_Name: cake01
   m_TagString: DinamicObject
@@ -139,3 +140,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
     type: 3}
+--- !u!114 &5036510506811376036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4107671402584166215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c922d4b2bbd1f84b8021cd80dfe5c8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokePS: {fileID: 5135596450926151502, guid: 91bbf44699f367049b7e6c25d20e871d, type: 3}
