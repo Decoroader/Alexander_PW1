@@ -70,7 +70,10 @@ public class HeadLogic : MonoBehaviour
                 ColoringHead(tempColor);
 
                 if (tempColor == trueColor)
+                {
+                    FillSaffleList();
                     gameController.UpdateLevel();
+                }
                 gameController.UpdateScore();
 
                 if (tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
@@ -134,6 +137,7 @@ public class HeadLogic : MonoBehaviour
         }
     }
     private void FillSaffleList() {
+        headColorContainer.Clear();
         List<Color> tempColorList = new List<Color> { };
         for (int iA = 0; iA < A_HeadColors.Length; iA++)
             tempColorList.Add(A_HeadColors[iA]);
