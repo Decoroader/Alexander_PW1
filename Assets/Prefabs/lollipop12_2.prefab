@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -8301842987495272173}
   - component: {fileID: 6200262753763608166}
   m_Layer: 0
-  m_Name: lollipop02
+  m_Name: lollipop12_2
   m_TagString: DinamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2446310922697107953}
   m_LocalRotation: {x: 0.60876137, y: 0, z: 0, w: 0.7933534}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 1.5, y: 0, z: -3}
   m_LocalScale: {x: 2.77, y: 3.88, z: 2.5}
   m_Children:
   - {fileID: 9079648498067138815}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ac98ab0f29512964fb4fd64a0458dde8, type: 2}
+  - {fileID: 2100000, guid: bfb1a5f0ed11e69419b719b3d12a5414, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

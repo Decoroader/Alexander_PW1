@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -8301842987495272173}
   - component: {fileID: 6200262753763608166}
   m_Layer: 0
-  m_Name: lollipop02
+  m_Name: lollipop03_3
   m_TagString: DinamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ac98ab0f29512964fb4fd64a0458dde8, type: 2}
+  - {fileID: 2100000, guid: d7d206f8a21817e4899e2bafc7ccf769, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
