@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
     public Button restartBtn;
@@ -20,21 +21,24 @@ public class GameController : MonoBehaviour
     private int timer = 111;
     private Color gameOverLight = new Color(0.1f, 0, 0);
     private AudioSource playerAudio;
+    private int level = 0;
+    private int score = 0;
 
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
-        UpdateLevel_Score(1);
         StartCoroutine(CommonTimer());
+        UpdateLevel();
+        UpdateScore();
     }
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Q))
             Application.Quit();
     }
-    public void UpdateLevel_Score(int localScore)
+    public void UpdateLevel()
 	{
-        scoreText.text = "Score: " + localScore;
+        levelText.text = "Level: " + ++level;
 
         if (gameSpeed != maxSpeed)
         {
@@ -43,6 +47,11 @@ public class GameController : MonoBehaviour
             else
                 gameSpeed = maxSpeed;
         }
+    }
+    public void UpdateScore()
+    {
+        score += level;
+        scoreText.text = "Score: " + score;
     }
     IEnumerator CommonTimer()
 	{

@@ -62,7 +62,7 @@ public class CandyDissolution : MonoBehaviour
             StartCoroutine(SoftScaleDown());
         }
         currentSmokePS.transform.parent = gameObject.transform;
-        Destroy(gameObject, 0.3f);
+        Destroy(gameObject, 0.3f);                              // destroy when candy dissoluted
     }
 
     IEnumerator SoftScaleDown()

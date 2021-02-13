@@ -23,7 +23,7 @@ public class HeadLogic : MonoBehaviour
     public GameObject ear2;
 
     private Color trueColor;
-    private int score_level = 1;
+
     private float tresholdColor = 3.9f;
     private int dearthTime = 3;
     private bool isCollisionAble = true;
@@ -70,7 +70,8 @@ public class HeadLogic : MonoBehaviour
                 ColoringHead(tempColor);
 
                 if (tempColor == trueColor)
-                    gameController.UpdateLevel_Score(++score_level);
+                    gameController.UpdateLevel();
+                gameController.UpdateScore();
 
                 if (tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
                 {

@@ -22,12 +22,14 @@ public class CandyPusher : MonoBehaviour
     private Vector3 tempLocalScale;
 
     private string receiverString = "Receiver";
+    private int currentIndex;
 
     void Start()
     {
         currentRigid = GetComponent<Rigidbody>();
         initRotation = transform.rotation;
         waitingTime = GameObject.Find("GameController").GetComponent<GameController>().gameSpeed;
+        currentIndex = GetCurrentObjectIndex();
         StartCoroutine(WaitForPlayerDecision());
     }
 
@@ -52,7 +54,7 @@ public class CandyPusher : MonoBehaviour
             if (other.gameObject.CompareTag(receiverString))
             {
                 if ((int)char.GetNumericValue(other.gameObject.name[other.gameObject.name.Length - 1]) ==
-                    GetCurrentObjectIndex())
+                    currentIndex)
                 {
                     StopVelocity();
                     StopAllCoroutines();
