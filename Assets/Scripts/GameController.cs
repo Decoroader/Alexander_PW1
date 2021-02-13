@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -16,11 +15,10 @@ public class GameController : MonoBehaviour
     public int gameSpeed = 230;
     public bool isGameActive = true;
 
-    //[SerializeField]private int speedDiscrette = 30;
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
     private int timer = 111;
-    [SerializeField]private Color gameOverLight = new Color(0.1f, 0, 0);
+    private Color gameOverLight = new Color(0.1f, 0, 0);
     private AudioSource playerAudio;
 
     void Start()
@@ -29,7 +27,11 @@ public class GameController : MonoBehaviour
         UpdateLevel_Score(1);
         StartCoroutine(CommonTimer());
     }
-
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Q))
+            Application.Quit();
+    }
     public void UpdateLevel_Score(int localScore)
 	{
         scoreText.text = "Score: " + localScore;

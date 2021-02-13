@@ -4,6 +4,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameController gameController;
+    public ParticleSystem spawnCandyEffect;
 
     public GameObject[] prefabsCandy;
     
@@ -26,6 +27,8 @@ public class Spawner : MonoBehaviour
         prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, prefabsCandy[prefabIndex].transform.rotation) as GameObject;
+        spawnCandyEffect.transform.position = currentCandy.transform.position;
+        spawnCandyEffect.Play();
     }
 
     public GameObject GetCurrentObject()

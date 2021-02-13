@@ -5,6 +5,7 @@ using UnityEngine;
 public class HeadLogic : MonoBehaviour
 {
     public GameController gameController;
+    public Animator comAnimator;
 
     private Color[] A_HeadColors = new Color[5] {
         new Color(1, 0, 0),
@@ -26,6 +27,7 @@ public class HeadLogic : MonoBehaviour
     private float tresholdColor = 3.9f;
     private int dearthTime = 3;
     private bool isCollisionAble = true;
+    private readonly int timeOfCollisionLock = 15;
 
     //[SerializeField] private float coeffG = 0.7f;
     //[SerializeField] private float coeffY = 0.15f;
@@ -36,6 +38,7 @@ public class HeadLogic : MonoBehaviour
         //A_HeadColors[1] *= coeffG;
         //A_HeadColors[3] *= coeffY;
         //A_HeadColors[4] *= coeffO;
+        //comAnimator = GetComponent<Animator>();
 
         FillSaffleList();
 
@@ -52,8 +55,6 @@ public class HeadLogic : MonoBehaviour
             ColoringHead(tempC);
             Debug.Log("Ideal color      " + tempC);
         }
-        if (Input.GetKeyUp(KeyCode.Q))
-            Application.Quit();
     }
     private void OnCollisionEnter(Collision candy)
 	{
@@ -75,6 +76,7 @@ public class HeadLogic : MonoBehaviour
                 {
                     gameController.GameOver();
                     Debug.Log("call overColor sound...");
+                    comAnimator.SetTrigger("over_trg");
                 }
 
                 StopAllCoroutines();
@@ -105,7 +107,7 @@ public class HeadLogic : MonoBehaviour
     IEnumerator LockCollision()                 // lock Collision since some candies collides more than one time
     {
         isCollisionAble = false;
-        int timeOfLock = 15;
+        int timeOfLock = timeOfCollisionLock;
         while (timeOfLock-- > 0)
             yield return new WaitForFixedUpdate();
 
@@ -121,9 +123,13 @@ public class HeadLogic : MonoBehaviour
             {
                 gameController.GameOver();
                 Debug.Log("call beep, as diyng...");
+                comAnimator.SetTrigger("over_trg");
             }
             else
+            {
+                comAnimator.SetTrigger("yam_trg");
                 Debug.Log("yum-yum sound...");
+            }
         }
     }
     private void FillSaffleList() {

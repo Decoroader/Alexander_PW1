@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CandyOnStart : MonoBehaviour
 {
-    public ParticleSystem spawnCandyEffect;
 
     private float coeffCoordinateMousToObject = 0.05f;
     private float initMouseCoordinate;
@@ -14,7 +13,6 @@ public class CandyOnStart : MonoBehaviour
 	{
         currentRigid = GetComponent<Rigidbody>();
         StartCoroutine(LeftRightSlide());
-        Debug.Log("call particle spawn effect...");
     }
 
     IEnumerator LeftRightSlide()
