@@ -17,11 +17,6 @@ public class HeadLogic : MonoBehaviour
 
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
 
-    public GameObject nose1;
-    public GameObject nose3;
-    public GameObject ear1;
-    public GameObject ear2;
-
     private Color trueColor;
 
     private float tresholdColor = 3.9f;
@@ -102,10 +97,6 @@ public class HeadLogic : MonoBehaviour
     private void ColoringHead(Color currColor)
 	{
         GetComponent<Renderer>().material.color = currColor;
-        nose1.GetComponent<Renderer>().material.color = currColor;
-        nose3.GetComponent<Renderer>().material.color = currColor;
-        ear1.GetComponent<Renderer>().material.color = currColor;
-        ear2.GetComponent<Renderer>().material.color = currColor;
     }
 
     IEnumerator LockCollision()                 // lock Collision since some candies collides more than one time

@@ -46,9 +46,6 @@ public class CandyPusher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Spawner")
-            currentRigid.useGravity = true;                 // if the candy not hit the receiver
-
         if (countForMoveInTube < 99)                        // this check is necessary because OnTriggerEnter is called multiple times
         {
             if (other.gameObject.CompareTag(receiverString))
@@ -122,8 +119,8 @@ public class CandyPusher : MonoBehaviour
 	{
 		while (true)
 		{
-			if (!(countWaitToReceiver-- > 0))           // while move the candy to the receiverside
-			{
+			if (!(countWaitToReceiver-- > 0))           // while candy moving to the receiverside
+            {
 				currentRigid.useGravity = true;         // the candy falls and out from the game since missed receiver
 				break;
 			}
