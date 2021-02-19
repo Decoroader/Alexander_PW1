@@ -5,7 +5,7 @@ public class CandyOnStart : MonoBehaviour
 {
 
     private float coeffCoordinateMousToObject = 0.05f;
-    private float initMouseCoordinate;
+    private float initMouseCoordinate = 0   ;
 
     private Rigidbody currentRigid;
 
@@ -14,7 +14,7 @@ public class CandyOnStart : MonoBehaviour
         currentRigid = GetComponent<Rigidbody>();
         StartCoroutine(LeftRightSlide());
     }
-
+#if UNITY_STANDALONE || UNITY_WEBGL
     IEnumerator LeftRightSlide()
     {
         while (true)
@@ -39,4 +39,28 @@ public class CandyOnStart : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
+#elif UNITY_IOS || UNITY_ANDROID
+    IEnumerator LeftRightSlide(){
+        Touch playerTouch = null;
+        while (true)
+        {
+            if (currentRigid.useGravity)                // stop scan mouse for the candy shifting 
+                break;
+            if(playerTouch == null){
+                if (Input.touchCount > 0) 
+                    playerTouch = Input.GetTouch(0);
+            }
+            if (playerTouch.phase == TouchPhase.Moved)  // mover of the dynamic object, like the cursor moves
+            { 
+                float shiftX = playerTouch.deltaPosition.x * coeffCoordinateMousToObject;
+                
+                transform.position = new Vector3(transform.position.x - shiftX,
+                    transform.position.y, transform.position.z);
+            }
+            if (playerTouch.phase == TouchPhase.Ended)  // the cundy runs in the reciever side
+                break;
+            yield return new WaitForFixedUpdate();
+        }
+    }
+#endif
 }

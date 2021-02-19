@@ -93,6 +93,7 @@ public class CandyPusher : MonoBehaviour
 
     IEnumerator WaitForPlayerDecision()
     {
+#if UNITY_STANDALONE || UNITY_WEBGL
         bool isPressedMouseButton = false;
         while (waitingTime-- > 0)                         // Wait For the Players Decision
         {
@@ -114,8 +115,30 @@ public class CandyPusher : MonoBehaviour
         }
         currentRigid.useGravity = true;         // the candy falls and out from the game
         yield return null;
+#elif UNITY_IOS || UNITY_ANDROID
+        while (waitingTime-- > 0)                         // Wait For the Players Decision
+        {
+            if (Input.GetMouseButtonDown(0))            // 
+                isPressedMouseButton = true;
+            if (isPressedMouseButton)
+            {
+                if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
+                {
+                    currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // is run
+                    // move the candy to the receiverside
+                    currentRigid.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
+                    // random rotation in the all axes
+                    StartCoroutine(WaitForReciever());      // wait for hit the receiver
+                    yield break;
+                }
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        currentRigid.useGravity = true;         // the candy falls and out from the game
+        yield return null;
+#endif
     }
-	IEnumerator WaitForReciever()
+    IEnumerator WaitForReciever()
 	{
 		while (true)
 		{
