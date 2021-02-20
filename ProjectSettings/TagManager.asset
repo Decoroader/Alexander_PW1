@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Receiver
+  - Ground
+  - OutSphere
+  - Head
+  - DinamicObject
+  - ODinamicObject
   layers:
   - Default
   - TransparentFX

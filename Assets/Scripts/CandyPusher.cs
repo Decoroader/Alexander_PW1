@@ -4,12 +4,12 @@ using UnityEngine;
 public class CandyPusher : MonoBehaviour
 {
     public GameObject prefabTransit;
-
+    public GameObject[] prefabsOpenCandy;
+    
     private GameObject currentTransit;
     private float speedOnOpenSpace = 5.5f;
     private float speedInTube = 7;
-    private float hightBound = 17;
-    private float lowBound = - 5;
+
     private float torqueRange = 11;
 
     private Rigidbody currentRigid;
@@ -37,11 +37,6 @@ public class CandyPusher : MonoBehaviour
     {
         if (countForMoveInTube-- > 0)       // move the candy in the tube
             transform.Translate(Vector3.forward * speedInTube * Time.deltaTime);
-
-        if ((transform.position.z > hightBound) || (transform.position.z < -hightBound) ||
-            (transform.position.x > hightBound) || (transform.position.x < -hightBound)||
-            (transform.position.y < lowBound))
-            Destroy(gameObject);            // destroy the candy out of he bounds
     }
 
     private void OnTriggerEnter(Collider other)
@@ -75,12 +70,21 @@ public class CandyPusher : MonoBehaviour
 		{
             StopVelocity();
             Destroy(currentTransit);
+            transform.position = new Vector3(0, 1.1f, transform.position.z);
 
-            transform.rotation = initRotation;
-            transform.position = new Vector3(0, transform.position.y, transform.position.z);
-            transform.localScale = tempLocalScale;         // back the scale to show the candy in the track to the head
-
-            currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
+            if (gameObject.CompareTag("ODinamicObject"))
+            {
+                Instantiate(prefabsOpenCandy[currentIndex],
+                    gameObject.transform.position, prefabsOpenCandy[currentIndex].transform.rotation);
+                gameObject.transform.position = Vector3.forward * (-11);
+                Destroy(gameObject, 1);
+            }
+            else
+            {
+                transform.rotation = initRotation;
+                transform.localScale = tempLocalScale;         // back the scale to show the candy in the track to the head
+                currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse);
+            }
             // move the candy to the head side
 
             countForMoveInTube = 0;
@@ -156,6 +160,10 @@ public class CandyPusher : MonoBehaviour
 		currentRigid.velocity = Vector3.zero;
 		currentRigid.angularVelocity = Vector3.zero;
 	}
+    public static int GetCurrentObjectIndex(GameObject objectForIndex)
+    {
+        return (int)char.GetNumericValue(objectForIndex.name[objectForIndex.name.Length - 8]);
+    }
     public int GetCurrentObjectIndex()
     {
         return (int)char.GetNumericValue(gameObject.name[gameObject.name.Length - 8]);

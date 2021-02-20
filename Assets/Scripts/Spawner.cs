@@ -31,15 +31,6 @@ public class Spawner : MonoBehaviour
         spawnCandyEffect.Play();
     }
 
-    public GameObject GetCurrentObject()
-	{
-        return currentCandy;
-	}
-    public int GetCurrentPrefabIndex()
-	{
-        return prefabIndex;
-    }
-
     IEnumerator NextObjectSpawner()
 	{
         yield return new WaitForSeconds(1);         // delay before first spawn
@@ -49,6 +40,7 @@ public class Spawner : MonoBehaviour
             if (currentCandy != null)
             {
                 if (prefabPosition.y != currentCandy.transform.position.y || prefabPosition.z != currentCandy.transform.position.z)
+                // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
                 {
                     yield return new WaitForSeconds(minFlyTime);
                     SpawnCandy();

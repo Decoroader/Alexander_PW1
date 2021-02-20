@@ -13,9 +13,7 @@ GameObject:
   - component: {fileID: 2446310922699306801}
   - component: {fileID: -5255347478916877642}
   - component: {fileID: 8745024794814624229}
-  - component: {fileID: -8297991271001088064}
-  - component: {fileID: -8301842987495272173}
-  - component: {fileID: 6200262753763608166}
+  - component: {fileID: 550961896622578272}
   m_Layer: 0
   m_Name: lollipop03_3
   m_TagString: DinamicObject
@@ -115,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8297991271001088064
+--- !u!114 &550961896622578272
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,36 +122,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2446310922697107953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba6d6472eca90c448941076fc2e757c, type: 3}
+  m_Script: {fileID: 11500000, guid: da8cc02cba2bf9f41ae596eeaf5f44da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-8301842987495272173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2446310922697107953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b6fc7d10dff2b8488169b7f0cbf9c72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
-    type: 3}
---- !u!114 &6200262753763608166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2446310922697107953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c922d4b2bbd1f84b8021cd80dfe5c8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smokePS: {fileID: 5135596450926151502, guid: 91bbf44699f367049b7e6c25d20e871d, type: 3}
 --- !u!1001 &4126469272627490736
 PrefabInstance:
   m_ObjectHideFlags: 0

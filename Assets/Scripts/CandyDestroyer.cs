@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CandyDissolution : MonoBehaviour
+public class CandyDestroyer : MonoBehaviour
 {
     public ParticleSystem smokePS;
     private ParticleSystem currentSmokePS;
@@ -11,6 +11,9 @@ public class CandyDissolution : MonoBehaviour
     private Vector3 tempLocalScale;
     private int timeScaleFall = 75;
     private float speedScaleFall = 0.001333333f;
+    private float dissolutionPeriod = 5f;
+    private float hightBound = 17;
+    private float lowBound = -5;
 
     private Rigidbody currentRigid;
     private Quaternion initSmokeRotation;
@@ -24,10 +27,12 @@ public class CandyDissolution : MonoBehaviour
         tempLocalScale = transform.localScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if ((transform.position.z > hightBound) || (transform.position.z < -hightBound) ||
+            (transform.position.x > hightBound) || (transform.position.x < -hightBound) ||
+            (transform.position.y < lowBound))
+            Destroy(gameObject);            // destroy the candy out of the bounds
     }
     private void OnCollisionEnter(Collision toHead_toGround)
     {
@@ -35,8 +40,8 @@ public class CandyDissolution : MonoBehaviour
         {
             if (toHead_toGround.gameObject.CompareTag("Head"))           // destroy the candy in the head
                 Destroy(gameObject, 0.19f);
-            if (toHead_toGround.gameObject.CompareTag("DinamicObject"))  // collision with other candy
-                currentRigid.useGravity = true;                 // the other candy falls and out from the game
+            //if (toHead_toGround.gameObject.CompareTag("DinamicObject"))  // collision with other candy
+            //    currentRigid.useGravity = true;                 // the other candy falls and out from the game
             if (toHead_toGround.gameObject.CompareTag("Ground"))
             {
                 isDisableAllCollisions = true;
@@ -49,7 +54,7 @@ public class CandyDissolution : MonoBehaviour
         tempLocalScale = transform.localScale;
         while (transform.localScale.x > tempLocalScale.x * 0.25f)
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(dissolutionPeriod);
             currentRigid.velocity = Vector3.zero;
             if(currentSmokePS.transform.parent != null)
                 currentSmokePS.transform.parent = null;

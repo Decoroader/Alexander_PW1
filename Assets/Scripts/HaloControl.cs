@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeadLogic : MonoBehaviour
+public class HaloControl : MonoBehaviour
 {
     public GameController gameController;
     public Animator comAnimator;
@@ -55,10 +55,10 @@ public class HeadLogic : MonoBehaviour
 	{
         if (isCollisionAble)
         {
-            if (candy.gameObject.CompareTag("DinamicObject"))
+            if (candy.gameObject.CompareTag("DinamicObject") || candy.gameObject.CompareTag("ODinamicObject"))
             {
                 headColorContainer.Add(
-                    A_HeadColors[candy.gameObject.GetComponent<CandyPusher>().GetCurrentObjectIndex()]);  // added current color to the 
+                    A_HeadColors[CandyPusher.GetCurrentObjectIndex(candy.gameObject)]);  // added current color to the 
                 headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
 
                 Color tempColor = Get_HeadColor();
@@ -99,7 +99,7 @@ public class HeadLogic : MonoBehaviour
         GetComponent<Renderer>().material.color = currColor;
     }
 
-    IEnumerator LockCollision()                 // lock Collision since some candies collides more than one time
+    IEnumerator LockCollision()     // lock Collision since some candies collides more than one time
     {
         isCollisionAble = false;
         int timeOfLock = timeOfCollisionLock;
@@ -108,7 +108,7 @@ public class HeadLogic : MonoBehaviour
 
         isCollisionAble = true;
     }
-    IEnumerator FeedTimer()                     // time for life of the head without candy
+    IEnumerator FeedTimer()         // time for life of the head without candy
     {
         int feedTimer = 1;
         while (gameController.isGameActive)

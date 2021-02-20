@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5303079817532938527}
   m_Layer: 0
   m_Name: lollipop11
-  m_TagString: DinamicObject
+  m_TagString: ODinamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,6 +139,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
     type: 3}
+  prefabsOpenCandy:
+  - {fileID: 2947955830866307891, guid: 4c5d188afdea8654a937c4aeb5227578, type: 3}
+  - {fileID: 2947955830866307891, guid: be1cc46bd7254a24f86b2876279dbaa7, type: 3}
+  - {fileID: 2446310922697107953, guid: 5817c64d549cfb044991b9887198e650, type: 3}
+  - {fileID: 2446310922697107953, guid: ad32bc2cc2b28404db4deed7895f78b8, type: 3}
 --- !u!114 &5303079817532938527
 MonoBehaviour:
   m_ObjectHideFlags: 0
