@@ -6,6 +6,11 @@ public class HaloControl : MonoBehaviour
 {
     public GameController gameController;
     public Animator comAnimator;
+    public AudioClip overColorSound;
+    public AudioClip yamSound;
+    public AudioClip dyingSound;
+    public AudioClip omnomSound;
+
 
     private Color[] A_HeadColors = new Color[5] {
         new Color(1, 0, 0),
@@ -18,6 +23,7 @@ public class HaloControl : MonoBehaviour
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
 
     private Color trueColor;
+    private AudioSource playerAudio;
 
     private float tresholdColor = 3.9f;
     private int dearthTime = 3;
@@ -33,7 +39,8 @@ public class HaloControl : MonoBehaviour
         //A_HeadColors[1] *= coeffG;
         //A_HeadColors[3] *= coeffY;
         //A_HeadColors[4] *= coeffO;
-        //comAnimator = GetComponent<Animator>();
+        
+        playerAudio = GetComponent<AudioSource>();
 
         FillSaffleList();
 
@@ -74,9 +81,12 @@ public class HaloControl : MonoBehaviour
                 if (tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
                 {
                     gameController.GameOver();
-                    Debug.Log("call overColor sound...");
-                    comAnimator.SetTrigger("over_trg");
+                    playerAudio.PlayOneShot(overColorSound, 1.0f);  // call overColor sound
+
+                    comAnimator.SetTrigger("over_trg"); 
                 }
+                else
+                    playerAudio.PlayOneShot(omnomSound, 0.25f);      // call om-nom sound
 
                 StopAllCoroutines();
                 StartCoroutine(FeedTimer());
@@ -105,8 +115,8 @@ public class HaloControl : MonoBehaviour
         int timeOfLock = timeOfCollisionLock;
         while (timeOfLock-- > 0)
             yield return new WaitForFixedUpdate();
-
-        isCollisionAble = true;
+        if(gameController.isGameActive)
+            isCollisionAble = true;
     }
     IEnumerator FeedTimer()         // time for life of the head without candy
     {
@@ -117,13 +127,14 @@ public class HaloControl : MonoBehaviour
             if (++feedTimer > dearthTime)
             {
                 gameController.GameOver();
-                Debug.Log("call beep, as diyng...");
+                playerAudio.PlayOneShot(dyingSound, 1.0f);  // call dying sound
+
                 comAnimator.SetTrigger("over_trg");
             }
             else
             {
                 comAnimator.SetTrigger("yam_trg");
-                Debug.Log("yum-yum sound...");
+                playerAudio.PlayOneShot(yamSound, 1.0f);    // call yam sound
             }
         }
     }

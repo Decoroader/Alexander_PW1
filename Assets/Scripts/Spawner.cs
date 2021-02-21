@@ -49,5 +49,7 @@ public class Spawner : MonoBehaviour
             else
                 SpawnCandy();
         }
+        // for exclude (by gravity fall) the last candy from fly to a receiver ->
+        currentCandy.GetComponent<Rigidbody>().useGravity = true;   
     }
 }

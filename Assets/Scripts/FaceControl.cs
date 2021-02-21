@@ -6,7 +6,7 @@ public class FaceControl : MonoBehaviour
     public Animator comAnimator;
     
     private bool lockTrigger = true;
-    private readonly int timeOfTriggerLock = 19;
+    private readonly int timeOfTriggerLock = 21;
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class FaceControl : MonoBehaviour
 
         }
     }
-    IEnumerator LockTrigger()     // lock Trigger since some candies to triggers more than one time
+    IEnumerator LockTrigger()     // lock Trigger since some candies triggers more than one time
     {
         lockTrigger = false;
         int timeOfLock = timeOfTriggerLock;

@@ -4,6 +4,7 @@ using UnityEngine;
 public class CandyDestroyer : MonoBehaviour
 {
     public ParticleSystem smokePS;
+
     private ParticleSystem currentSmokePS;
 
     private bool isDisableAllCollisions = false;

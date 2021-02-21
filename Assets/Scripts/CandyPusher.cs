@@ -5,7 +5,7 @@ public class CandyPusher : MonoBehaviour
 {
     public GameObject prefabTransit;
     public GameObject[] prefabsOpenCandy;
-    
+
     private GameObject currentTransit;
     private float speedOnOpenSpace = 5.5f;
     private float speedInTube = 7;
