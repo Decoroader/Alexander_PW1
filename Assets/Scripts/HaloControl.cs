@@ -9,7 +9,8 @@ public class HaloControl : MonoBehaviour
     public AudioClip overColorSound;
     public AudioClip yamSound;
     public AudioClip dyingSound;
-    public AudioClip omnomSound;
+    public AudioClip omnomRegularSound;
+    public AudioClip omnomWowSound;
 
 
     private Color[] A_HeadColors = new Color[5] {
@@ -75,18 +76,19 @@ public class HaloControl : MonoBehaviour
                 {
                     FillSaffleList();
                     gameController.UpdateLevel();
+                    playerAudio.PlayOneShot(omnomWowSound, 1.0f);      // call om-nom wow sound
                 }
-                gameController.UpdateScore();
-
-                if (tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
+                else if(tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
                 {
                     gameController.GameOver();
-                    playerAudio.PlayOneShot(overColorSound, 1.0f);  // call overColor sound
+                    playerAudio.PlayOneShot(overColorSound, 1.0f);      // call overColor sound
 
                     comAnimator.SetTrigger("over_trg"); 
                 }
                 else
-                    playerAudio.PlayOneShot(omnomSound, 0.25f);      // call om-nom sound
+                    playerAudio.PlayOneShot(omnomRegularSound, 0.25f);  // call om-nom regular sound
+
+                gameController.UpdateScore();
 
                 StopAllCoroutines();
                 StartCoroutine(FeedTimer());

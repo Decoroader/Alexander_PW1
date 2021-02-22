@@ -62,7 +62,7 @@ public class CandyPusher : MonoBehaviour
                     currentTransit.transform.SetParent(transform);
                 }
                 else
-                    currentRigid.velocity *= -1;
+                    currentRigid.velocity *= -0.33f;
             }
         }
         
