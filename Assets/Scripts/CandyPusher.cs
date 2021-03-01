@@ -38,6 +38,11 @@ public class CandyPusher : MonoBehaviour
         if (countForMoveInTube-- > 0)       // move the candy in the tube
             transform.Translate(Vector3.forward * speedInTube * Time.deltaTime);
     }
+    private void OnCollisionEnter(Collision candy)
+	{
+        if (candy.gameObject.CompareTag("DinamicObject")|| candy.gameObject.CompareTag("ODinamicObject"))
+            currentRigid.useGravity = true;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
