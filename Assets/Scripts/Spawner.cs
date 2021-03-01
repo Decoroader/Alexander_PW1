@@ -5,6 +5,7 @@ public class Spawner : MonoBehaviour
 {
     public GameController gameController;
     public ParticleSystem spawnCandyEffect;
+    public CommonDataSettings commonSettings;
 
     public GameObject[] prefabsCandy;
     
@@ -14,12 +15,14 @@ public class Spawner : MonoBehaviour
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
     private float minFlyTime = 0.5f;
+    private bool midDifficulty;
 
     private int prefabIndex; 
 
     void Start()
     {
         StartCoroutine(NextObjectSpawner());
+        midDifficulty = commonSettings.difficulty_mid;
     }
 	
 	private void SpawnCandy()
@@ -39,11 +42,14 @@ public class Spawner : MonoBehaviour
             yield return null;
             if (currentCandy != null)
             {
+                if((((prefabPosition.x != currentCandy.transform.position.x) || 
+                    (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
+                    ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
                 // !!! string between this comment allow make game more fast & difficult
                 //if ((prefabPosition.x) != (currentCandy.transform.position.x) || (prefabPosition.z) != (currentCandy.transform.position.z))
                 // !!! string between this comment allow make game more fast & difficult (instead string below)
 
-                if ((prefabPosition.z) != (currentCandy.transform.position.z))
+                //if ((prefabPosition.z) != (currentCandy.transform.position.z))
                 // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
                 {
                     yield return new WaitForSeconds(minFlyTime);
