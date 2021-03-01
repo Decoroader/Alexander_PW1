@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public static bool isOpenMouseInput = true;
+
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
@@ -70,6 +72,7 @@ public class GameController : MonoBehaviour
         restartBtn.gameObject.SetActive(true);
         quitBtn.gameObject.SetActive(true);
         verticalLight.color = gameOverLight;
+        isOpenMouseInput = true;
     }
     public void RestartGame()
     {
