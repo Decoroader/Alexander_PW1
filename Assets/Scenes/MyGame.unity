@@ -1142,6 +1142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9379936c8a8dcd748947621516bbf191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonData: {fileID: 11400000, guid: c7e933de961464245be74bed9743bfe3, type: 2}
   levelText: {fileID: 628903123}
   scoreText: {fileID: 426029851}
   timeText: {fileID: 279736223}

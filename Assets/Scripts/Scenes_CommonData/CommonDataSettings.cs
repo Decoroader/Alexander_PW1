@@ -12,4 +12,5 @@ public class CommonDataSettings : ScriptableObject
     public bool toGame = false;
     public bool toMenu = false;
     public bool sorry = false;
+    public bool reload = false;
 }

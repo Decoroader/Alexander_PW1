@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public static bool isOpenMouseInput = true;
+    public CommonDataSettings commonData;
 
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
@@ -77,8 +78,8 @@ public class GameController : MonoBehaviour
     public void RestartGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+        commonData.reload = true;
+    }   
     public void QuitGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
