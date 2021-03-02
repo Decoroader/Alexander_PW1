@@ -49,16 +49,16 @@ public class HaloControl : MonoBehaviour
         ColoringHead(trueColor);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            Color tempC = A_HeadColors[0] + A_HeadColors[1] +
-                A_HeadColors[2] + A_HeadColors[3] + A_HeadColors[4];
-            ColoringHead(tempC);
-            Debug.Log("Ideal color      " + tempC);
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.S))
+    //    {
+    //        Color tempC = A_HeadColors[0] + A_HeadColors[1] +
+    //            A_HeadColors[2] + A_HeadColors[3] + A_HeadColors[4];
+    //        ColoringHead(tempC);
+    //        Debug.Log("Ideal color      " + tempC);
+    //    }
+    //}
     private void OnCollisionEnter(Collision candy)
 	{
         if (isCollisionAble)
