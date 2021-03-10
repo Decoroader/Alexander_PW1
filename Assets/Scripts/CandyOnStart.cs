@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class CandyOnStart : MonoBehaviour
 {
-    
-    private float coeffCoordinateMousToObject = 0.05f;
+    public CommonDataSettings commonData;
+
     private float initMouseCoordinate = 0;
+    private Camera camMain;
 
     private Rigidbody currentRigid;
 
     private void Start()
 	{
+        camMain = Camera.main;
         currentRigid = GetComponent<Rigidbody>();
         StartCoroutine(LeftRightSlide());
     }
@@ -32,17 +34,16 @@ public class CandyOnStart : MonoBehaviour
             {
                 if (initMouseCoordinate > 0)
                 {
-                    if (Input.GetMouseButton(0))        // mover of the dynamic object, like the cursor moves
-                    {
-                        float shiftX = (initMouseCoordinate - Input.mousePosition.x) * coeffCoordinateMousToObject;
-                        initMouseCoordinate = Input.mousePosition.x;
-                        transform.position = new Vector3(transform.position.x - shiftX,
+                    Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
+                    transform.position = new Vector3(cursor.x,
                             transform.position.y, transform.position.z);
-                    }
-
-                    if (Input.GetMouseButtonUp(0))      // the cundy runs in the reciever side
-                        break;
                 }
+                if (Input.GetMouseButtonUp(0))      // the cundy runs in the reciever side
+                    break;
+				if (commonData.toGame)
+				{
+
+				}
             }
             yield return new WaitForFixedUpdate();
         }
