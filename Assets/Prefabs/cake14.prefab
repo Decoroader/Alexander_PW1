@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba6d6472eca90c448941076fc2e757c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnCandyEffect: {fileID: 0}
+  commonData: {fileID: 11400000, guid: c7e933de961464245be74bed9743bfe3, type: 2}
 --- !u!114 &7667739222903665599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
     type: 3}
+  prefabsOpenCandy: []
 --- !u!114 &9077564634554856445
 MonoBehaviour:
   m_ObjectHideFlags: 0
