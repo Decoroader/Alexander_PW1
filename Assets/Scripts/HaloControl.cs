@@ -31,6 +31,8 @@ public class HaloControl : MonoBehaviour
     private bool isCollisionAble = true;
     private readonly int timeOfCollisionLock = 15;
 
+    private Coroutine lockCollisionCoroutine;
+
     //[SerializeField] private float coeffG = 0.7f;
     //[SerializeField] private float coeffY = 0.15f;
     //[SerializeField] private float coeffO = 0.5f;
@@ -92,7 +94,7 @@ public class HaloControl : MonoBehaviour
 
                 StopAllCoroutines();
                 StartCoroutine(FeedTimer());
-                StartCoroutine(LockCollision());
+                lockCollisionCoroutine = StartCoroutine(LockCollision());
             }
         }
     }
@@ -132,6 +134,8 @@ public class HaloControl : MonoBehaviour
                 playerAudio.PlayOneShot(dyingSound, 1.0f);  // call dying sound
 
                 comAnimator.SetTrigger("over_trg");
+                StopCoroutine(lockCollisionCoroutine);
+                isCollisionAble = false;
             }
             else
             {

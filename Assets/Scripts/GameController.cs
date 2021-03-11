@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -15,14 +14,21 @@ public class GameController : MonoBehaviour
     public Button restartBtn;
     public Button quitBtn;
     public Light verticalLight;
+    public Light horizontalLight;
+    public Light pointLight;
     public AudioClip clickSound;
     public int gameSpeed = 230;
-    public bool isGameActive = true;
+    public bool isGameActive;
+
+    public GameObject unclicked;
+    public GameObject clicked;
 
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
     private int timer = 111;
-    private Color gameOverLight = new Color(0.1f, 0, 0);
+    private float tutorialTime = 0.5f;
+
+    //private Color gameOverLight = new Color(0.1f, 0, 0);
     private AudioSource playerAudio;
     private int level = 0;
     private int score = -1;
@@ -33,6 +39,18 @@ public class GameController : MonoBehaviour
         StartCoroutine(CommonTimer());
         UpdateLevel();
         UpdateScore();
+
+        if (commonData.currentDifficulty != commonData.difficulty)
+        {
+            commonData.difficulty = commonData.currentDifficulty;
+            unclicked.SetActive(true);
+            unclicked.transform.position = new Vector3(0.3f, 0, -0.5f);
+            if (commonData.currentDifficulty == 1)
+                StartCoroutine(EasyTutorial());
+            else
+                StartCoroutine(MidPlusTutorial());
+        }
+
     }
     void Update()
     {
@@ -40,7 +58,7 @@ public class GameController : MonoBehaviour
             Application.Quit();
     }
     public void UpdateLevel()
-	{
+    {
         levelText.text = "Level: " + ++level;
 
         if (gameSpeed != maxSpeed)
@@ -57,7 +75,7 @@ public class GameController : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
     IEnumerator CommonTimer()
-	{
+    {
         while (isGameActive)
         {
             timeText.text = "Time " + timer--;
@@ -66,23 +84,63 @@ public class GameController : MonoBehaviour
                 GameOver();
         }
     }
-    
+
     public void GameOver()
-	{
+    {
         isGameActive = false;
         restartBtn.gameObject.SetActive(true);
         quitBtn.gameObject.SetActive(true);
-        verticalLight.color = gameOverLight;
+        verticalLight.enabled = false;
+        horizontalLight.enabled = false;
+        pointLight.enabled = false;
         isOpenMouseInput = true;
     }
     public void RestartGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
         commonData.reload = true;
-    }   
+    }
     public void QuitGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
         Application.Quit();
+    }
+    IEnumerator EasyTutorial()
+    {
+        yield return new WaitForSeconds(tutorialTime);
+
+        clicked.SetActive(true);
+        clicked.transform.position = new Vector3(0.3f, 0, -0.51f);
+        yield return new WaitForSeconds(tutorialTime/2);
+        
+        clicked.SetActive(false);
+        yield return new WaitForSeconds(tutorialTime);
+
+        unclicked.SetActive(false);
+        
+        isGameActive = true;
+    }
+    IEnumerator MidPlusTutorial()
+    {
+        yield return new WaitForSeconds(tutorialTime);
+
+        clicked.SetActive(true);
+        unclicked.SetActive(false);
+        clicked.transform.position = new Vector3(0.3f, 0, -0.51f);
+        int timeCounter = 17;
+        while (timeCounter-- > 0)
+        {
+            yield return new WaitForFixedUpdate();
+            clicked.transform.position = new Vector3(clicked.transform.position.x - 0.15f, 0, -0.51f); ;
+        }
+
+        unclicked.SetActive(true);
+        unclicked.transform.position = clicked.transform.position;
+        clicked.SetActive(false);
+        yield return new WaitForSeconds(tutorialTime);
+
+        unclicked.SetActive(false);
+
+        isGameActive = true;
     }
 }

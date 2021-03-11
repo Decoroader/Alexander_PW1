@@ -22,10 +22,13 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(NextObjectSpawner());
-        midDifficulty = commonSettings.difficulty_mid;
+        if (commonSettings.currentDifficulty >= 2)
+            midDifficulty = true;
+        else
+            midDifficulty = false;
     }
-	
-	private void SpawnCandy()
+
+    private void SpawnCandy()
 	{
         prefabIndex = Random.Range(0, prefabsCandy.Length);
         prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
@@ -42,14 +45,13 @@ public class Spawner : MonoBehaviour
             yield return null;
             if (currentCandy != null)
             {
-                if((((prefabPosition.x != currentCandy.transform.position.x) || 
-                    (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
-                    ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
                 // !!! string between this comment allow make game more fast & difficult
-                //if ((prefabPosition.x) != (currentCandy.transform.position.x) || (prefabPosition.z) != (currentCandy.transform.position.z))
+                if ((((prefabPosition.x != currentCandy.transform.position.x) || 
+                    (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
                 // !!! string between this comment allow make game more fast & difficult (instead string below)
 
-                //if ((prefabPosition.z) != (currentCandy.transform.position.z))
+                    ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
+                
                 // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
                 {
                     yield return new WaitForSeconds(minFlyTime);

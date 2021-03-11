@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine.SceneManagement;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
@@ -25,18 +23,19 @@ public class Menu : MonoBehaviour
 	{
         playerAudio.PlayOneShot(clickSound, 1.0f);
 
-        commonData.difficulty_mid = false;
-        commonData.difficulty_hight = false;
+        commonData.currentDifficulty = 1;
     }
     public void MidDifficulty()
 	{
         playerAudio.PlayOneShot(clickSound, 1.0f);
 
-        commonData.difficulty_mid = true;
+        commonData.currentDifficulty = 2;
     }
     public void HardDifficulty()
     {
-        commonData.sorry = true;
+        playerAudio.PlayOneShot(clickSound, 1.0f);
+
+        commonData.currentDifficulty = 3;
     }
     public void BackGround()
     {

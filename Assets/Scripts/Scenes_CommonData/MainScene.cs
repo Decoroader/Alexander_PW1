@@ -8,7 +8,13 @@ public class MainScene : MonoBehaviour
 
     private int showTimerSorryScene = 75;
 
-    void Start()
+	private void Awake()
+	{
+        commonData.difficulty = 0;
+        commonData.currentDifficulty = 1;
+    }
+
+    private void Start()
     {
         StartCoroutine(StartGame());
     }
