@@ -5,7 +5,6 @@ public class CandyOnStart : MonoBehaviour
 {
     public CommonDataSettings commonData;
 
-    private float initMouseCoordinate = 0;
     private Camera camMain;
 
     private Rigidbody currentRigid;
@@ -19,6 +18,8 @@ public class CandyOnStart : MonoBehaviour
 #if UNITY_STANDALONE || UNITY_WEBGL
     IEnumerator LeftRightSlide()
     {
+        float initCursorCoordinateX = 0;
+
         bool isPressedMouseButton = false;          // I know about drys
 
         while (true)
@@ -27,23 +28,27 @@ public class CandyOnStart : MonoBehaviour
                 break;
             if (Input.GetMouseButtonDown(0)) 
             { 
-                initMouseCoordinate = Input.mousePosition.x; // get the X coordinate of the cursor
+                initCursorCoordinateX = camMain.ScreenToWorldPoint(Input.mousePosition).x; // get the X coordinate of the cursor
                 isPressedMouseButton = true;
             }
             if (isPressedMouseButton)
             {
-                if (initMouseCoordinate > 0)
-                {
-                    Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
+                Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
+                if (commonData.difficulty == 1)
+				{
                     transform.position = new Vector3(cursor.x,
+                            transform.position.y, transform.position.z);
+                    break;
+                }
+				else
+				{
+                    float shiftX = initCursorCoordinateX - cursor.x;
+                    initCursorCoordinateX = cursor.x;
+                    transform.position = new Vector3(transform.position.x - shiftX,
                             transform.position.y, transform.position.z);
                 }
                 if (Input.GetMouseButtonUp(0))      // the cundy runs in the reciever side
                     break;
-				if (commonData.toGame)
-				{
-
-				}
             }
             yield return new WaitForFixedUpdate();
         }
