@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour
     private float rangeX = 7f;
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
-    private float minFlyTime = 0.5f;
+    private float spawDelay = 0.21f;
     private bool midDifficulty;
 
     private int prefabIndex; 
@@ -54,7 +54,7 @@ public class Spawner : MonoBehaviour
                 
                 // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
                 {
-                    yield return new WaitForSeconds(minFlyTime);
+                    yield return new WaitForSeconds(spawDelay);
                     SpawnCandy();
                 }
             }
