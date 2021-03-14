@@ -124,6 +124,9 @@ public class HaloControl : MonoBehaviour
     }
     IEnumerator FeedTimer()         // time for life of the head without candy
     {
+        gameController.hungry = true;
+        gameController.hungryTimer = 0;
+
         int feedTimer = 1;
         while (gameController.isGameActive)
         {

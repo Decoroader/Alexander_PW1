@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI hungryTimeText;
     public Button restartBtn;
     public Button quitBtn;
     public Light verticalLight;
@@ -19,6 +20,8 @@ public class GameController : MonoBehaviour
     public AudioClip clickSound;
     public int gameSpeed = 230;
     public bool isGameActive;
+    public bool hungry;
+    public int hungryTimer;
 
     public GameObject unclicked;
     public GameObject clicked;
@@ -51,6 +54,11 @@ public class GameController : MonoBehaviour
                 StartCoroutine(MidPlusTutorial());
         }
 
+        hungryTimer = 0;
+        hungry = false;
+        hungryTimeText.text = "Hungry " + 0;
+        hungryTimeText.color = Color.green;
+        StartCoroutine(HungryTimer());
     }
     void Update()
     {
@@ -82,6 +90,25 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1);
             if (timer < 0)
                 GameOver();
+        }
+    }
+    IEnumerator HungryTimer()
+    {
+        while (isGameActive)
+        {
+            if (hungry)
+            {
+                hungryTimeText.text = "Hungry " + ++hungryTimer;
+                
+                if(hungryTimer >= 5 && hungryTimer < 10)
+                    hungryTimeText.color = Color.yellow;
+                else if(hungryTimer >= 10)
+                    hungryTimeText.color = Color.red;
+
+                if (hungryTimer > 15)
+                    GameOver();
+            }
+            yield return new WaitForSeconds(1);
         }
     }
 
