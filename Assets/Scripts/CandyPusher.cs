@@ -100,11 +100,10 @@ public class CandyPusher : MonoBehaviour
             if (initPosition.z != transform.position.z)
             {
                 if (!(countWaitToReceiver-- > 0))           // while candy moving to the receiverside
-                {
                     currentRigid.useGravity = true;         // the candy falls and out from the game since missed receiver
-                    break;
-                }
             }
+            if (currentRigid.useGravity)
+                break;
             yield return new WaitForFixedUpdate();
         }
     }

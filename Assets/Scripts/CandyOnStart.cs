@@ -94,6 +94,7 @@ public class CandyOnStart : MonoBehaviour
 #endif
     IEnumerator WaitForPlayerDecision()
 	{
+        commonData.startCandyTime = true;
 		while (waitingTime-- > 0)
 		{
             yield return new WaitForFixedUpdate();

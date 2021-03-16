@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour
     private AudioSource playerAudio;
     private int level = 0;
     private int score = -1;
+    private Coroutine candyTimer;
 
     void Start()
     {
@@ -60,11 +61,20 @@ public class GameController : MonoBehaviour
         hungryTimeText.text = "Hungry " + 0;
         hungryTimeText.color = Color.green;
         StartCoroutine(HungryTimer());
+        cundyTime.fillAmount = 1;
     }
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Q))
             Application.Quit();
+        if (commonData.startCandyTime)
+        {
+            commonData.startCandyTime = false;
+            if (candyTimer != null)
+                StopCoroutine(candyTimer);
+            cundyTime.fillAmount = 1;
+            candyTimer = StartCoroutine(CandyTimer());
+        }
     }
     public void UpdateSpeedLevel()
     {
@@ -113,6 +123,16 @@ public class GameController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
+    IEnumerator CandyTimer()
+	{
+		while (cundyTime.fillAmount > 0)
+		{
+            cundyTime.fillAmount -= (float)(1 / (float)gameSpeed);
+
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
 
     public void GameOver()
     {

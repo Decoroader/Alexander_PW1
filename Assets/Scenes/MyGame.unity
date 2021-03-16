@@ -964,7 +964,7 @@ MonoBehaviour:
   scoreText: {fileID: 426029851}
   timeText: {fileID: 279736223}
   hungryTimeText: {fileID: 518011854}
-  cundyTime: {fileID: 0}
+  cundyTime: {fileID: 1371521605}
   restartBtn: {fileID: 56263610}
   quitBtn: {fileID: 467778196}
   verticalLight: {fileID: 539434650}

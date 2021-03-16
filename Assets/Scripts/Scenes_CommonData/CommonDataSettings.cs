@@ -15,6 +15,7 @@ public class CommonDataSettings : ScriptableObject
     public bool toMenu;
     public bool sorry;
     public bool reload;
+    public bool startCandyTime;
 
 	private void Awake()
 	{
@@ -25,6 +26,6 @@ public class CommonDataSettings : ScriptableObject
         toMenu = false;
         sorry = false;
         reload = false;
-
+        startCandyTime = false;
     }
 }
