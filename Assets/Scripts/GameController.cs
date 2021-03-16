@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI hungryTimeText;
+    public Image cundyTime;
     public Button restartBtn;
     public Button quitBtn;
     public Light verticalLight;
@@ -40,7 +41,7 @@ public class GameController : MonoBehaviour
     {
         playerAudio = GetComponent<AudioSource>();
         StartCoroutine(CommonTimer());
-        UpdateLevel();
+        UpdateSpeedLevel();
         UpdateScore();
 
         if (commonData.currentDifficulty != commonData.difficulty)
@@ -65,7 +66,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Q))
             Application.Quit();
     }
-    public void UpdateLevel()
+    public void UpdateSpeedLevel()
     {
         levelText.text = "Level: " + ++level;
 
@@ -82,6 +83,7 @@ public class GameController : MonoBehaviour
         score += level;
         scoreText.text = "Score: " + score;
     }
+
     IEnumerator CommonTimer()
     {
         while (isGameActive)

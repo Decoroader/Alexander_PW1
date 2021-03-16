@@ -6,15 +6,25 @@ public class CandyOnStart : MonoBehaviour
     public CommonDataSettings commonData;
 
     private Camera camMain;
-
     private Rigidbody currentRigid;
+
+    private float   speedOnOpenSpace = 5.5f;
+    private float   torqueRange = 11;
+    private int     waitingTime;
 
     private void Start()
 	{
         camMain = Camera.main;
         currentRigid = GetComponent<Rigidbody>();
+        waitingTime = GameObject.Find("GameController").GetComponent<GameController>().gameSpeed;
+
         StartCoroutine(LeftRightSlide());
     }
+    private float RandomTorque()
+    {
+        return Random.Range(-torqueRange, torqueRange);
+    }
+
 #if UNITY_STANDALONE || UNITY_WEBGL
     IEnumerator LeftRightSlide()
     {
@@ -30,16 +40,14 @@ public class CandyOnStart : MonoBehaviour
             { 
                 initCursorCoordinateX = camMain.ScreenToWorldPoint(Input.mousePosition).x; // get the X coordinate of the cursor
                 isPressedMouseButton = true;
+                StartCoroutine(WaitForPlayerDecision());
             }
             if (isPressedMouseButton)
             {
                 Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
                 if (commonData.difficulty == 1)
-				{
                     transform.position = new Vector3(cursor.x,
                             transform.position.y, transform.position.z);
-                    break;
-                }
 				else
 				{
                     float shiftX = initCursorCoordinateX - cursor.x;
@@ -47,8 +55,15 @@ public class CandyOnStart : MonoBehaviour
                     transform.position = new Vector3(transform.position.x - shiftX,
                             transform.position.y, transform.position.z);
                 }
-                if (Input.GetMouseButtonUp(0))      // the cundy runs in the reciever side
+                if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
+                {
+                    currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // is run
+                    // move the candy to the receiverside
+                    currentRigid.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
+                    // random rotation in the all axes
+                    StopAllCoroutines();
                     break;
+                }
             }
             yield return new WaitForFixedUpdate();
         }
@@ -77,4 +92,12 @@ public class CandyOnStart : MonoBehaviour
         }
     }
 #endif
+    IEnumerator WaitForPlayerDecision()
+	{
+		while (waitingTime-- > 0)
+		{
+            yield return new WaitForFixedUpdate();
+        }
+        currentRigid.useGravity = true;
+    }
 }

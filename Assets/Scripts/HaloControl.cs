@@ -77,7 +77,7 @@ public class HaloControl : MonoBehaviour
                 if (tempColor == trueColor)
                 {
                     FillSaffleList();
-                    gameController.UpdateLevel();
+                    gameController.UpdateSpeedLevel();
                     playerAudio.PlayOneShot(omnomWowSound, 1.0f);      // call om-nom wow sound
                 }
                 else if(tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)

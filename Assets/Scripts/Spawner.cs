@@ -45,14 +45,13 @@ public class Spawner : MonoBehaviour
             yield return null;
             if (currentCandy != null)
             {
+                // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
+                
                 // !!! string between this comment allow make game more fast & difficult
                 if ((((prefabPosition.x != currentCandy.transform.position.x) || 
                     (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
                 // !!! string between this comment allow make game more fast & difficult (instead string below)
-
                     ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
-                
-                // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
                 {
                     yield return new WaitForSeconds(spawDelay);
                     SpawnCandy();
