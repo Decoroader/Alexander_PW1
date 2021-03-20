@@ -5,7 +5,9 @@ public class CandyPusher : MonoBehaviour
 {
     public GameObject prefabTransit;
     public GameObject[] prefabsOpenCandy;
+    public AudioClip notSound;
 
+    private AudioSource playerAudio;
     private GameObject currentTransit;
     private float speedToHead = 5.9f;
     private float speedInTube = 7;
@@ -29,6 +31,7 @@ public class CandyPusher : MonoBehaviour
         initPosition = transform.position;
         currentIndex = GetCurrentObjectIndex();
         StartCoroutine(WaitForReciever());
+        playerAudio  = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -65,7 +68,10 @@ public class CandyPusher : MonoBehaviour
                     currentTransit.transform.SetParent(transform);
                 }
                 else
+                {
+                    playerAudio.PlayOneShot(notSound, 1.0f);      // call not sound, as candy collided to incorrect receiver
                     currentRigid.velocity *= -0.33f;
+                }
             }
         }
         
