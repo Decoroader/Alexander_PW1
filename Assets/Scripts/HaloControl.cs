@@ -63,7 +63,7 @@ public class HaloControl : MonoBehaviour
     //}
     private void OnCollisionEnter(Collision candy)
 	{
-        if (isCollisionAble)
+        if (isCollisionAble & gameController.isGameActive)
         {
             if (candy.gameObject.CompareTag("DinamicObject") || candy.gameObject.CompareTag("ODinamicObject"))
             {
@@ -119,8 +119,7 @@ public class HaloControl : MonoBehaviour
         int timeOfLock = timeOfCollisionLock;
         while (timeOfLock-- > 0)
             yield return new WaitForFixedUpdate();
-        if(gameController.isGameActive)
-            isCollisionAble = true;
+        isCollisionAble = true;
     }
     IEnumerator FeedTimer()         // time for life of the head without candy
     {
@@ -128,23 +127,28 @@ public class HaloControl : MonoBehaviour
         gameController.hungryTimer = 0;
 
         int feedTimer = 1;
-        while (gameController.isGameActive)
+        while (true)
         {
             yield return new WaitForSeconds(5);
-            if (++feedTimer > dearthTime)
+            if (gameController.isGameActive)
             {
-                gameController.GameOver();
-                playerAudio.PlayOneShot(dyingSound, 1.0f);  // call dying sound
+                if (++feedTimer > dearthTime)
+                {
+                    gameController.GameOver();
+                    playerAudio.PlayOneShot(dyingSound, 1.0f);  // call dying sound
 
-                comAnimator.SetTrigger("over_trg");
-                StopCoroutine(lockCollisionCoroutine);
-                isCollisionAble = false;
+                    comAnimator.SetTrigger("over_trg");
+                    StopCoroutine(lockCollisionCoroutine);
+                    isCollisionAble = false;
+                }
+                else
+                {
+                    comAnimator.SetTrigger("yam_trg");
+                    playerAudio.PlayOneShot(yamSound, 1.0f);    // call yam sound
+                }
             }
             else
-            {
-                comAnimator.SetTrigger("yam_trg");
-                playerAudio.PlayOneShot(yamSound, 1.0f);    // call yam sound
-            }
+                break;
         }
     }
     private void FillSaffleList() {

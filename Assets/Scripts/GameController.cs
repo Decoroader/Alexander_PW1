@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public static bool isOpenMouseInput = true;
     public CommonDataSettings commonData;
 
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI hungryTimeText;
-    public Image cundyTime;
+    public Image candyTime;
     public Button restartBtn;
     public Button quitBtn;
     public Light verticalLight;
@@ -31,6 +30,7 @@ public class GameController : MonoBehaviour
     private int maxSpeed = 50;
     private int timer = 111;
     private float tutorialTime = 0.5f;
+    private int hungryTreshold = 15;
 
     //private Color gameOverLight = new Color(0.1f, 0, 0);
     private AudioSource playerAudio;
@@ -56,12 +56,11 @@ public class GameController : MonoBehaviour
                 StartCoroutine(MidPlusTutorial());
         }
 
-        hungryTimer = 0;
         hungry = false;
         hungryTimeText.text = "Hungry " + 0;
         hungryTimeText.color = Color.green;
         StartCoroutine(HungryTimer());
-        cundyTime.fillAmount = 1;
+        candyTime.fillAmount = 0;
     }
     void Update()
     {
@@ -70,15 +69,15 @@ public class GameController : MonoBehaviour
         if (commonData.startCandyTime)
         {
             commonData.startCandyTime = false;
-            if (candyTimer != null)
-                StopCoroutine(candyTimer);
-            cundyTime.fillAmount = 1;
-            candyTimer = StartCoroutine(CandyTimer());
+
+            candyTime.fillAmount = 1;
+            if (candyTimer == null)
+                candyTimer = StartCoroutine(CandyTimer());
         }
     }
     public void UpdateSpeedLevel()
     {
-        levelText.text = "Level: " + ++level;
+        levelText.text = "Speed Level: " + ++level;
 
         if (gameSpeed != maxSpeed)
         {
@@ -112,12 +111,14 @@ public class GameController : MonoBehaviour
             {
                 hungryTimeText.text = "Hungry " + ++hungryTimer;
                 
-                if(hungryTimer >= 5 && hungryTimer < 10)
+                if(hungryTimer >= (hungryTreshold / 3) && hungryTimer < (hungryTreshold * 2 / 3))
                     hungryTimeText.color = Color.yellow;
-                else if(hungryTimer >= 10)
+                else if(hungryTimer >= (hungryTreshold * 2 / 3))
                     hungryTimeText.color = Color.red;
+                else
+                    hungryTimeText.color = Color.green;
 
-                if (hungryTimer > 15)
+                if (hungryTimer < 0)
                     GameOver();
             }
             yield return new WaitForSeconds(1);
@@ -125,12 +126,13 @@ public class GameController : MonoBehaviour
     }
     IEnumerator CandyTimer()
 	{
-		while (cundyTime.fillAmount > 0)
+		while (candyTime.fillAmount > 0)
 		{
-            cundyTime.fillAmount -= (float)(1 / (float)gameSpeed);
+            candyTime.fillAmount -= (float)(1 / (float)gameSpeed);
 
             yield return new WaitForFixedUpdate();
         }
+        candyTimer = null;
     }
 
 
@@ -142,7 +144,6 @@ public class GameController : MonoBehaviour
         verticalLight.enabled = false;
         horizontalLight.enabled = false;
         pointLight.enabled = false;
-        isOpenMouseInput = true;
     }
     public void RestartGame()
     {

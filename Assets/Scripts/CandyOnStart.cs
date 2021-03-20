@@ -18,15 +18,21 @@ public class CandyOnStart : MonoBehaviour
         currentRigid = GetComponent<Rigidbody>();
         waitingTime = GameObject.Find("GameController").GetComponent<GameController>().gameSpeed;
 
-        StartCoroutine(LeftRightSlide());
+        StartCoroutine(CandyPushControl());
     }
     private float RandomTorque()
     {
         return Random.Range(-torqueRange, torqueRange);
     }
+    private void PushCandy()
+	{
+        currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // is run
+                                                                                      // move the candy to the receiverside
+        currentRigid.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
+    }
 
 #if UNITY_STANDALONE || UNITY_WEBGL
-    IEnumerator LeftRightSlide()
+    IEnumerator CandyPushControl()
     {
         float initCursorCoordinateX = 0;
 
@@ -36,20 +42,25 @@ public class CandyOnStart : MonoBehaviour
         {
             if (currentRigid.useGravity)            // stop scan mouse for the candy shifting 
                 break;
-            if (Input.GetMouseButtonDown(0)) 
+            if (Input.GetMouseButtonDown(0) && !isPressedMouseButton) 
             { 
                 initCursorCoordinateX = camMain.ScreenToWorldPoint(Input.mousePosition).x; // get the X coordinate of the cursor
                 isPressedMouseButton = true;
-                StartCoroutine(WaitForPlayerDecision());
+                if (commonData.difficulty > 1)
+                    StartCoroutine(WaitForPlayerDecision());
             }
             if (isPressedMouseButton)
             {
                 Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
                 if (commonData.difficulty == 1)
+                {
                     transform.position = new Vector3(cursor.x,
                             transform.position.y, transform.position.z);
-				else
-				{
+                    PushCandy();
+                    break;
+                }
+                else
+                {
                     float shiftX = initCursorCoordinateX - cursor.x;
                     initCursorCoordinateX = cursor.x;
                     transform.position = new Vector3(transform.position.x - shiftX,
@@ -57,16 +68,13 @@ public class CandyOnStart : MonoBehaviour
                 }
                 if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
                 {
-                    currentRigid.AddForce(Vector3.forward * speedOnOpenSpace, ForceMode.Impulse); // is run
-                    // move the candy to the receiverside
-                    currentRigid.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
-                    // random rotation in the all axes
-                    StopAllCoroutines();
+                    PushCandy();
                     break;
                 }
             }
             yield return new WaitForFixedUpdate();
         }
+        StopAllCoroutines();
     }
 #elif UNITY_IOS || UNITY_ANDROID
     IEnumerator LeftRightSlide(){
@@ -95,7 +103,8 @@ public class CandyOnStart : MonoBehaviour
     IEnumerator WaitForPlayerDecision()
 	{
         commonData.startCandyTime = true;
-		while (waitingTime-- > 0)
+
+        while (waitingTime-- > 0)
 		{
             yield return new WaitForFixedUpdate();
         }
