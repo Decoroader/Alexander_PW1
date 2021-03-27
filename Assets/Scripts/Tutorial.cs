@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tutorial : MonoBehaviour
@@ -8,9 +7,12 @@ public class Tutorial : MonoBehaviour
     public GameController gameController;
     public Spawner spawner;
 
+    public GameObject[] tutorialCandyPrefabs;
+
     public GameObject unclicked;
     public GameObject clicked;
-    public GameObject[] tutorialCandyPrefabs;
+    public GameObject leftRightArrow;
+    public GameObject rightLeftArrow;
 
     private Rigidbody currRigid;
     private float speedToReceiver = 4.5f;
@@ -24,10 +26,15 @@ public class Tutorial : MonoBehaviour
     private Vector3 clickPosition1 = new Vector3(+0.3f, 0.3f, -0.57f);
     private Vector3 clickPosition;
 
-    private Vector3 redReseiverArrow = new Vector3(-5.9f, -1.7f, -3.0f);
-    private Vector3 redCandyArrow = new Vector3(+3.39f, -1.79f, -5.9f);
-    private Vector3 blueReseiverArrow = new Vector3(+1.0f, -1.5f, -3.0f);
-    private Vector3 blueCandyArrow = new Vector3(-3.3f, -1.79f, -5.9f);
+    private Vector3 redReseiverArrow0 = new Vector3(-5.97f, +2.3f, -0.3f);
+    private Vector3 redCandyArrow0 = new Vector3(+3.39f, +1.89f, -3.0f);
+    private Vector3 blueReseiverArrow1 = new Vector3(+1.0f, +2.3f, -0.3f);
+    private Vector3 blueCandyArrow1 = new Vector3(-3.3f, +1.75f, -3.0f);
+    private Vector3 reseiverArrowPosition;
+    private Vector3 candyArrowPosition;
+    private GameObject reseiverArrow;
+    private GameObject candyArrow;
+
 
     void Awake()
     {
@@ -78,15 +85,27 @@ public class Tutorial : MonoBehaviour
             {
                 prefabPosition = prefPosition0;
                 clickPosition = clickPosition0;
+                candyArrowPosition = redCandyArrow0;
+                candyArrow = rightLeftArrow;
+                reseiverArrowPosition = redReseiverArrow0;
+                reseiverArrow = leftRightArrow;
             }
             else
             {
                 prefabPosition = prefPosition1;
                 clickPosition = clickPosition1;
+                candyArrowPosition = blueCandyArrow1;
+                candyArrow = leftRightArrow;
+                reseiverArrowPosition = blueReseiverArrow1;
+                reseiverArrow = rightLeftArrow;
             }
+            candyArrow.SetActive(false);
+            reseiverArrow.SetActive(false);
+
             GameObject currentTutCandy = 
                 Instantiate(tutorialCandyPrefabs[prefIndex], prefabPosition, tutorialCandyPrefabs[prefIndex].transform.rotation);
             currRigid = currentTutCandy.GetComponent<Rigidbody>();
+            StartCoroutine(ArrowControl());                 // blinking arrows
             yield return new WaitForSeconds(tutorialTime);
 
             unclicked.SetActive(true);
@@ -128,6 +147,27 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(tutorialTime);
 
         unclicked.SetActive(false);
+    }
+    IEnumerator ArrowControl()
+    {
+        candyArrow.transform.position = candyArrowPosition;
+        yield return new WaitForSeconds(tutorialTime/4);
+        candyArrow.SetActive(true);
+        yield return new WaitForSeconds(tutorialTime / 4);
+        candyArrow.SetActive(false);
+        yield return new WaitForSeconds(tutorialTime / 4);
+        candyArrow.SetActive(true);
+        yield return new WaitForSeconds(tutorialTime / 4);
+        candyArrow.SetActive(false);
+
+        reseiverArrow.transform.position = reseiverArrowPosition;
+        reseiverArrow.SetActive(true);
+        yield return new WaitForSeconds(tutorialTime / 4);
+        reseiverArrow.SetActive(false);
+        yield return new WaitForSeconds(tutorialTime / 4);
+        reseiverArrow.SetActive(true);
+        yield return new WaitForSeconds(tutorialTime / 4);
+        reseiverArrow.SetActive(false);
     }
     IEnumerator Delay_StartGame() 
     {
