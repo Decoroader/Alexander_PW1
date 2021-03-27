@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour
     private float rangeMinZ = -4.5f;
     private float spawDelay = 0.21f;
     private bool midDifficulty;
+    //private 
 
     private int prefabIndex; 
 
@@ -28,10 +29,45 @@ public class Spawner : MonoBehaviour
             midDifficulty = false;
     }
 
+    private Vector3 PrefabPosition()
+	{
+        if(currentCandy == null)
+            return new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
+
+        int colorIndex = ObjectColorIndex.GetCurrentObjectIndex(currentCandy);
+        float shiftNewCandyX = 1.51f;
+        float tempXPosition = Random.Range(-rangeX, rangeX);
+
+        switch (colorIndex)
+        {
+            case 0:
+                if (tempXPosition >= -5.75f && tempXPosition <= -4.25f)
+                    tempXPosition += shiftNewCandyX;
+                    break;
+            case 1:
+                if (tempXPosition >= -3.25f && tempXPosition <= -1.75f)
+                    tempXPosition += shiftNewCandyX;
+                    break;
+            case 2:
+                if (tempXPosition >= -0.75f && tempXPosition <= 0.75f)
+                    tempXPosition += shiftNewCandyX;
+                    break;
+            case 3:
+                if (tempXPosition >= 1.75f && tempXPosition <= 3.25f)
+                    tempXPosition -= shiftNewCandyX;
+                    break;
+            case 4:
+                if (tempXPosition >= 4.25f && tempXPosition <= 5.75f)
+                    tempXPosition -= shiftNewCandyX;
+                    break;
+		}
+        return new Vector3(tempXPosition, 1, Random.Range(rangeMinZ, rangeMaxZ));
+    }
     private void SpawnCandy()
 	{
+        prefabPosition = PrefabPosition();
         prefabIndex = Random.Range(0, prefabsCandy.Length);
-        prefabPosition = new Vector3(Random.Range(-rangeX, rangeX), 1, Random.Range(rangeMinZ, rangeMaxZ));
+
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, prefabsCandy[prefabIndex].transform.rotation) as GameObject;
         spawnCandyEffect.transform.position = currentCandy.transform.position;
         spawnCandyEffect.Play();
