@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CandyPusher : MonoBehaviour
+public class CandyReceiver_OutSphere : MonoBehaviour
 {
     public GameObject prefabTransit;
     public GameObject[] prefabsOpenCandy;

@@ -38,9 +38,13 @@ public class CandyOnStart : MonoBehaviour
 
         bool isPressedMouseButton = false;          // I know about drys
 
+        Vector3 startCandyPosition = transform.position;
+
         while (true)
         {
-            if (currentRigid.useGravity)            // stop scan mouse for the candy shifting 
+            if (currentRigid.useGravity)                        // stop scan mouse for the candy shifting 
+                break;
+            if (startCandyPosition.z != transform.position.z)   // stop scan mouse, in the tutorial candy pushed
                 break;
             if (Input.GetMouseButtonDown(0) && !isPressedMouseButton) 
             { 
