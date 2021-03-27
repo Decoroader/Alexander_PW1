@@ -29,7 +29,7 @@ public class CandyReceiver_OutSphere : MonoBehaviour
         currentRigid = GetComponent<Rigidbody>();
         initRotation = transform.rotation;
         initPosition = transform.position;
-        currentIndex = GetCurrentObjectIndex();
+        currentIndex = ObjectColorIndex.GetCurrentObjectIndex(gameObject);
         StartCoroutine(WaitForReciever());
         playerAudio  = GetComponent<AudioSource>();
     }
@@ -119,12 +119,4 @@ public class CandyReceiver_OutSphere : MonoBehaviour
 		currentRigid.velocity = Vector3.zero;
 		currentRigid.angularVelocity = Vector3.zero;
 	}
-    public static int GetCurrentObjectIndex(GameObject objectForIndex)
-    {
-        return (int)char.GetNumericValue(objectForIndex.name[objectForIndex.name.Length - 8]);
-    }
-    public int GetCurrentObjectIndex()
-    {
-        return (int)char.GetNumericValue(gameObject.name[gameObject.name.Length - 8]);
-    }
 }
