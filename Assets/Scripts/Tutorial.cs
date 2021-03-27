@@ -128,24 +128,31 @@ public class Tutorial : MonoBehaviour
     }
     IEnumerator MidPlusTutorial()
     {
-        unclicked.SetActive(true);
+        Vector3 startTap_Click = new Vector3(-2.3f, 1.0f, -3.9f);
+        Instantiate(tutorialCandyPrefabs[1], prefPosition1, tutorialCandyPrefabs[1].transform.rotation);
         yield return new WaitForSeconds(tutorialTime);
+        unclicked.SetActive(true);
 
-        clicked.SetActive(true);
-        unclicked.SetActive(false);
-        clicked.transform.position = new Vector3(0.3f, 0, -0.51f);
-        int timeCounter = 17;
-        while (timeCounter-- > 0)
+        while (isTutorialActive)
         {
-            yield return new WaitForFixedUpdate();
-            clicked.transform.position = new Vector3(clicked.transform.position.x - 0.15f, 0, -0.51f); ;
+            unclicked.transform.position = startTap_Click;
+            clicked.transform.position = startTap_Click;
+            yield return new WaitForSeconds(tutorialTime / 2);
+
+            clicked.SetActive(true);
+            unclicked.SetActive(false);
+            int timeCounter = 18;
+            while (timeCounter-- > 0)
+            {
+                yield return new WaitForFixedUpdate();
+                clicked.transform.position = new Vector3(clicked.transform.position.x + 0.15f, startTap_Click.y, startTap_Click.z); ;
+            }
+
+            unclicked.SetActive(true);
+            unclicked.transform.position = clicked.transform.position;
+            clicked.SetActive(false);
+            yield return new WaitForSeconds(tutorialTime/2);
         }
-
-        unclicked.SetActive(true);
-        unclicked.transform.position = clicked.transform.position;
-        clicked.SetActive(false);
-        yield return new WaitForSeconds(tutorialTime);
-
         unclicked.SetActive(false);
     }
     IEnumerator ArrowControl()
