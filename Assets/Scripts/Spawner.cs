@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public CommonDataSettings commonSettings;
 
     public GameObject[] prefabsCandy;
-    
+
     private GameObject currentCandy;
     private Vector3 prefabPosition;
     private float rangeX = 7f;
@@ -40,25 +40,31 @@ public class Spawner : MonoBehaviour
     IEnumerator NextObjectSpawner()
 	{
         yield return new WaitForSeconds(1);         // delay before first spawn
-        while (gameController.isGameActive)
+
+        while (true)
         {
             yield return null;
-            if (currentCandy != null)
+            if (gameController.isGameActive)
             {
-                // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
-                
-                // !!! string between this comment allow make game more fast & difficult
-                if ((((prefabPosition.x != currentCandy.transform.position.x) || 
-                    (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
-                // !!! string between this comment allow make game more fast & difficult (instead string below)
-                    ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
+                if (currentCandy != null)
                 {
-                    yield return new WaitForSeconds(spawDelay);
-                    SpawnCandy();
+                    // when candy moved from it's instantiate position wait minFlyTime and spawn new candy
+
+                    // !!! string between this comment allow make game more fast & difficult
+                    if ((((prefabPosition.x != currentCandy.transform.position.x) ||
+                        (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
+                        // !!! string between this comment allow make game more fast & difficult (instead string below)
+                        ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
+                    {
+                        yield return new WaitForSeconds(spawDelay);
+                        SpawnCandy();
+                    }
                 }
+                else
+                    SpawnCandy();
             }
-            else
-                SpawnCandy();
+            else if (gameController.gameOver)
+                break;
         }
         // for exclude (by gravity fall) the last candy from fly to a receiver ->
         currentCandy.GetComponent<Rigidbody>().useGravity = true;   

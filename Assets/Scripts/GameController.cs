@@ -20,16 +20,13 @@ public class GameController : MonoBehaviour
     public AudioClip clickSound;
     public int gameSpeed = 230;
     public bool isGameActive;
+    public bool gameOver;
     public bool hungry;
     public int hungryTimer;
-
-    public GameObject unclicked;
-    public GameObject clicked;
 
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
     private int timer = 111;
-    private float tutorialTime = 0.5f;
     private int hungryTreshold = 15;
 
     //private Color gameOverLight = new Color(0.1f, 0, 0);
@@ -45,22 +42,14 @@ public class GameController : MonoBehaviour
         UpdateSpeedLevel();
         UpdateScore();
 
-        if (commonData.currentDifficulty != commonData.difficulty)
-        {
-            commonData.difficulty = commonData.currentDifficulty;
-            unclicked.SetActive(true);
-            unclicked.transform.position = new Vector3(0.3f, 0, -0.5f);
-            if (commonData.currentDifficulty == 1)
-                StartCoroutine(EasyTutorial());
-            else
-                StartCoroutine(MidPlusTutorial());
-        }
-
         hungry = false;
         hungryTimeText.text = "Hungry " + 0;
         hungryTimeText.color = Color.green;
         StartCoroutine(HungryTimer());
+        
         candyTime.fillAmount = 0;
+
+        gameOver = false;
     }
     void Update()
     {
@@ -95,19 +84,25 @@ public class GameController : MonoBehaviour
 
     IEnumerator CommonTimer()
     {
-        while (isGameActive)
+        while (true)
         {
-            timeText.text = "Time " + timer--;
             yield return new WaitForSeconds(1);
-            if (timer < 0)
-                GameOver();
+
+            if (isGameActive)
+            {
+                timeText.text = "Time " + timer--;
+                if (timer < 0)
+                    GameOver();
+            }
+            //else if (gameOver)
+            //    break;
         }
     }
     IEnumerator HungryTimer()
     {
-        while (isGameActive)
+        while (true)
         {
-            if (hungry)
+            if (isGameActive && hungry)
             {
                 hungryTimeText.text = "Hungry " + ++hungryTimer;
                 
@@ -139,6 +134,8 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         isGameActive = false;
+        gameOver = true;
+        StopAllCoroutines();
         restartBtn.gameObject.SetActive(true);
         quitBtn.gameObject.SetActive(true);
         verticalLight.enabled = false;
@@ -154,43 +151,5 @@ public class GameController : MonoBehaviour
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
         Application.Quit();
-    }
-    IEnumerator EasyTutorial()
-    {
-        yield return new WaitForSeconds(tutorialTime);
-
-        clicked.SetActive(true);
-        clicked.transform.position = new Vector3(0.3f, 0, -0.51f);
-        yield return new WaitForSeconds(tutorialTime/2);
-        
-        clicked.SetActive(false);
-        yield return new WaitForSeconds(tutorialTime);
-
-        unclicked.SetActive(false);
-        
-        isGameActive = true;
-    }
-    IEnumerator MidPlusTutorial()
-    {
-        yield return new WaitForSeconds(tutorialTime);
-
-        clicked.SetActive(true);
-        unclicked.SetActive(false);
-        clicked.transform.position = new Vector3(0.3f, 0, -0.51f);
-        int timeCounter = 17;
-        while (timeCounter-- > 0)
-        {
-            yield return new WaitForFixedUpdate();
-            clicked.transform.position = new Vector3(clicked.transform.position.x - 0.15f, 0, -0.51f); ;
-        }
-
-        unclicked.SetActive(true);
-        unclicked.transform.position = clicked.transform.position;
-        clicked.SetActive(false);
-        yield return new WaitForSeconds(tutorialTime);
-
-        unclicked.SetActive(false);
-
-        isGameActive = true;
     }
 }

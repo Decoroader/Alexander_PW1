@@ -68,7 +68,7 @@ public class HaloControl : MonoBehaviour
             if (candy.gameObject.CompareTag("DinamicObject") || candy.gameObject.CompareTag("ODinamicObject"))
             {
                 headColorContainer.Add(
-                    A_HeadColors[CandyPusher.GetCurrentObjectIndex(candy.gameObject)]);  // added current color to the 
+                    A_HeadColors[CandyReceiver_OutSphere.GetCurrentObjectIndex(candy.gameObject)]);  // added current color to the 
                 headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
 
                 Color tempColor = Get_HeadColor();
