@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3961909489135902230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b6fc7d10dff2b8488169b7f0cbf9c72, type: 3}
+  m_Script: {fileID: 11500000, guid: a1e8640352047834cb62df36c90759ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   prefabTransit: {fileID: 315463306164241321, guid: 8f17bf2883ae7e542b453e4ee06df623,
