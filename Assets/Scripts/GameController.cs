@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI profitText;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI hungryTimeText;
     public Image candyTime;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour
     private int maxSpeed = 50;
     private int timer = 111;
     private int hungryTreshold = 15;
+    private int fadeControl = 90;
 
     //private Color gameOverLight = new Color(0.1f, 0, 0);
     private AudioSource playerAudio;
@@ -40,12 +42,13 @@ public class GameController : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
         StartCoroutine(CommonTimer());
         UpdateSpeedLevel();
-        UpdateScore();
 
         hungry = false;
         hungryTimeText.text = "Hungry " + 0;
         hungryTimeText.color = Color.green;
         StartCoroutine(HungryTimer());
+
+        StartCoroutine(AlphaFade());
         
         candyTime.fillAmount = 0;
 
@@ -80,6 +83,20 @@ public class GameController : MonoBehaviour
     {
         score += level;
         scoreText.text = "Score: " + score;
+        profitText.color = Color.yellow;
+        profitText.text = "+" + level;
+        fadeControl = 0;
+    }
+
+    IEnumerator AlphaFade()
+	{
+		while (true)
+		{
+            if (profitText.color.a > 0)
+                profitText.color = new Color(profitText.color.r, profitText.color.g, profitText.color.b,
+                    Mathf.Cos(fadeControl++ * Mathf.PI / 180) * 1.5f);
+            yield return new WaitForFixedUpdate();
+        }
     }
 
     IEnumerator CommonTimer()
@@ -94,8 +111,6 @@ public class GameController : MonoBehaviour
                 if (timer < 0)
                     GameOver();
             }
-            //else if (gameOver)
-            //    break;
         }
     }
     IEnumerator HungryTimer()
