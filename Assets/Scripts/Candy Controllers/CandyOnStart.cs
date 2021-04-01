@@ -56,7 +56,7 @@ public class CandyOnStart : MonoBehaviour
             if (isPressedMouseButton)
             {
                 Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
-                if (commonData.difficulty == 1)
+                if (commonData.difficulty <= 2)
                 {
                     transform.position = new Vector3(cursor.x,
                             transform.position.y, transform.position.z);

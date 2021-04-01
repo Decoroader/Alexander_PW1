@@ -15,18 +15,14 @@ public class Spawner : MonoBehaviour
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
     private float spawDelay = 0.21f;
-    private bool midDifficulty;
-    //private 
+    private int difficulty;
 
     private int prefabIndex; 
 
     void Start()
     {
         StartCoroutine(NextObjectSpawner());
-        if (commonSettings.currentDifficulty >= 2)
-            midDifficulty = true;
-        else
-            midDifficulty = false;
+        difficulty = commonSettings.currentDifficulty;
     }
 
     private Vector3 PrefabPosition()
@@ -65,7 +61,11 @@ public class Spawner : MonoBehaviour
     }
     private void SpawnCandy()
 	{
-        prefabPosition = PrefabPosition();
+        if (difficulty >= 2)
+            prefabPosition = PrefabPosition();
+        else
+            prefabPosition = commonSettings.easyCandyPosition;
+
         prefabIndex = Random.Range(0, prefabsCandy.Length);
 
         currentCandy = Instantiate(prefabsCandy[prefabIndex], prefabPosition, prefabsCandy[prefabIndex].transform.rotation) as GameObject;
@@ -88,9 +88,9 @@ public class Spawner : MonoBehaviour
 
                     // !!! string between this comment allow make game more fast & difficult
                     if ((((prefabPosition.x != currentCandy.transform.position.x) ||
-                        (prefabPosition.z != currentCandy.transform.position.z)) && midDifficulty) ||
+                        (prefabPosition.z != currentCandy.transform.position.z)) && difficulty == 3) ||
                         // !!! string between this comment allow make game more fast & difficult (instead string below)
-                        ((prefabPosition.z != currentCandy.transform.position.z) && !midDifficulty))
+                        ((prefabPosition.z != currentCandy.transform.position.z) && difficulty <= 2))
                     {
                         yield return new WaitForSeconds(spawDelay);
                         SpawnCandy();

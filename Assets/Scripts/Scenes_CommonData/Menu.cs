@@ -35,7 +35,6 @@ public class Menu : MonoBehaviour
         playerAudio.PlayOneShot(clickSound, 1.0f);
 
         commonData.currentDifficulty = 3;
-        commonData.sorry = true;
     }
     public void BackGround()
     {
