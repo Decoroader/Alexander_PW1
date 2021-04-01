@@ -9,8 +9,11 @@ public class Tutorial : MonoBehaviour
     public CommonDataSettings commonData;
     public GameController gameController;
     public Spawner spawner;
+    public Light pointCandyLight;
+    public Light spotReceiverLight;
 
     public GameObject[] tutorialCandyPrefabs;
+    public GameObject tutorialReceiver;
 
     public GameObject unclicked;
     public GameObject clicked;
@@ -20,40 +23,32 @@ public class Tutorial : MonoBehaviour
     private float tutorialTime = 0.5f;
     private bool isPressedMouseButton;
     private bool isTutorialActive;
-    private Vector3 prefPosition1 = new Vector3(-2.5f, 1.0f, -3.0f);
-    private Vector3 clickPosition1 = new Vector3(+0.3f, 0.3f, -0.57f);
+    private Vector3 clickPosition = new Vector3(+0.3f, 0.33f, -0.7f);
 
 #if !flagIlliyaAwesomeVertion
     private Rigidbody currRigid;
     private float speedToReceiver = 4.5f;
-    
-    private Vector3 prefPosition0 = new Vector3(+2.5f, 1.0f, -3.0f);
    
-    private Vector3 prefabPosition;
-    private Vector3 clickPosition0 = new Vector3(-4.75f, 0.3f, -0.57f);
-    private Vector3 clickPosition;
-
-    private Vector3 redReseiverArrow0 = new Vector3(-5.97f, +2.3f, -0.3f);
-    private Vector3 redCandyArrow0 = new Vector3(+3.39f, +1.89f, -3.0f);
-    private Vector3 blueReseiverArrow1 = new Vector3(+1.0f, +2.3f, -0.3f);
-    private Vector3 blueCandyArrow1 = new Vector3(-3.3f, +1.75f, -3.0f);
-    private Vector3 reseiverArrowPosition;
-    private Vector3 candyArrowPosition;
-    private GameObject reseiverArrow;
-    private GameObject candyArrow;
+    private Vector3 candyPosition;
+    //private Vector3 clickPosition0 = new Vector3(-4.75f, 0.3f, -0.57f);
+    //private Vector3 clickPosition;
+    private Vector3 scaledReceiver = new Vector3(1.8f, 1.8f, 1.2f);
+    private Vector3 initReceiverScale;
+    private Coroutine easyTutorial = null;
 #endif
 
     void Awake()
     {
-        
+        candyPosition = commonData.easyCandyPosition;
+        initReceiverScale = tutorialReceiver.transform.localScale;
         if (commonData.currentDifficulty != commonData.difficulty)
         {
             isTutorialActive = true;
             gameController.isGameActive = false;
 
             commonData.difficulty = commonData.currentDifficulty;
-            if (commonData.currentDifficulty == 1)
-                StartCoroutine(EasyTutorial());
+            if (commonData.currentDifficulty <= 2)
+                easyTutorial = StartCoroutine(EasyTutorial());
             else
                 StartCoroutine(MidPlusTutorial());
         }
@@ -76,6 +71,11 @@ public class Tutorial : MonoBehaviour
             isTutorialActive = false;
             clicked.SetActive(false);
             unclicked.SetActive(false);
+            tutorialReceiver.transform.localScale = initReceiverScale;
+            pointCandyLight.enabled = false;
+            spotReceiverLight.enabled = false;
+            if(easyTutorial != null)
+                StopCoroutine(easyTutorial);
 
             StartCoroutine(Delay_StartGame());
         }
@@ -108,89 +108,61 @@ public class Tutorial : MonoBehaviour
     // !!!!!!!!!!!!!!!Illiya version!!!!!!!!!!!!!!!!!!
 #else
 
-    // ------> arrows version <--------
-    private int IndexGenerator()
-	{
-        return Random.Range(0, 2);
-	}
-
+    // ------> scale version <--------
 	IEnumerator EasyTutorial()
 	{
-		while (isTutorialActive)
+        Vector3 initCandyScale;
+        float scaleCoeff = 1.2f;
+
+        while (isTutorialActive)
 		{
-			int prefIndex = IndexGenerator();
-			if (prefIndex == 0)
-			{
-				prefabPosition = prefPosition0;
-				clickPosition = clickPosition0;
-				candyArrowPosition = redCandyArrow0;
-				candyArrow = rightLeftArrow;
-				reseiverArrowPosition = redReseiverArrow0;
-				reseiverArrow = leftRightArrow;
-			}
-			else
-			{
-				prefabPosition = prefPosition1;
-				clickPosition = clickPosition1;
-				candyArrowPosition = blueCandyArrow1;
-				candyArrow = leftRightArrow;
-				reseiverArrowPosition = blueReseiverArrow1;
-				reseiverArrow = rightLeftArrow;
-			}
-			candyArrow.SetActive(false);
-			reseiverArrow.SetActive(false);
-
 			GameObject currentTutCandy =
-				Instantiate(tutorialCandyPrefabs[prefIndex], prefabPosition, tutorialCandyPrefabs[prefIndex].transform.rotation);
+				Instantiate(tutorialCandyPrefabs[1], candyPosition, tutorialCandyPrefabs[1].transform.rotation);
 			currRigid = currentTutCandy.GetComponent<Rigidbody>();
-			StartCoroutine(ArrowControl());                 // blinking arrows
+            initCandyScale = currentTutCandy.transform.localScale;
+            yield return new WaitForSeconds(tutorialTime);
+
+            pointCandyLight.enabled = true;
+            currentTutCandy.transform.localScale = 
+                new Vector3(initCandyScale.x * scaleCoeff, initCandyScale.y * scaleCoeff, initCandyScale.z * scaleCoeff);
 			yield return new WaitForSeconds(tutorialTime);
 
-			unclicked.SetActive(true);
-			unclicked.transform.position = clickPosition;
-			yield return new WaitForSeconds(tutorialTime);
+            pointCandyLight.enabled = false;
+            spotReceiverLight.enabled = true;
+            currentTutCandy.transform.localScale = initCandyScale;
+            tutorialReceiver.transform.localScale = scaledReceiver;
+            yield return new WaitForSeconds(tutorialTime);
 
-			clicked.SetActive(true);
-			clicked.transform.position = clickPosition;
-			currentTutCandy.transform.position = new Vector3(clickPosition.x, prefabPosition.y, prefabPosition.z);
+            unclicked.SetActive(true);
+            unclicked.transform.position = clickPosition;
+            yield return new WaitForSeconds(tutorialTime);
+
+            clicked.SetActive(true);
+            unclicked.SetActive(false);
+            clicked.transform.position = clickPosition;
+			currentTutCandy.transform.position = new Vector3(clickPosition.x - 0.25f, candyPosition.y, candyPosition.z);
 			currRigid.AddForce(Vector3.forward * speedToReceiver, ForceMode.Impulse); // is run
 																					  // move the candy to the receiverside
 			yield return new WaitForSeconds(tutorialTime / 2);
 
-			clicked.SetActive(false);
-			yield return new WaitForSeconds(tutorialTime);
+            unclicked.SetActive(true);
+            clicked.SetActive(false);
+            tutorialReceiver.transform.localScale = initReceiverScale;
+            yield return new WaitForSeconds(tutorialTime / 2);
 
-			unclicked.SetActive(false);
-		}
-	}
-	// ------> arrows version <--------
-
-	IEnumerator ArrowControl()
-    {
-        candyArrow.transform.position = candyArrowPosition;
-        yield return new WaitForSeconds(tutorialTime/4);
-        candyArrow.SetActive(true);
-        yield return new WaitForSeconds(tutorialTime / 4);
-        candyArrow.SetActive(false);
-        yield return new WaitForSeconds(tutorialTime / 4);
-        candyArrow.SetActive(true);
-        yield return new WaitForSeconds(tutorialTime / 4);
-        candyArrow.SetActive(false);
-
-        reseiverArrow.transform.position = reseiverArrowPosition;
-        reseiverArrow.SetActive(true);
-        yield return new WaitForSeconds(tutorialTime / 4);
-        reseiverArrow.SetActive(false);
-        yield return new WaitForSeconds(tutorialTime / 4);
-        reseiverArrow.SetActive(true);
-        yield return new WaitForSeconds(tutorialTime / 4);
-        reseiverArrow.SetActive(false);
+            unclicked.SetActive(false);
+            yield return new WaitForSeconds(tutorialTime / 2);
+         
+            spotReceiverLight.enabled = false;
+        }
     }
+	// ------> scale version <--------
+
 #endif
     IEnumerator MidPlusTutorial()
     {
         Vector3 startTap_Click = new Vector3(-2.3f, 1.0f, -3.9f);
-        Instantiate(tutorialCandyPrefabs[1], prefPosition1, tutorialCandyPrefabs[1].transform.rotation);
+        Instantiate(tutorialCandyPrefabs[1], candyPosition, tutorialCandyPrefabs[1].transform.rotation);
         yield return new WaitForSeconds(tutorialTime);
         unclicked.SetActive(true);
 
