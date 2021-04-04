@@ -14,72 +14,70 @@ public class Tutorial : MonoBehaviour
 
     public GameObject[] tutorialCandyPrefabs;
     public GameObject tutorialReceiver;
+    public GameObject tutorialTubeReceiver;     // for detach(till tutorial works) from the Receiver to avoid tube scaling
 
     public GameObject unclicked;
     public GameObject clicked;
-    public GameObject leftRightArrow;
-    public GameObject rightLeftArrow;
+    public GameObject playButton;
 
+    private GameObject currentTutCandy;
+    private Vector3 initCandyScale;
+    private float scaleCoeff = 1.3f;
+    private Rigidbody currRigid;
     private float tutorialTime = 0.5f;
-    private bool isPressedMouseButton;
-    private bool isTutorialActive;
     private Vector3 clickPosition = new Vector3(+0.3f, 0.33f, -0.7f);
 
 #if !flagIlliyaAwesomeVertion
-    private Rigidbody currRigid;
     private float speedToReceiver = 4.5f;
    
     private Vector3 candyPosition;
-    //private Vector3 clickPosition0 = new Vector3(-4.75f, 0.3f, -0.57f);
-    //private Vector3 clickPosition;
     private Vector3 scaledReceiver = new Vector3(1.8f, 1.8f, 1.2f);
     private Vector3 initReceiverScale;
-    private Coroutine easyTutorial = null;
+    private Coroutine currentTutorial = null;
 #endif
 
     void Awake()
     {
+        // TODO: change tutorial hand
         candyPosition = commonData.easyCandyPosition;
         initReceiverScale = tutorialReceiver.transform.localScale;
         if (commonData.currentDifficulty != commonData.difficulty)
         {
-            isTutorialActive = true;
             gameController.isGameActive = false;
 
             commonData.difficulty = commonData.currentDifficulty;
             if (commonData.currentDifficulty <= 2)
-                easyTutorial = StartCoroutine(EasyTutorial());
+                currentTutorial = StartCoroutine(EasyTutorial());
             else
-                StartCoroutine(MidPlusTutorial());
+                currentTutorial = StartCoroutine(HardTutorial());
+            tutorialTubeReceiver.transform.parent = null;
         }
         else
         {
+            playButton.SetActive(false);
             gameController.isGameActive = true;
-            isTutorialActive = false;
             GetComponent<Tutorial>().enabled = false;
         }
     }
+    
+    public void PlayChecker()
+	{
+        clicked.SetActive(false);
+        unclicked.SetActive(false);
+        tutorialReceiver.transform.localScale = initReceiverScale;
+        tutorialTubeReceiver.transform.parent = tutorialReceiver.transform;
+        pointCandyLight.enabled = false;
+        spotReceiverLight.enabled = false;
+        if (currentTutorial != null)
+            StopCoroutine(currentTutorial);
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && !isPressedMouseButton)
-		{
-            isPressedMouseButton = true;
-        }
-		if (isPressedMouseButton)
-		{
-            isTutorialActive = false;
-            clicked.SetActive(false);
-            unclicked.SetActive(false);
-            tutorialReceiver.transform.localScale = initReceiverScale;
-            pointCandyLight.enabled = false;
-            spotReceiverLight.enabled = false;
-            if(easyTutorial != null)
-                StopCoroutine(easyTutorial);
+        Destroy(currentTutCandy, 0.1f);
 
-            StartCoroutine(Delay_StartGame());
-        }
+        StartCoroutine(Delay_StartGame());
+
+        playButton.SetActive(false);
     }
+
 #if flagIlliyaAwesomeVertion
     // !!!!!!!!!!!!!!!Illiya version!!!!!!!!!!!!!!!!!!
     IEnumerator EasyTutorial()
@@ -89,7 +87,7 @@ public class Tutorial : MonoBehaviour
 
         unclicked.SetActive(true);
         unclicked.transform.position = clickPosition1;
-        while (isTutorialActive)
+        while (true)
         {
             yield return new WaitForSeconds(tutorialTime);
 
@@ -103,23 +101,24 @@ public class Tutorial : MonoBehaviour
             yield return new WaitForSeconds(tutorialTime);
 
         }
-        unclicked.SetActive(false);
     }
     // !!!!!!!!!!!!!!!Illiya version!!!!!!!!!!!!!!!!!!
 #else
 
-    // ------> scale version <--------
-	IEnumerator EasyTutorial()
+    private void GetCandyAndData(Vector3 candyPos)
 	{
-        Vector3 initCandyScale;
-        float scaleCoeff = 1.2f;
-
-        while (isTutorialActive)
+        currentTutCandy = 
+            Instantiate(tutorialCandyPrefabs[1], candyPos, tutorialCandyPrefabs[1].transform.rotation);
+        currRigid = currentTutCandy.GetComponent<Rigidbody>();
+        initCandyScale = currentTutCandy.transform.localScale;
+    }
+    // ------> scale version <--------
+    IEnumerator EasyTutorial()
+	{
+        while (true)
 		{
-			GameObject currentTutCandy =
-				Instantiate(tutorialCandyPrefabs[1], candyPosition, tutorialCandyPrefabs[1].transform.rotation);
-			currRigid = currentTutCandy.GetComponent<Rigidbody>();
-            initCandyScale = currentTutCandy.transform.localScale;
+            GetCandyAndData(candyPosition);
+			
             yield return new WaitForSeconds(tutorialTime);
 
             pointCandyLight.enabled = true;
@@ -159,34 +158,50 @@ public class Tutorial : MonoBehaviour
 	// ------> scale version <--------
 
 #endif
-    IEnumerator MidPlusTutorial()
+    IEnumerator HardTutorial()
     {
-        Vector3 startTap_Click = new Vector3(-2.3f, 1.0f, -3.9f);
-        Instantiate(tutorialCandyPrefabs[1], candyPosition, tutorialCandyPrefabs[1].transform.rotation);
-        yield return new WaitForSeconds(tutorialTime);
-        unclicked.SetActive(true);
-
-        while (isTutorialActive)
+        Vector3 startHardPosition = new Vector3(-2.3f, 1.0f, -5.5f);
+        Vector3 startCandyPositionHard = 
+            new Vector3(startHardPosition.x - 0.2f, startHardPosition.y, startHardPosition.z + 1.5f );
+        
+        while (true)
         {
-            unclicked.transform.position = startTap_Click;
-            clicked.transform.position = startTap_Click;
+            GetCandyAndData(startCandyPositionHard);
+            yield return new WaitForSeconds(tutorialTime);
+            
+            currentTutCandy.transform.localScale =
+                new Vector3(initCandyScale.x * scaleCoeff, initCandyScale.y * scaleCoeff, initCandyScale.z * scaleCoeff);
+            yield return new WaitForSeconds(tutorialTime);
+
+            currentTutCandy.transform.localScale = initCandyScale;
+            unclicked.transform.position = startHardPosition;
+            clicked.transform.position = startHardPosition;
+            unclicked.SetActive(true);
             yield return new WaitForSeconds(tutorialTime / 2);
 
+            tutorialReceiver.transform.localScale = scaledReceiver;
+            spotReceiverLight.enabled = true;
             clicked.SetActive(true);
             unclicked.SetActive(false);
-            int timeCounter = 18;
+            int timeCounter = 53;
+            float shifter = 0.05f;
             while (timeCounter-- > 0)
             {
                 yield return new WaitForFixedUpdate();
-                clicked.transform.position = new Vector3(clicked.transform.position.x + 0.15f, startTap_Click.y, startTap_Click.z); ;
+                clicked.transform.position = 
+                    new Vector3(clicked.transform.position.x + shifter, startHardPosition.y, startHardPosition.z);
+                currentTutCandy.transform.position = 
+                    new Vector3(currentTutCandy.transform.position.x + shifter, startCandyPositionHard.y, startCandyPositionHard.z);
             }
+            currRigid.AddForce(Vector3.forward * speedToReceiver, ForceMode.Impulse);
+            tutorialReceiver.transform.localScale = initReceiverScale;
+            spotReceiverLight.enabled = false;
 
             unclicked.SetActive(true);
             unclicked.transform.position = clicked.transform.position;
             clicked.SetActive(false);
             yield return new WaitForSeconds(tutorialTime / 2);
         }
-        unclicked.SetActive(false);
     }
     IEnumerator Delay_StartGame() 
     {
