@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour
         fadeControl = 0;
     }
 
-    IEnumerator AlphaFade()
+    IEnumerator AlphaFade() // provide lerp fading the number of the hit candy profit  
 	{
 		while (true)
 		{
@@ -119,17 +119,14 @@ public class GameController : MonoBehaviour
         {
             if (isGameActive && hungry)
             {
-                hungryTimeText.text = "Hungry " + ++hungryTimer;
-                
                 if(hungryTimer >= (hungryTreshold / 3) && hungryTimer < (hungryTreshold * 2 / 3))
                     hungryTimeText.color = Color.yellow;
                 else if(hungryTimer >= (hungryTreshold * 2 / 3))
                     hungryTimeText.color = Color.red;
                 else
                     hungryTimeText.color = Color.green;
-
-                if (hungryTimer < 0)
-                    GameOver();
+             
+                hungryTimeText.text = "Hungry " + ++hungryTimer;
             }
             yield return new WaitForSeconds(1);
         }
@@ -146,7 +143,8 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void GameOver()
+    // test comment
+    public void GameOver()      
     {
         isGameActive = false;
         gameOver = true;
