@@ -13,12 +13,11 @@ GameObject:
   - component: {fileID: 6123546025082619297}
   - component: {fileID: 3444022280815424737}
   - component: {fileID: 8479397223635064390}
-  - component: {fileID: 3314224809549083197}
   - component: {fileID: 52756597444741571}
   - component: {fileID: 3624504135333313557}
   - component: {fileID: 1669798270216163142}
   m_Layer: 0
-  m_Name: lollipop12
+  m_Name: lollipop12_2
   m_TagString: ODinamicObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,19 +114,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3314224809549083197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6123546025084623713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ba6d6472eca90c448941076fc2e757c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  commonData: {fileID: 11400000, guid: c7e933de961464245be74bed9743bfe3, type: 2}
 --- !u!114 &52756597444741571
 MonoBehaviour:
   m_ObjectHideFlags: 0
