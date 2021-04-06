@@ -2,7 +2,7 @@
 
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class Tutorial : MonoBehaviour
 
     public GameObject unclicked;
     public GameObject clicked;
-    public GameObject playButton;
+    public Button playButton;
 
     private GameObject currentTutCandy;
     private Vector3 initCandyScale;
@@ -51,10 +51,11 @@ public class Tutorial : MonoBehaviour
             else
                 currentTutorial = StartCoroutine(HardTutorial());
             tutorialTubeReceiver.transform.parent = null;
+            playButton.gameObject.SetActive(true);
         }
         else
         {
-            playButton.SetActive(false);
+            playButton.gameObject.SetActive(false);
             gameController.isGameActive = true;
             GetComponent<Tutorial>().enabled = false;
         }
@@ -75,7 +76,7 @@ public class Tutorial : MonoBehaviour
 
         StartCoroutine(Delay_StartGame());
 
-        playButton.SetActive(false);
+        playButton.gameObject.SetActive(false);
     }
 
 #if flagIlliyaAwesomeVertion

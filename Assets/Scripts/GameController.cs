@@ -13,8 +13,8 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI hungryTimeText;
     public Image candyTime;
-    public Button restartBtn;
-    public Button quitBtn;
+    public Button playBtn;
+    public Button optionsBtn;
     public Light verticalLight;
     public Light horizontalLight;
     public Light pointLight;
@@ -142,27 +142,24 @@ public class GameController : MonoBehaviour
         candyTimer = null;
     }
 
-
-    // test comment
     public void GameOver()      
     {
         isGameActive = false;
         gameOver = true;
         StopAllCoroutines();
-        restartBtn.gameObject.SetActive(true);
-        quitBtn.gameObject.SetActive(true);
+        playBtn.gameObject.SetActive(true);
         verticalLight.enabled = false;
         horizontalLight.enabled = false;
         pointLight.enabled = false;
     }
-    public void RestartGame()
+    public void PlayGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
         commonData.reload = true;
     }
-    public void QuitGame()
+    public void OptionsGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
-        Application.Quit();
+        commonData.toMenu = true;
     }
 }
