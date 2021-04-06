@@ -50,7 +50,7 @@ public class CandyOnStart : MonoBehaviour
             { 
                 initCursorCoordinateX = camMain.ScreenToWorldPoint(Input.mousePosition).x; // get the X coordinate of the cursor
                 isPressedMouseButton = true;
-                if (commonData.difficulty > 1)
+                if (commonData.difficulty == 3)
                     StartCoroutine(WaitForPlayerDecision());
             }
             if (isPressedMouseButton)

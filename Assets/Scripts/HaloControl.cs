@@ -51,6 +51,7 @@ public class HaloControl : MonoBehaviour
         ColoringHead(trueColor);
     }
 
+    // !!!!!!!!!!!!! don't delete !!!!!!!!!!!!!!!!!!!!!!!!!! this update for ideal color test
     //void Update()
     //{
     //    if (Input.GetKeyUp(KeyCode.S))
