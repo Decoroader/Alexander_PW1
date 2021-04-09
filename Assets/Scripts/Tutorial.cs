@@ -18,7 +18,7 @@ public class Tutorial : MonoBehaviour
 
     public GameObject unclicked;
     public GameObject clicked;
-    public Button playButton;
+    public Button tutorialPlayButton;
 
     private GameObject currentTutCandy;
     private Vector3 initCandyScale;
@@ -41,6 +41,7 @@ public class Tutorial : MonoBehaviour
         // TODO: change tutorial hand
         candyPosition = commonData.easyCandyPosition;
         initReceiverScale = tutorialReceiver.transform.localScale;
+
         if (commonData.currentDifficulty != commonData.difficulty)
         {
             gameController.isGameActive = false;
@@ -51,16 +52,17 @@ public class Tutorial : MonoBehaviour
             else
                 currentTutorial = StartCoroutine(HardTutorial());
             tutorialTubeReceiver.transform.parent = null;
-            playButton.gameObject.SetActive(true);
+            tutorialPlayButton.gameObject.SetActive(true);
         }
         else
         {
-            playButton.gameObject.SetActive(false);
+            tutorialPlayButton.gameObject.SetActive(false);
             gameController.isGameActive = true;
             GetComponent<Tutorial>().enabled = false;
         }
     }
-    
+
+	
     public void PlayChecker()
 	{
         clicked.SetActive(false);
@@ -76,7 +78,7 @@ public class Tutorial : MonoBehaviour
 
         StartCoroutine(Delay_StartGame());
 
-        playButton.gameObject.SetActive(false);
+        tutorialPlayButton.gameObject.SetActive(false);
     }
 
 #if flagIlliyaAwesomeVertion
