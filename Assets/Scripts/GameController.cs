@@ -3,6 +3,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/// <summary>
+/// UI in the game and timers control 
+/// mb should it called UIConrol?
+/// </summary>
 public class GameController : MonoBehaviour
 {
     public CommonDataSettings commonData;
@@ -24,6 +28,7 @@ public class GameController : MonoBehaviour
     public bool gameOver;
     public bool hungry;
     public int hungryTimer;
+    public GameObject backgroundPlayerPrefab;
 
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
@@ -53,6 +58,8 @@ public class GameController : MonoBehaviour
         candyTime.fillAmount = 0;
 
         gameOver = false;
+
+        Instantiate(backgroundPlayerPrefab);
     }
     void Update()
     {

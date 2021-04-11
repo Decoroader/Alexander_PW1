@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour
     public void FromMenuToGame()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
-        commonData.toGame = true;
+        commonData.fromMenu_toGame = true;
     }
     public void LowDifficulty()
 	{
@@ -45,9 +45,10 @@ public class Menu : MonoBehaviour
         commonData.currentDifficulty = 3;
         FrameSetter(commonData.currentDifficulty);
     }
-    public void BackGround()
+    public void BackgroundMusic()
     {
-        commonData.sorry = true;
+        playerAudio.PlayOneShot(clickSound, 1.0f);
+        commonData.toMusic = true;
     }
     public void Quit()
     {

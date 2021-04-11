@@ -26,13 +26,27 @@ public class MainScene : MonoBehaviour
             commonData.toMenu = false;
             StartCoroutine(SwitchScene(commonData.GAME, commonData.MENU));
         }
-        if (commonData.toGame)
+        
+        if (commonData.toMusic)
 		{
-            commonData.toGame = false;
+            commonData.toMusic = false;
+            StartCoroutine(SwitchScene(commonData.MENU, commonData.MUSIC));
+        }
+
+        if (commonData.fromMenu_toGame)
+		{
+            commonData.fromMenu_toGame = false;
             StartCoroutine(SwitchScene(commonData.MENU, commonData.GAME));
             //if (SceneManager.GetSceneByBuildIndex(commonData.SORRY) != null)
             //    showTimerSorryScene = 0;
         }
+
+        if (commonData.fromMusic_toGame)
+        {
+            commonData.fromMusic_toGame = false;
+            StartCoroutine(SwitchScene(commonData.MUSIC, commonData.GAME));
+        }
+
         if (commonData.sorry)
             StartCoroutine(SorryScene());
         if (commonData.reload)
@@ -50,6 +64,7 @@ public class MainScene : MonoBehaviour
     IEnumerator StartGame()
     {
         commonData.reload = false;
+        // if (SceneManager.GetActiveScene().buildIndex == 1) // this line for optimization as avoid strings in a code
         if (SceneManager.GetActiveScene().name == "MyGame")
             yield return SceneManager.UnloadSceneAsync(commonData.GAME);
         yield return SceneManager.LoadSceneAsync(commonData.GAME, LoadSceneMode.Additive);

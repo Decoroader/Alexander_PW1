@@ -10,9 +10,13 @@ public class CommonDataSettings : ScriptableObject
     public readonly int GAME = 1;
     public readonly int MENU = 2;
     public readonly int SORRY = 3;
+    public readonly int MUSIC = 4;
 
-    public bool toGame;
+    public int musicIndex;
+    public bool fromMenu_toGame;
+    public bool fromMusic_toGame;
     public bool toMenu;
+    public bool toMusic;
     public bool sorry;
     public bool reload;
     public bool startCandyTime;
@@ -25,7 +29,7 @@ public class CommonDataSettings : ScriptableObject
         difficulty = 0;
         currentDifficulty = 1;
 
-        toGame = false;
+        fromMenu_toGame = false;
         toMenu = false;
         sorry = false;
         reload = false;
