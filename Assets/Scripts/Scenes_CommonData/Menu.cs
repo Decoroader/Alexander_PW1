@@ -27,24 +27,13 @@ public class Menu : MonoBehaviour
         playerAudio.PlayOneShot(clickSound, 1.0f);
         commonData.fromMenu_toGame = true;
     }
-    public void LowDifficulty()
-	{
-        playerAudio.PlayOneShot(clickSound, 1.0f);
-        commonData.currentDifficulty = 1;
-        FrameSetter(commonData.currentDifficulty);
-    }
-    public void MidDifficulty()
-	{
-        playerAudio.PlayOneShot(clickSound, 1.0f);
-        commonData.currentDifficulty = 2;
-        FrameSetter(commonData.currentDifficulty);
-    }
-    public void HardDifficulty()
+    public void ChooseDifficulty(int chosenDifficulty)
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
-        commonData.currentDifficulty = 3;
+        commonData.currentDifficulty = chosenDifficulty;
         FrameSetter(commonData.currentDifficulty);
     }
+   
     public void BackgroundMusic()
     {
         playerAudio.PlayOneShot(clickSound, 1.0f);
