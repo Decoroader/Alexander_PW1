@@ -14,7 +14,7 @@ public class CandyDestroyer : MonoBehaviour
     private float speedScaleFall = 0.001333333f;
     private float dissolutionPeriod = 5f;
     private float hightBound = 17;
-    private float lowBound = -5;
+    private float lowBound = -8;
 
     private Rigidbody currentRigid;
     private Quaternion initSmokeRotation;
