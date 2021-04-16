@@ -36,14 +36,17 @@ public class MainScene : MonoBehaviour
         if (commonData.fromMenu_toGame)
 		{
             commonData.fromMenu_toGame = false;
+            if(commonData.currentDifficulty == commonData.difficulty)
+                commonData.difficulty += 1;
+
             StartCoroutine(SwitchScene(commonData.MENU, commonData.GAME));
-            //if (SceneManager.GetSceneByBuildIndex(commonData.SORRY) != null)
-            //    showTimerSorryScene = 0;
         }
 
         if (commonData.fromMusic_toGame)
         {
             commonData.fromMusic_toGame = false;
+            if (commonData.currentDifficulty == commonData.difficulty)
+                commonData.difficulty += 1;
             StartCoroutine(SwitchScene(commonData.MUSIC, commonData.GAME));
         }
 
