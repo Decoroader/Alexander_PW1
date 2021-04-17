@@ -44,15 +44,12 @@ public class Tutorial : MonoBehaviour
 
         if (commonData.currentDifficulty != commonData.difficulty)
         {
+            commonData.difficulty = commonData.currentDifficulty;
+
+            tutorialPlayButton.gameObject.SetActive(true);
             gameController.isGameActive = false;
 
-            commonData.difficulty = commonData.currentDifficulty;
-            if (commonData.currentDifficulty <= 2)
-                currentTutorial = StartCoroutine(EasyTutorial());
-            else
-                currentTutorial = StartCoroutine(HardTutorial());
-            tutorialTubeReceiver.transform.parent = null;
-            tutorialPlayButton.gameObject.SetActive(true);
+            StartCoroutine(Delay_StartTutorial());
         }
         else
         {
@@ -205,6 +202,15 @@ public class Tutorial : MonoBehaviour
             clicked.SetActive(false);
             yield return new WaitForSeconds(tutorialTime / 2);
         }
+    }
+    IEnumerator Delay_StartTutorial() 
+    {
+        yield return null;
+        if (commonData.currentDifficulty <= 2)
+            currentTutorial = StartCoroutine(EasyTutorial());
+        else
+            currentTutorial = StartCoroutine(HardTutorial());
+        tutorialTubeReceiver.transform.parent = null;
     }
     IEnumerator Delay_StartGame() 
     {
