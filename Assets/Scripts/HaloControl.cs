@@ -14,11 +14,13 @@ public class HaloControl : MonoBehaviour
 
 
     private Color[] A_HeadColors = new Color[5] {
-        new Color(1, 0, 0),
-        new Color(0, 0.7f, 0),
-        new Color(0, 0, 1),
-        new Color(0.15f, 0.138f, 0.0025f),
-        new Color(0.5f, 0.445f, 0.0025f),
+        new Color(0.91f, 0, 0),
+        new Color(0, 0.75f, 0),
+        new Color(0, 0, 1.0f),
+        new Color(0.91f, 0, 0),
+        new Color(0, 0.75f, 0)
+        //new Color(0.15f, 0.138f, 0.0025f),
+        //new Color(0.5f, 0.445f, 0.0025f),
     };
 
     [SerializeField] private List<Color> headColorContainer = new List<Color> { };
@@ -26,7 +28,9 @@ public class HaloControl : MonoBehaviour
     private Color trueColor;
     private AudioSource playerAudio;
 
-    private float tresholdColor = 3.9f;
+    private float thresholdColorR = 3.65f;
+    private float thresholdColorG = 3.01f;
+    private float thresholdColorB = 4.01f;
     private int dearthTime = 3;
     private bool isCollisionAble = true;
     private readonly int timeOfCollisionLock = 15;
@@ -68,28 +72,37 @@ public class HaloControl : MonoBehaviour
         {
             if (candy.gameObject.CompareTag("DinamicObject") || candy.gameObject.CompareTag("ODinamicObject"))
             {
-                headColorContainer.Add(
-                    A_HeadColors[ObjectColorIndex.GetCurrentObjectIndex(candy.gameObject)]);  // added current color to the 
-                headColorContainer.RemoveAt(0);                                 // removed 1st element for save List lenght
-
-                Color tempColor = Get_HeadColor();
-                ColoringHead(tempColor);
-
-                if (tempColor == trueColor)
+                int rgbIndex = ObjectColorIndex.GetCurrentObjectIndex(candy.gameObject);
+                AudioClip forPlayClip;
+                if (rgbIndex <= 2)                  // check r, g, b colors only
                 {
-                    FillSaffleList();
-                    gameController.UpdateSpeedLevel();
-                    playerAudio.PlayOneShot(omnomWowSound, 1.0f);      // call om-nom wow sound
-                }
-                else if(tempColor.r > tresholdColor || tempColor.g > (tresholdColor*0.71f) || tempColor.b > tresholdColor)
-                {
-                    gameController.GameOver();
-                    playerAudio.PlayOneShot(overColorSound, 1.0f);      // call overColor sound
+                    headColorContainer.Add(
+                        A_HeadColors[rgbIndex]);    // current color added the last element for save List lenght
+                    headColorContainer.RemoveAt(0); // for save List lenght 1st element removed
+                
 
-                    comAnimator.SetTrigger("over_trg"); 
+                    Color tempColor = Get_HeadColor();  
+                    ColoringHead(tempColor);
+
+                    if (tempColor == trueColor)
+                    {
+                        FillSaffleList();
+                        gameController.UpdateSpeedLevel();
+                        forPlayClip = omnomWowSound;                    // call om-nom wow sound
+                    }
+                    else if (tempColor.r > (thresholdColorR) || tempColor.g > (thresholdColorG) || tempColor.b > thresholdColorB)
+                    {
+                        gameController.GameOver();
+                        forPlayClip = overColorSound;                   // call overColor sound
+
+                        comAnimator.SetTrigger("over_trg");
+                    }
+                    else
+                        forPlayClip = omnomRegularSound;                // call om-nom regular sound
                 }
                 else
-                    playerAudio.PlayOneShot(omnomRegularSound, 0.25f);  // call om-nom regular sound
+                    forPlayClip = omnomRegularSound;                // call om-nom regular sound
+                playerAudio.PlayOneShot(forPlayClip, 0.25f);        // play accordly voice
 
                 gameController.UpdateScore();
 
