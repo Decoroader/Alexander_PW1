@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
     //private Color gameOverLight = new Color(0.1f, 0, 0);
     private AudioSource playerAudio;
     private int level = 0;
-    private int score = -1;
+    private int score = 0;
     private Coroutine candyTimer;
 
     void Start()
