@@ -12,7 +12,7 @@ public class CommonDataSettings : ScriptableObject
     public readonly int SORRY = 3;
     public readonly int MUSIC = 4;
 
-    public int musicIndex = 2;
+    public int musicIndex = 3;
     public bool fromMenu_toGame;
     public bool fromMusic_toGame;
     public bool toMenu;
