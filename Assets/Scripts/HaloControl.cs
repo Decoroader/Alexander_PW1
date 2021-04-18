@@ -11,7 +11,9 @@ public class HaloControl : MonoBehaviour
     public AudioClip dyingSound;
     public AudioClip omnomRegularSound;
     public AudioClip omnomWowSound;
-
+    public GameObject receiverR;
+    public GameObject receiverG;
+    public GameObject receiverB;
 
     private Color[] A_HeadColors = new Color[5] {
         new Color(0.91f, 0, 0),
@@ -36,6 +38,9 @@ public class HaloControl : MonoBehaviour
     private readonly int timeOfCollisionLock = 15;
 
     private Coroutine lockCollisionCoroutine;
+    private Color rColor;
+    private Color gColor;
+    private Color bColor;
 
     //[SerializeField] private float coeffG = 0.7f;
     //[SerializeField] private float coeffY = 0.15f;
@@ -53,6 +58,10 @@ public class HaloControl : MonoBehaviour
 
         trueColor = Get_HeadColor();
         ColoringHead(trueColor);
+
+        rColor = receiverR.GetComponent<Renderer>().material.color;
+        gColor = receiverG.GetComponent<Renderer>().material.color;
+        bColor = receiverB.GetComponent<Renderer>().material.color;
     }
 
     // !!!!!!!!!!!!! don't delete !!!!!!!!!!!!!!!!!!!!!!!!!! this update for ideal color test
@@ -98,7 +107,10 @@ public class HaloControl : MonoBehaviour
                         comAnimator.SetTrigger("over_trg");
                     }
                     else
+                    {
                         forPlayClip = omnomRegularSound;                // call om-nom regular sound
+                        ReceiverLighting(tempColor);
+                    }
                 }
                 else
                     forPlayClip = omnomRegularSound;                // call om-nom regular sound
@@ -113,6 +125,34 @@ public class HaloControl : MonoBehaviour
         }
     }
 	
+    private void ReceiverLighting(Color tempColor)
+	{
+        Color warnigColor = new Color(0.31f, 0.31f, 0.31f);
+        if (tempColor.r > (thresholdColorR - 0.1f))
+        {
+            receiverR.GetComponent<Renderer>().material.color = warnigColor;
+            receiverG.GetComponent<Renderer>().material.color = gColor;
+            receiverB.GetComponent<Renderer>().material.color = bColor;
+        }
+		else if(tempColor.g > (thresholdColorG - 0.1f))
+		{
+            receiverR.GetComponent<Renderer>().material.color = rColor;
+            receiverG.GetComponent<Renderer>().material.color = warnigColor;
+            receiverB.GetComponent<Renderer>().material.color = bColor;
+        }
+        else if (tempColor.b > (thresholdColorB - 0.1f))
+        {
+            receiverR.GetComponent<Renderer>().material.color = rColor;
+            receiverG.GetComponent<Renderer>().material.color = gColor;
+            receiverB.GetComponent<Renderer>().material.color = warnigColor;
+        }
+		else
+		{
+            receiverR.GetComponent<Renderer>().material.color = rColor;
+            receiverG.GetComponent<Renderer>().material.color = gColor;
+            receiverB.GetComponent<Renderer>().material.color = bColor;
+        }
+    }
     private Color Get_HeadColor()                 // sum of the all colors in the List<Color>, and coloring head
 	{
         Color headColor = Color.black;
