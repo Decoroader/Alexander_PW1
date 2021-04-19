@@ -169,4 +169,9 @@ public class GameController : MonoBehaviour
         playerAudio.PlayOneShot(clickSound, 1.0f);
         commonData.toMenu = true;
     }
+    public void Quit()
+    {
+        playerAudio.PlayOneShot(clickSound, 1.0f);
+        Application.Quit();
+    }
 }

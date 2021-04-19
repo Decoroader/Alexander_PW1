@@ -39,11 +39,6 @@ public class Menu : MonoBehaviour
         playerAudio.PlayOneShot(clickSound, 1.0f);
         commonData.toMusic = true;
     }
-    public void Quit()
-    {
-        playerAudio.PlayOneShot(clickSound, 1.0f);
-        Application.Quit();
-    }
     public void Face()
     {
         commonData.sorry = true;
