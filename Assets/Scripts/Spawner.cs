@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour
     private float rangeX = 7f;
     private float rangeMaxZ = -1.5f;
     private float rangeMinZ = -4.5f;
-    private float spawDelay = 0.21f;
+    private float spawDelay = 0.33f;
     private int difficulty;
 
     private int prefabIndex; 
