@@ -31,7 +31,7 @@ public class CandyOnStart : MonoBehaviour
         currentRigid.AddTorque(RandomTorque(), RandomTorque(), RandomTorque(), ForceMode.Impulse);
     }
 
-#if UNITY_STANDALONE || UNITY_WEBGL
+//#if UNITY_STANDALONE || UNITY_WEBGL
     IEnumerator CandyPushControl()
     {
         float initCursorCoordinateX = 0;
@@ -80,30 +80,30 @@ public class CandyOnStart : MonoBehaviour
         }
         StopAllCoroutines();
     }
-#elif UNITY_IOS || UNITY_ANDROID
-    IEnumerator LeftRightSlide(){
-        Touch playerTouch = null;
-        while (true)
-        {
-            if (currentRigid.useGravity)                // stop scan mouse for the candy shifting 
-                break;
-            if(playerTouch == null){
-                if (Input.touchCount > 0) 
-                    playerTouch = Input.GetTouch(0);
-            }
-            if (playerTouch.phase == TouchPhase.Moved)  // mover of the dynamic object, like the cursor moves
-            { 
-                float shiftX = playerTouch.deltaPosition.x * coeffCoordinateMousToObject;
+//#elif UNITY_IOS || UNITY_ANDROID
+//    IEnumerator LeftRightSlide(){
+//        Touch playerTouch = null;
+//        while (true)
+//        {
+//            if (currentRigid.useGravity)                // stop scan mouse for the candy shifting 
+//                break;
+//            if(playerTouch == null){
+//                if (Input.touchCount > 0) 
+//                    playerTouch = Input.GetTouch(0);
+//            }
+//            if (playerTouch.phase == TouchPhase.Moved)  // mover of the dynamic object, like the cursor moves
+//            { 
+//                float shiftX = playerTouch.deltaPosition.x * coeffCoordinateMousToObject;
                 
-                transform.position = new Vector3(transform.position.x - shiftX,
-                    transform.position.y, transform.position.z);
-            }
-            if (playerTouch.phase == TouchPhase.Ended)  // the cundy runs in the reciever side
-                break;
-            yield return new WaitForFixedUpdate();
-        }
-    }
-#endif
+//                transform.position = new Vector3(transform.position.x - shiftX,
+//                    transform.position.y, transform.position.z);
+//            }
+//            if (playerTouch.phase == TouchPhase.Ended)  // the cundy runs in the reciever side
+//                break;
+//            yield return new WaitForFixedUpdate();
+//        }
+//    }
+//#endif
     IEnumerator WaitForPlayerDecision()
 	{
         commonData.startCandyTime = true;
