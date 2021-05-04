@@ -744,7 +744,7 @@ MonoBehaviour:
   verticalLight: {fileID: 539434650}
   horizontalLight: {fileID: 705507994}
   pointLight: {fileID: 1413692833}
-  clickSound: {fileID: 8300000, guid: abca7b6d2197d4b31a1269c2d331bbd3, type: 3}
+  clickSound: {fileID: 8300000, guid: f0230f12fb6e186429f2d49b1cd7ffcf, type: 3}
   gameSpeed: 230
   isGameActive: 1
   gameOver: 0
