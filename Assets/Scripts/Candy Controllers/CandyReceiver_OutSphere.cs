@@ -63,7 +63,7 @@ public class CandyReceiver_OutSphere : MonoBehaviour
                     tempLocalScale = transform.localScale;
                     transform.localScale /= scaleTransformer;       // reduce scale to hide the candy in the transit sphere
 
-                    countForMoveInTube = 111;
+                    countForMoveInTube = 199;
                     currentTransit = Instantiate(prefabTransit, transform.position, transform.rotation) as GameObject;
                     currentTransit.transform.SetParent(transform);
                 }

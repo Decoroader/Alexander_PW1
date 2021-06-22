@@ -76,7 +76,7 @@ public class CandyOnStart : MonoBehaviour
                     break;
                 }
             }
-            yield return new WaitForFixedUpdate();
+            yield return null;
         }
         StopAllCoroutines();
     }
