@@ -14,6 +14,7 @@ public class StartScene : MonoBehaviour
     private float outXmax = 2.01f;
     private float outZmin = 29.69f;
     private float outZmax = 29.71f;
+    private bool isOutStartScene = false;
     
     private float humThresholdZ = -18.9f;
     private bool isArriveAtHum = false;
@@ -35,9 +36,10 @@ public class StartScene : MonoBehaviour
 
     void Update()
     {
-        if (((transform.position.x >= outXmin) && (transform.position.x <= outXmax)) && ((transform.position.z >= outZmin) && (transform.position.z <= outZmax)))
+        if (((transform.position.x >= outXmin) && (transform.position.x <= outXmax)) && ((transform.position.z >= outZmin) && (transform.position.z <= outZmax)) && !isOutStartScene)
         {
             commonData.fromStart_toGame = true;
+            isOutStartScene = true;
         }
 
         if (transform.position.z > humThresholdZ && !isArriveAtHum)
