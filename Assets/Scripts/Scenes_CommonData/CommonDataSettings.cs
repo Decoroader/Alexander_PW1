@@ -11,8 +11,10 @@ public class CommonDataSettings : ScriptableObject
     public readonly int MENU = 2;
     public readonly int SORRY = 3;
     public readonly int MUSIC = 4;
+    public readonly int STARTSCENE = 5;
 
     public int musicIndex = 3;
+    public bool fromStart_toGame;
     public bool fromMenu_toGame;
     public bool fromMusic_toGame;
     public bool toMenu;
@@ -29,6 +31,7 @@ public class CommonDataSettings : ScriptableObject
         difficulty = 0;
         currentDifficulty = 1;
 
+        fromStart_toGame = false;
         fromMenu_toGame = false;
         toMenu = false;
         sorry = false;

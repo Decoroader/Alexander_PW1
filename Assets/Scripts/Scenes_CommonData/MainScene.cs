@@ -16,11 +16,17 @@ public class MainScene : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartGame());
+        StartCoroutine(StartScene());
     }
 
 	private void Update()
 	{
+        if (commonData.fromStart_toGame)
+        {
+            commonData.fromStart_toGame = false;
+            StartCoroutine(SwitchScene(commonData.STARTSCENE, commonData.GAME));
+        }
+
         if (commonData.toMenu)
 		{
             commonData.toMenu = false;
@@ -73,6 +79,13 @@ public class MainScene : MonoBehaviour
         yield return SceneManager.LoadSceneAsync(commonData.GAME, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(commonData.GAME));
     }
+
+    IEnumerator StartScene()
+    {
+        yield return SceneManager.LoadSceneAsync(commonData.STARTSCENE, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(commonData.STARTSCENE));
+    }
+
     IEnumerator SorryScene()
     {
         commonData.sorry = false;
