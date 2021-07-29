@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mus.unity
     guid: 81ffe9137fd298744800de30f5aa45a0
+  - enabled: 1
+    path: Assets/Scenes/StartScene1.unity
+    guid: 3aac86286d4c6ae468bc685aceac5185
   m_configObjects: {}

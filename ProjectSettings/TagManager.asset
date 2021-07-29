@@ -10,6 +10,7 @@ TagManager:
   - Head
   - DinamicObject
   - ODinamicObject
+  - StartOut
   layers:
   - Default
   - TransparentFX
