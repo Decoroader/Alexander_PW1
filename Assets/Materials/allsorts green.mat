@@ -28,12 +28,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d7ac0e79fad3f46bd923f7e1c997ece5, type: 3}
+        m_Texture: {fileID: 2800000, guid: e75d6a4d2d0d9254e9f71d35bb26c327, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: -1}
     m_Floats:
     - _EmissionLM: 0
     - _Shininess: 1
     m_Colors:
-    - _Color: {r: 0.7723078, g: 0.9622642, b: 0.75800997, a: 1}
+    - _Color: {r: 0.41624942, g: 0.990566, b: 0.36912602, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
