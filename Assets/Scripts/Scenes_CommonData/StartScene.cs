@@ -9,6 +9,7 @@ public class StartScene : MonoBehaviour
     public GameObject onButton;
     public GameObject hum50Hz;
     public GameObject computerSound;
+    public GameObject backgroundPlayerPrefab;
 
     private float outXmin = 1.99f;
     private float outXmax = 2.01f;
@@ -27,7 +28,7 @@ public class StartScene : MonoBehaviour
 
     private GameObject child0Hand;
     private Vector3 handRotation;
-
+    private Vector3 backgroundPosition = new Vector3(1.5f, 0.0f, 45.0f);
 
     void Start()
     {
@@ -43,21 +44,27 @@ public class StartScene : MonoBehaviour
         }
 
         if (transform.position.z > humThresholdZ && !isArriveAtHum)
-            TriggerAndObjectSwitchOn(isArriveAtHum, hum50Hz);
+        {
+            TriggerAndObjectSwitchOn(ref isArriveAtHum, hum50Hz);
+        }
 
         if (transform.position.y > compThresholdY && !isArriveAtComp)
-            TriggerAndObjectSwitchOn(isArriveAtComp, computerSound);
+        {
+            TriggerAndObjectSwitchOn(ref isArriveAtComp, computerSound);
+        }
 
-        handRotation = child0Hand.transform.localEulerAngles; 
+        handRotation = child0Hand.transform.localEulerAngles;
 
+        
         if ((handRotation.x > handXmin) && !isRedButtonPressed)
         {
             offButton.SetActive(false);
-            TriggerAndObjectSwitchOn(isRedButtonPressed, onButton);
+            TriggerAndObjectSwitchOn(ref isRedButtonPressed, onButton);
+            DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
         }
 
     }
-    private void TriggerAndObjectSwitchOn(bool catchFlag, GameObject soundObject)
+    private void TriggerAndObjectSwitchOn(ref bool catchFlag, GameObject soundObject)
     {
         catchFlag = true;
         soundObject.SetActive(true);

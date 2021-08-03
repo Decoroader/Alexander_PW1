@@ -23,6 +23,7 @@ public class CommonDataSettings : ScriptableObject
     public bool reload;
     public bool startCandyTime;
 
+
     public Vector3 easyCandyPosition = new Vector3(+1.5f, 1.0f, -3.5f);
 
 
