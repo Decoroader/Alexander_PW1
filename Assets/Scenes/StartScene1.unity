@@ -48063,6 +48063,8 @@ MonoBehaviour:
   onButton: {fileID: 1167315172}
   hum50Hz: {fileID: 1050277133}
   computerSound: {fileID: 2057883314}
+  backgroundPlayerPrefab: {fileID: 6422722909197167446, guid: 3ffcbf94b27fb85418f886ed60eceace,
+    type: 3}
 --- !u!1001 &1802773425
 PrefabInstance:
   m_ObjectHideFlags: 0

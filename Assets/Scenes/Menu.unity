@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c5d5030a74ce54fa16c28aed76afc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: abca7b6d2197d4b31a1269c2d331bbd3, type: 3}
+  clickSound: {fileID: 8300000, guid: ec32cfc3a1727504cb299f933010e29a, type: 3}
   commonData: {fileID: 11400000, guid: c7e933de961464245be74bed9743bfe3, type: 2}
   buttonEasy: {fileID: 1700305873}
   buttonMid: {fileID: 1421254304}

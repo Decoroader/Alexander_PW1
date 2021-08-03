@@ -11,6 +11,7 @@ TagManager:
   - DinamicObject
   - ODinamicObject
   - StartOut
+  - BGSound
   layers:
   - Default
   - TransparentFX
