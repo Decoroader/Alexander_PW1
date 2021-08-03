@@ -28,7 +28,6 @@ public class GameController : MonoBehaviour
     public bool gameOver;
     public bool hungry;
     public int hungryTimer;
-    public GameObject backgroundPlayerPrefab;
 
     private int speedDiscrette = 30;
     private int maxSpeed = 50;
@@ -41,7 +40,13 @@ public class GameController : MonoBehaviour
     private int level = 0;
     private int score = 0;
     private Coroutine candyTimer;
+    private Vector3 backgroundPosition = new Vector3(0, 3, -3);
 
+    private void Awake()
+    {
+        GameObject[] backgroundMusic = GameObject.FindGameObjectsWithTag("BGSound");
+        backgroundMusic[0].transform.position = backgroundPosition;
+    }
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();
@@ -58,8 +63,6 @@ public class GameController : MonoBehaviour
         candyTime.fillAmount = 0;
 
         gameOver = false;
-
-        Instantiate(backgroundPlayerPrefab);
     }
     void Update()
     {

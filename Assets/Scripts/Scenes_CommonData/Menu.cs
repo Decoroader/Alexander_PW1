@@ -15,6 +15,13 @@ public class Menu : MonoBehaviour
 
     private Vector3 frameDifficultyPosition;
 
+    private Vector3 backgroundPosition = new Vector3(0, 3, 0);
+
+    private void Awake()
+    {
+        GameObject[] backgroundMusic = GameObject.FindGameObjectsWithTag("BGSound");
+        backgroundMusic[0].transform.position = backgroundPosition;
+    }
     void Start()
     {
         playerAudio = GetComponent<AudioSource>();

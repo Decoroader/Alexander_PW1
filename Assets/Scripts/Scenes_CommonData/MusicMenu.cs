@@ -5,10 +5,13 @@ public class MusicMenu : MonoBehaviour
     public CommonDataSettings commonData;
 
     public GameObject backgroundPlayerPrefab;
-    
-    void Start()
+
+    private Vector3 backgroundPosition = new Vector3(0, 3, 0);
+
+    private void Awake()
     {
-        Instantiate(backgroundPlayerPrefab);
+        GameObject[] backgroundMusic = GameObject.FindGameObjectsWithTag("BGSound");
+        backgroundMusic[0].transform.position = backgroundPosition;
     }
 
     public void Apply()
