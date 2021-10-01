@@ -13,9 +13,9 @@ public class StartScene : MonoBehaviour
 
     private float outXmin = 1.99f;
     private float outXmax = 2.01f;
-    private float outZmin = 29.69f;
+    private float outZmin = 29.55f;
     private float outZmax = 29.71f;
-    private bool isOutStartScene = false;
+    [SerializeField] private bool isOutStartScene = false;
     
     private float humThresholdZ = -18.9f;
     private bool isArriveAtHum = false;
@@ -33,15 +33,17 @@ public class StartScene : MonoBehaviour
     void Start()
     {
         child0Hand = transform.GetChild(0).gameObject;
+        DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
     }
 
     void Update()
     {
-        if (((transform.position.x >= outXmin) && (transform.position.x <= outXmax)) && ((transform.position.z >= outZmin) && (transform.position.z <= outZmax)) && !isOutStartScene)
-        {
-            commonData.fromStart_toGame = true;
-            isOutStartScene = true;
-        }
+            //if (((transform.position.x >= outXmin) && (transform.position.x <= outXmax)) && ((transform.position.z >= outZmin) && (transform.position.z <= outZmax)) && !isOutStartScene)
+            if ((transform.position.z >= -19f) && !isOutStartScene)
+            {
+                commonData.fromStart_toGame = true;
+                isOutStartScene = true;
+            }
 
         if (transform.position.z > humThresholdZ && !isArriveAtHum)
         {
@@ -60,7 +62,7 @@ public class StartScene : MonoBehaviour
         {
             offButton.SetActive(false);
             TriggerAndObjectSwitchOn(ref isRedButtonPressed, onButton);
-            DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
+            //DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
         }
 
     }
