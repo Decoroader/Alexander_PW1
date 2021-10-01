@@ -10,7 +10,7 @@ public class ControllerOfConveyor : MonoBehaviour
     [SerializeField] private float maxConveyorShift;
     void Start()
     {
-        speed = commonData.conveyorSpeed;
+        //speed = commonData.conveyorSpeed;
         startPos = transform.position;
 
         maxConveyorShift = startPos.x - conveyorData.convLong;

@@ -66,7 +66,6 @@ public class MainScene : MonoBehaviour
     {
         if (SceneManager.GetSceneByBuildIndex(sceneForUnloadIndex) != null)
             yield return SceneManager.UnloadSceneAsync(sceneForUnloadIndex);
-
         yield return SceneManager.LoadSceneAsync(sceneForLoadIndex, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneForLoadIndex));
     }

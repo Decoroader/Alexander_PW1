@@ -10,7 +10,7 @@ public class CandyConveyorMover : MonoBehaviour
     void Start()
     {
         isMoveOnConveyor = false;
-        speed = commonData.conveyorSpeed;
+        //speed = commonData.conveyorSpeed;
         candyRigidBody = GetComponent<Rigidbody>();
     }
 

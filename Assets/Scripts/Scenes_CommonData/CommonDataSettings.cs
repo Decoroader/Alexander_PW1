@@ -7,6 +7,8 @@ public class CommonDataSettings : ScriptableObject
     public int  difficulty;
     public int  currentDifficulty;
 
+    //public readonly float conveyorSpeed = 1.1f;
+
     public readonly int GAME = 1;
     public readonly int MENU = 2;
     public readonly int SORRY = 3;
