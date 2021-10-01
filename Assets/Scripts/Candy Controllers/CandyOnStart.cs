@@ -12,11 +12,15 @@ public class CandyOnStart : MonoBehaviour
     private float   torqueRange = 11;
     private int     waitingTime;
 
+    private Vector3 mousePos;
+    private float mousePosZ;
+
     private void Start()
 	{
         camMain = Camera.main;
         currentRigid = GetComponent<Rigidbody>();
         waitingTime = GameObject.Find("GameController").GetComponent<GameController>().gameSpeed;
+        mousePosZ = -17.0f;
 
         StartCoroutine(CandyPushControl());
     }
@@ -34,9 +38,9 @@ public class CandyOnStart : MonoBehaviour
 //#if UNITY_STANDALONE || UNITY_WEBGL
     IEnumerator CandyPushControl()
     {
-        float initCursorCoordinateX = 0;
+        float OnClickCursorCoordinateX = 0;
 
-        bool isPressedMouseButton = false;          // I know about drys
+        bool isPressedMouseButton = false;
 
         Vector3 startCandyPosition = transform.position;
 
@@ -46,35 +50,39 @@ public class CandyOnStart : MonoBehaviour
                 break;
             if (startCandyPosition.z != transform.position.z)   // stop scan mouse, in the tutorial candy pushed
                 break;
+            
+            mousePos = Input.mousePosition;
+            mousePos.z = mousePosZ;
+            mousePos = camMain.ScreenToWorldPoint(mousePos);// this is tranformation to the game coordinate
+                                                            // it's obviosly, but one time I lost too many time w/o this info
             if (Input.GetMouseButtonDown(0) && !isPressedMouseButton) 
-            { 
-                initCursorCoordinateX = camMain.ScreenToWorldPoint(Input.mousePosition).x; // get the X coordinate of the cursor
+            {
+                OnClickCursorCoordinateX = mousePos.x;      // get the X coordinate of the cursor on the first clicked frame
                 isPressedMouseButton = true;
                 if (commonData.difficulty == 3)
                     StartCoroutine(WaitForPlayerDecision());
             }
             if (isPressedMouseButton)
             {
-                Vector3 cursor = camMain.ScreenToWorldPoint(Input.mousePosition);
                 if (commonData.difficulty <= 2)
                 {
-                    transform.position = new Vector3(cursor.x,
+                    transform.position = new Vector3(-OnClickCursorCoordinateX,
                             transform.position.y, transform.position.z);
-                    PushCandy();
-                    break;
+                    isPressedMouseButton = false;
                 }
                 else
                 {
-                    float shiftX = initCursorCoordinateX - cursor.x;
-                    initCursorCoordinateX = cursor.x;
-                    transform.position = new Vector3(transform.position.x - shiftX,
+                    float shiftX = OnClickCursorCoordinateX - mousePos.x;
+                    OnClickCursorCoordinateX = mousePos.x;
+
+                    transform.position = new Vector3(transform.position.x + shiftX,
                             transform.position.y, transform.position.z);
                 }
-                if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
-                {
-                    PushCandy();
-                    break;
-                }
+            }
+            if (Input.GetMouseButtonUp(0))              // runs the cundy in the receiver side?
+            {
+                PushCandy();
+                break;
             }
             yield return null;
         }
