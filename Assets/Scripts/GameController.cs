@@ -29,10 +29,10 @@ public class GameController : MonoBehaviour
     public bool hungry;
     public int hungryTimer;
 
-    private int speedDiscrette = 30;
-    private int maxSpeed = 50;
+    private readonly int speedDiscrette = 30;
+    private readonly int maxSpeed = 50;
     private int timer = 111;
-    private int hungryTreshold = 15;
+    private readonly int hungryTreshold = 15;
     private int fadeControl = 90;
 
     //private Color gameOverLight = new Color(0.1f, 0, 0);
