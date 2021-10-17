@@ -8,8 +8,8 @@ public class CandyOnStart : MonoBehaviour
     private Camera camMain;
     private Rigidbody currentRigid;
 
-    private float   speedOnOpenSpace = 5.5f;
-    private float   torqueRange = 11;
+    private readonly float speedOnOpenSpace = 5.5f;
+    private readonly float torqueRange = 11;
     private int     waitingTime;
 
     private Vector3 mousePos;
