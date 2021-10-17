@@ -11,39 +11,35 @@ public class StartScene : MonoBehaviour
     public GameObject computerSound;
     public GameObject backgroundPlayerPrefab;
 
-    private float outXmin = 1.99f;
-    private float outXmax = 2.01f;
-    private float outZmin = 29.55f;
-    private float outZmax = 29.71f;
+    private readonly float outXmin = -1.755f;
+    private readonly float outZmin = 45.3f;
     [SerializeField] private bool isOutStartScene = false;
     
-    private float humThresholdZ = -18.9f;
+    private readonly float humThresholdZ = -18.9f;
     private bool isArriveAtHum = false;
 
-    private float compThresholdY = 4.1f;
+    private readonly float compThresholdY = 4.1f;
     private bool isArriveAtComp = false;
 
-    private float handXmin = 57f;
+    private readonly float handXmin = 57f;
     private bool isRedButtonPressed = false;
-
+    
     private GameObject child0Hand;
     private Vector3 handRotation;
-    private Vector3 backgroundPosition = new Vector3(1.5f, 0.0f, 45.0f);
+    private readonly Vector3 backgroundPosition = new Vector3(1.5f, 0.0f, 45.0f);
 
     void Start()
     {
         child0Hand = transform.GetChild(0).gameObject;
-        DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
     }
 
     void Update()
     {
-            //if (((transform.position.x >= outXmin) && (transform.position.x <= outXmax)) && ((transform.position.z >= outZmin) && (transform.position.z <= outZmax)) && !isOutStartScene)
-            if ((transform.position.z >= -19f) && !isOutStartScene)
-            {
-                commonData.fromStart_toGame = true;
-                isOutStartScene = true;
-            }
+        if ((transform.position.x >= outXmin) && (transform.position.z >= outZmin) && !isOutStartScene)
+        {
+            commonData.fromStart_toGame = true;
+            isOutStartScene = true;
+        }
 
         if (transform.position.z > humThresholdZ && !isArriveAtHum)
         {
@@ -62,7 +58,7 @@ public class StartScene : MonoBehaviour
         {
             offButton.SetActive(false);
             TriggerAndObjectSwitchOn(ref isRedButtonPressed, onButton);
-            //DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
+            DontDestroyOnLoad(Instantiate(backgroundPlayerPrefab, backgroundPosition, Quaternion.identity));
         }
 
     }
